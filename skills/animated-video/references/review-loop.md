@@ -38,3 +38,33 @@ write only under `out/judge/`. Judge against the current brief and platform. Pas
 - Your own spot-check after each render still catches things: a per-word duck that pumps, a
   see-through character, floating legs, a blurred last frame. Pull frames at every flagged
   time before reporting "done".
+- Judges and stills can pass a film that fails as a whole. Ask the story judge, line by line, what
+  physically happens on screen and whether a newcomer could retell it; a mechanism shown only as a
+  label or a colour change fails that check even when every frame is pretty.
+
+## Measures that separate a full film from an empty one
+Cut count rarely explains a "flat" verdict; content does. Measure the film and its reference the
+same way, from a frame every second or so:
+- **Empty area:** the share of each frame that is near-flat (low local variance), and the share
+  that is near-black.
+- **Detail:** mean edge density or high-frequency energy per frame.
+- **Colourfulness:** mean chroma.
+- **Repetition:** the share of seconds whose frame looks like an earlier one (a perceptual hash
+  distance under a threshold).
+- **Motion:** frame-difference energy over time. Separate camera movement from objects moving,
+  because a panning camera over a still subject reads as busy in the numbers and dead on screen.
+Put matched beats of the film and the reference side by side at the same size.
+
+## Restart after a rejected cut
+When the user rejects a whole cut ("low quality", "not immersive", "start over"), don't route
+fixes; the problem is the concept, not the shots.
+1. Stop all builds and renders.
+2. Run an independent evaluator: a fresh agent that judges from the finished film and the
+   reference first, then reads the plans only to diagnose process causes. Give it the films and
+   the script, not your own diagnosis. It writes a verdict, ranked problems with timestamps and
+   side-by-side frames, a line-by-line table, what to keep, and two or three different
+   directions.
+3. Take the user's notes on it, write the lessons into the project, and record what the user
+   locks (often the script, the voice and any camera footage).
+4. Restart at step 1 of the skill with a fresh concept. A new agent with the lessons file
+   avoids inheriting the old plan's assumptions.

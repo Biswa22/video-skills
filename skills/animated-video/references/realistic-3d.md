@@ -148,6 +148,29 @@ material, check their licence, and record where each came from.
 Done when: a still of the hero framing sits beside the matching reference at the same size and
 the remaining differences are listed in `LOOK.md`.
 
+## People in a realistic film
+
+Hands and faces are where a real-time render reads as CGI first, especially at macro: rubbery
+skin, a uniform grey or peach tone, fingers that bend past their joint limits, a pinch that never
+quite grips. Plan them before the shot list hardens:
+
+- **Frame around them first.** Silhouettes against a window, backs of heads, hands entering at
+  the frame edge, a cut-away to the object. A shot that only works with a convincing close-up hand
+  or face is a route decision, not a polish task.
+- **When they must appear, give the rig hard limits.** Real joint ranges on every frame (finger
+  joints flex in one plane, the fingertip joint follows the middle one, almost no hyperextension),
+  checked by a validator over every rendered frame, plus contact checks against the props. Skin
+  needs real colour variation (redder knuckles, fingertips and creases, paler over tendons,
+  translucent nails) and light through thin edges.
+- **Drop a pose that can't look real.** If one pose stays wrong after a focused pass (a precision
+  pinch at macro is the usual one), restage the action without the hand: the object moves into
+  frame on its own and a cut carries the action.
+- **Check scanned assets before framing them.** A licensed head or hand scan may have closed eyes,
+  blemishes in its albedo, or no texture at all; frame or treat it accordingly, and keep its
+  licence and credit line with it.
+- **Don't let a hard element remove the world.** Reframe or reroute the people (Blender for
+  photographic close-ups); dissolving the set around them leaves the whole film unplaced.
+
 ## 4. Animate with weight, then test one moving shot
 
 - **Mass and inertia.** Heavy things accelerate and stop slowly; light things react first and

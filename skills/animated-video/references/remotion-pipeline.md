@@ -31,7 +31,10 @@
 - To build ahead of a recording, generate `words.json` from the script at the speaker's measured
   pace (words per second of an earlier recording) and build every beat from `cue()` as usual.
   Label it a stand-in. After recording, align the real VO and re-render; a cue phrase the speaker
-  changed throws by name. Unverified end to end: check that every cue resolves after alignment.
+  changed throws by name, and so does the caption check at load, in every bundle that imports
+  them. Update the caption lines together with the words, then run a script that loads each act's
+  cue module on its own and lists every phrase that no longer resolves, with the nearest phrase
+  in the new transcript, so each act owner fixes only their own.
 
 ## Procedural drawing
 - A `<canvas>` inside a Remotion component suits procedural art (grain, boil, particles). Redraw
@@ -89,6 +92,28 @@ Sound stays on the picture when both come from the same numbers.
   then render stills from the bundle.
 - Many agents rendering on one machine starve each other, and a full render can be killed
   (exit 137). Throttle, and render final cuts when the machine is quiet.
+- A long render's memory grows until the machine runs out; one 3D-heavy film crashed a laptop
+  rendering 3,500 frames in one call alongside another segment. Render finals in short chunks
+  (about 300 frames, low concurrency, one at a time), skip chunks already on disk so a rerun
+  resumes, then join with FFmpeg's concat demuxer (`-c copy`) and mux the mix. Check the joined
+  frame count against `TOTAL`.
+- A React component defined inside another component's body is a new type on every render, so it
+  remounts each frame: its geometry rebuilds and any state it set (materials, uniforms) resets.
+  It shows as one-frame pops and brightness differences between a sequence and a single still.
+  Define components at module level.
+- A wrapper that clones materials (for a per-subtree effect) keeps the clones from seeing
+  per-frame updates the original material's owner makes, and a compile hook that closes over the
+  original makes every clone read the original's uniforms. Bind hooks to the material being
+  compiled, and avoid wrapping subtrees that animate their own materials.
+- three.js (r186): a standard or physical material lit by `scene.environment` ignores
+  `envMapIntensity` unless it has its own `envMap`; assign the environment texture explicitly to
+  scale one material's reflections. A floor's metalness also needs lowering when you lower its
+  specular, or metallic Fresnel keeps it mirror-bright at grazing angles.
+- A screen-space pass that gathers neighbours (depth of field, bloom) spreads one NaN or infinite
+  pixel into a black disc or bar. Sanitise its input (non-finite to 0, clamp to the half-float
+  range).
+- To extract an exact frame from a render, use `-vf "select=eq(n\,N)"`; `-ss` before `-i` on a
+  concatenated file was off by one frame.
 - The last renderable frame is `TOTAL - 1`.
 - 3D framing: with a vertical field of view F, a camera at distance d frames a height of
   2·d·tan(F/2). Set distances from the size the subject must fill, before modelling detail.

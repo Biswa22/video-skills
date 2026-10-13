@@ -25,7 +25,10 @@ brief; a luminous film can be warm or cold, sparse or dense, stylised or near-ph
 ## Typical failure
 A first pass tends to come out as glowing shapes on a flat dark field: subjects in one part of
 the frame and the rest empty, one plane, glows that light nothing, and primitives standing in
-for objects. Check the first stills for exactly this before building further.
+for objects. Check the first stills for exactly this before building further. The tempting fix,
+better light (a black product stage with a soft key and a reflective floor around floating
+devices), is the same failure in a nicer finish. The fix is content: a place, the objects in it,
+and the thing being followed travelling through it.
 
 ## Mechanics
 - Stack: `@remotion/three`, `three`, `@react-three/fiber`. Use the template's

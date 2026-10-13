@@ -62,7 +62,9 @@ Pick the spine that fits the brief:
 
 Either way: intake questions in one message, three different concepts with a recommendation,
 the chosen one developed into a timed beat sheet, then stop for the user's approval, for short
-pieces too. When the video-script skill is installed, check narration against its script
+pieces too. A concept starts with its world: the place where every line happens and what we
+follow through it. The look comes after (step 2); a palette or a rulebook chosen first gives a
+film with nowhere to be. When the video-script skill is installed, check narration against its script
 checklist.
 
 Done when: the user has approved the concept and beat sheet, or supplied a finished script.
@@ -121,13 +123,20 @@ narration, the sound bed is chosen and the beats are cued to it.
 
 Turn the approved beat sheet into `STORYBOARD.md`: the logline, the recurring motif, and a
 scene table of timing, picture, on-screen text and the transition into the next scene. For each
-line, name the thing on screen and what changes in it. List uncertain facts in `NOTES.md` and
-leave them out of the film.
+line, name the place, the thing on screen and what happens to it. When the presenter appears on
+camera over the animation, plan what stands behind them in each insert as part of the same
+world, from the start. List uncertain facts in `NOTES.md` and leave them out of the film.
 
 Copy the style-neutral infrastructure in `templates/remotion-film/` (timing lib, camera, 3D
 canvas, finish, the still, render, contact-sheet and align scripts). Wire up acts, placeholder
 scenes, captions and audio, and render stills across the whole timeline.
 [Pipeline reference and gotchas](references/remotion-pipeline.md).
+
+When the film's meaning lives in motion (an explainer's mechanisms, a chase, a build), turn the
+skeleton into a rough **animatic** before the key-frame board: simple blocked shapes moving over
+the real VO, with any presenter inserts in place, reviewed as dense frame strips (and played,
+when a tool allows). It passes when every line's event reads with the sound off. A board of good
+stills can hide a film in which the camera pans and nothing happens.
 
 Then render the **key-frame board**: one still per beat in the approved style, showing each
 beat's composition, hero object, light and text. Detail may stay rough; the look may not. Show it
@@ -164,6 +173,8 @@ example ([register when it works](../asset-library/SKILL.md#3-register-reusable-
 Write the art bible before animators start: look, colour script, cast, staging, safe zones,
 the chosen style's bar from its reference, and this **finish bar**, which holds in every style:
 
+- **A place.** Every shot happens somewhere in the film's world. An abstract or dark set is still
+  a place, filled with objects and texture; more light does not fix an empty frame.
 - **Full frame.** Compose for the aspect ratio; no shot leaves more than about a quarter of the
   frame as flat colour. The picture continues behind captions and app UI, calm enough to read.
 - **Depth.** Foreground, subject and background, with parallax from a camera that rarely
@@ -176,6 +187,11 @@ the chosen style's bar from its reference, and this **finish bar**, which holds 
   school, product or place appears as its real logo or a faithful likeness, never a generic
   symbol.
 - **Life.** Secondary motion that belongs to the scene; anticipation, overshoot and settle.
+- **Intent.** Every camera move answers an event (it follows, reveals or arrives); no idle
+  panning over an unchanged subject. Each shot layers a primary action with secondary action
+  and ambient life, so several purposeful things move at once.
+- **Performed, not labelled.** A mechanism happens on screen as cause and effect. A label, a
+  number or a colour change never stands in for the event.
 - **Transitions through content.** A morph, a push through an object, particles that reform.
   Carry colour and momentum across the cut; skip crossfades and flat-colour flashes.
 - **Detail in the picture.** Sophistication comes from objects, light and motion. Leave out
@@ -185,6 +201,11 @@ Then write per-act briefs (line, picture, action), each pointing at the key-fram
 
 - In the full production, run one animator per act in parallel, each owning its own files; the
   shared kit, lib and film shell stay read-only. Throttle rendering on a shared machine.
+- The director owns legibility for the whole film. Parallel animators optimise their own acts
+  and seams; after each act's contact sheet, ask whether a newcomer could retell what happened
+  in every shot, and send back any shot where they couldn't.
+- When an element renders poorly (people, a crowd, an interior), reframe or simplify that
+  element or change its route; don't delete the world around it.
 - Each act exports its sound events (every visible hit, landing, move and place change, from
   the same constants that draw it). The director owns one cue sheet built from those events;
   per-act sound quotas multiply into clutter.
@@ -221,11 +242,15 @@ lenses, route issues to their owners by time range, fix in parallel, re-render, 
   criterion agreed in `LOOK.md`, and the user's acceptance of a test shot is met or unmet on its
   own. Keep open issues in `ISSUES.md` (time range, owner, severity, status).
 - On long runs, send progress (latest contact sheet, ETA) at each stage boundary.
+- When the user rejects a whole cut, don't patch it. Run an independent evaluation against the
+  bar, write the lessons down, and restart from the concept with only what the user locks.
+  [Restart after a rejected cut](references/review-loop.md#restart-after-a-rejected-cut).
 
 ## 8. Deliver
 
-Render the final (the template normalizes loudness for social). Check the first frame (it's
-the cover), the last second, and the loudness. Report the path, the open issues, every agreed
+Render the final (the template normalizes loudness for social); for a long or heavy film,
+render it in short chunks ([pipeline gotchas](references/remotion-pipeline.md#gotchas)). Check
+the first frame (it's the cover), the last second, and the loudness. Report the path, the open issues, every agreed
 criterion still unmet (a stopped review loop is not a pass), any sourced images, and anything synthetic or invented (voice, names, messages, stand-in images). Commit each version in the
 project's local git repo (`git init` at setup). For changes to a finished film (speed, trim, a caption), take the
 cheapest route that preserves quality, such as an ffmpeg pass on the delivered file, and offer

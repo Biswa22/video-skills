@@ -112,6 +112,12 @@ Test extraction of the active channel, gentle filtering, adaptive gain/compressi
 and normalization on representative samples before processing the full recording.
 Preserve originals and decoded timing. Measure the encoded listening copy as well
 as the PCM master: AAC overshoot can require more headroom.
+When downmixing a stereo recording to mono, average the channels
+(`pan=mono|c0=0.5*c0+0.5*c1`). Summing raises identical channels by 6 dB, and FFmpeg's
+`-ac 1` raises them by about 3 dB (measured), either of which clips a voice that
+peaked near full scale. Process in floating point and write integer PCM only once, at the
+end; a filter applied to an already-clipped 16-bit file clips again. Check the
+edited voice for samples at full scale and flat-topped runs before mixing.
 Usable recovered speech is a reason to test salvage before suggesting a retake;
 signal checks cannot establish the original app/input-setting cause or listening quality.
 

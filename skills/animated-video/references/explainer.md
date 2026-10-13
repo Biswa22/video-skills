@@ -21,6 +21,18 @@ Pick the shape that fits the topic; these are common ones, not a complete list:
 - **Myth and mechanism:** the common belief, then what actually happens.
 - **What if:** remove one part and watch what breaks; the mechanism shows by its absence.
 
+## World first
+Decide where the film happens before deciding how it looks. Imagine the environment: one
+continuous place, or a journey through named places, where every line of the script happens
+and where the viewer feels the story. For each line, name the place and what physically happens
+there. A film built from a palette, a rulebook or a set of disconnected setups has nowhere to
+be, and no lighting, detail or camera work makes it immersive afterwards.
+
+If one element of the world is hard to render well (people, a crowd, a complex interior),
+reframe it (silhouettes, hands at the frame edge, backs of heads, a cut-away) or change its
+production route. Don't dissolve the world around it into an abstract stage; an empty stage
+makes the whole film feel unplaced.
+
 ## Devices
 Tools that make a mechanism watchable. Choose the few that serve this topic; a film that uses
 all of them feels like a formula.
@@ -41,20 +53,38 @@ all of them feels like a formula.
 - **A turn:** step back from the mechanism to the people, history or meaning behind it, and end
   on an image that answers the opening.
 
-## Concepts and beat sheet
-Pitch three concepts that differ in angle or shape, not three wordings of one idea. For each:
-the question, the hook line, the shape, the devices, the stakes, the turn, and the final image.
-Recommend one and say why.
+Whatever the devices, these rules hold:
+- **Perform the mechanism; don't label it.** Each step happens on screen as cause and effect
+  to the thing being followed: it is cut, sent, hit, broken, copied, resent, scrambled. A label,
+  a number or a change of colour never stands in for the event.
+- **Metaphor serves legibility; accuracy is a check.** A visible lane, a labelled brick or a
+  pulse running down a path is fine when it is true in spirit and the narration names the
+  reality. Physical correctness checks the staging; it should not forbid the metaphor that makes
+  the idea readable. Deep accuracy no viewer can see is not a substitute for a clear event.
+- **Teach any visual code once.** If colour, shape or position carries meaning (colour as
+  frequency, red as loss), show the rule in one legible image before using it.
 
-Develop the chosen one into a beat sheet timed to the length: for every line, the thing on
-screen and what changes in it. A line with nothing to show is a candidate for the narrator on
+## Concepts and beat sheet
+Pitch three concepts that differ in world, angle or shape, not three wordings of one idea. For
+each: the world, the thing followed through it, the question, the hook line, the shape, the
+devices, how each mechanism is performed, the stakes, the turn, and the final image. Recommend
+one and say why.
+
+Develop the chosen one into a beat sheet timed to the length: for every line, the place, the
+thing on screen, the event that happens to it, why the camera moves, and what else moves in the
+frame at the same time. A line with nothing to show is a candidate for the narrator on
 camera, a caption, or a cut. Look up how every real object, place and interface in the film
 actually looks, and list facts you could not verify in `NOTES.md`.
 
 ## Explainer checks, before you show it
 - The opening question is concrete and answered by the end.
 - Every term is defined in words a newcomer follows, and every pronoun points at one thing.
-- Each beat changes something on screen; scenery is not a beat.
+- Each beat changes something on screen; scenery is not a beat, and neither is a camera move
+  over an unchanged subject.
+- Every line has a place, and every mechanism is an event, not a label.
+- Any visual code is taught on screen before it carries meaning.
+- A slow-motion or scale gauge is set up by the voice or the picture, and never jumps without a
+  visible reason.
 - Something goes wrong or is at stake in the middle.
 - Numbers on screen equal the narration's numbers.
 - The ending answers the opening, ideally with an image or gauge that returns.
@@ -69,3 +99,10 @@ right now (the photo is on the Pacific floor at this moment), 200 ms slowed 750x
 millisecond clock in the corner, one numbered packet followed throughout, packets lost and
 re-sent as the stakes, a garden hose and a hair for scale, and the 1858 telegraph cable as the
 turn. Those were that topic's devices. A different topic needs its own shape and devices.
+
+A counter-example from the same month: an explainer about how wireless earbuds receive music
+fixed its palette and a strict physics rulebook before choosing a world, then dissolved its
+train setting into a dark abstract stage when the people in it rendered poorly. The film was
+rejected as not immersive: devices floated in a void, the camera panned while nothing happened,
+and its mechanisms (hopping, collisions, resending) were named by labels and colour changes
+instead of happening on screen.
