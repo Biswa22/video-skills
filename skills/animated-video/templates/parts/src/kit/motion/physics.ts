@@ -2,8 +2,9 @@
 // drag, bounces on a floor plane with friction) at four sub-steps per frame and stored, then read
 // back by frame, so any frame or sub-frame renders the same. Pure function of its options.
 //
-//   const sparks = burst({n: 400, seed: 7, at: 146, origin: coil, speed: [60, 180], gravity: 980,
-//                         drag: 2.5, floor: 0, bounce: 0.3, life: [0.3, 0.9]});
+//   const sparks = burst({n: 16, seed: 7, at: 146, origin: coil, speed: [60, 180], gravity: 980,
+//                         drag: 2.5, floor: 0, bounce: 0.3});      // a handful, gone in ~10 frames
+// Draw bursts through a budget (budget.ts) so they stay small and never cover the hero.
 //   per frame: for (let i = 0; i < sparks.n; i++) { const age = sparks.at(fr, i, p); if (age < 0) continue; ... }
 //
 // Units are the scene's; speed in units/s, gravity in units/s² (980 for a scene in centimetres).
@@ -25,7 +26,8 @@ export type BurstOpts = {
   floor?: number; // y of a ground plane to bounce on (none by default)
   bounce?: number; // restitution 0..1 (default 0.35)
   friction?: number; // share of sideways speed kept per bounce (default 0.6)
-  life: [number, number]; // seconds
+  life?: [number, number]; // seconds (default 0.12-0.36 s, 4-11 frames: effects are punctuation; give
+  //                           debris that must settle and stay an explicit long life)
   spin?: number; // max tumble, rad/s (for chunks)
   sizes?: [number, number]; // size range (power-law: many small, few large); read with size(i)
   fps?: number;
@@ -45,7 +47,8 @@ export const burst = (o: BurstOpts) => {
   for (let i = 0; i < o.n; i++) {
     const r = (k: number) => rand(o.seed, i, k);
     born[i] = o.at + (o.spread ?? 0) * r(1);
-    life[i] = o.life[0] + (o.life[1] - o.life[0]) * r(2);
+    const L = o.life ?? [0.12, 0.36];
+    life[i] = L[0] + (L[1] - L[0]) * r(2);
     size[i] = o.sizes ? o.sizes[0] + (o.sizes[1] - o.sizes[0]) * r(3) ** 3 : 1;
     spin[i] = (o.spin ?? 0) * (r(4) * 2 - 1);
     axis.push(new Vector3(r(5) - 0.5, r(6) - 0.5, r(7) - 0.5).normalize());

@@ -34,6 +34,24 @@ Keep timing constants in a pure events module (no React or three) that also expo
 `EVENTS: {id, fr, what}` for `motion_check.py events` and the cue sheet. With hit-stops, choreograph
 in story frames and export `timeline(stops).output(storyFrame)`.
 
+## Effects are punctuation for events; the hero is always in view
+
+The hero of each beat (the part or mechanism the motion script says it is about) stays fully
+readable. Sparks, streaks, flashes, rings and debris are punctuation: tied to a real event (metal cut,
+hit or scraped; an impact; a discharge), small (a handful, not a fountain), and gone within ~8–12
+frames. Nothing crosses in front of the hero and nothing outshines it, except for a frame or two at
+a true impact. No ambient spark rain, no continuous emission, no multi-frame white-out; a shockwave
+is thin and starts outside the hero. Density comes from parts and mechanisms (slides, hinges,
+latches, spin-ups, staggered waves, the camera answering events), not particles: the film gate's
+movers count includes particles, so a shot that passes on effects alone still fails the critic.
+
+The kit defaults to this. `burst()` lives 4–11 frames unless given a `life`. Draw bursts through
+`budget()` (`budget.ts`): at most `maxLive` particles per burst (default 40) and `maxBursts` bursts at
+once (default 2; an older one fades over 3 frames), and every particle in front of the hero's screen
+box is faded to `cover` (6%). Pass the beat's hero as a world `Box3` each frame
+(`fx.frame(fr, camera, box)`) and use `fx.alpha(p)` for anything else that might cross it (rain,
+dust). Keep the screen-filling stuff (lens drops, smoke, motes drawn into the hero) out.
+
 ## API in brief
 
 **`time.ts`** — timing.
@@ -71,6 +89,9 @@ floor, bounce, friction, life, spin, sizes})` simulates once at four sub-steps p
 drag, bounces with friction on a floor plane), then `at(fr, i, out)` → age or -1, `tail(fr, i, back,
 out)`, `turn(fr, i)`, `size[i]` (power law: many small, few large). `heat(age)` is a cooling spark's
 HDR colour. Units are the scene's: a centimetre scene uses gravity 980.
+
+**`budget.ts`** — `budget({maxBursts, maxLive, cover, pad})` → `frame(fr, camera, heroBox)`,
+`each(bursts, fn(b, i, p, age, alpha))`, `alpha(p)`. See the rule above.
 
 **`fx.ts`** — one draw call each, filled per frame.
 `streaks(max)` camera-facing segments (sparks, rain, trails; brightest at the head, energy-conserving
@@ -138,6 +159,14 @@ The kit was proven on a 7.5 s vertical shot: a phone above a wet rooftop ledge a
 into its real parts, the parts rebuild into a transmitter on the ledge that fires a signal across the
 city, then fly back and slam together. Measured there, not general truths:
 
+- **Effects compete with the hero.** The first cut had hundreds of sparks per hit, steam, smoke,
+  motes and lens drops; its maker found it "too much effects" with the important thing out of view.
+  The revision kept six tiny spark bursts (screws popping, the frame cut, the fire, the slam) and two
+  small splashes under a budget, and replaced the lost motion with mechanisms. The gate's movers
+  median went from 20.0 to 19.25 with effects cut (below the bar film's 19.5), then to 20.0 again with
+  mechanisms; the second that held the charge rose from 15 to 24.5. One large surface sweeping across
+  frame (a full turret turn) counted as one mover and dropped that second to 12: several mid-size
+  parts deploying in a stagger read better and count better.
 - **Cost.** 1080x1920, 6–16 samples per frame chosen from camera speed and `energy`, MSAA 4, soft
   background, bloom: about 0.3 s per frame per render worker on an Apple-silicon laptop (225 frames in
   34 s at concurrency 2, 1 GB peak). Re-rendered frames were bit-identical.

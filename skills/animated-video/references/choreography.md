@@ -32,6 +32,9 @@ animatic. Format and checks: `templates/remotion-film/motion_check.py`.
   each offset in time), collisions with consequences, and a camera that moves through and around
   the action (whip, orbit, push-through, crash zoom). Avoid one object drifting, a glow pulsing, a
   looped ambient motion under narration, and holds while the voice explains.
+- **Effects are punctuation.** Sparks, flashes, debris and rings are tied to an event, brief, and
+  never cover the hero. The movers measure counts particles, so a shot that passes on effects alone
+  fails the critic.
 - **Every sentence is carried by at least one beat** inside its span, so no line is told by the
   voice alone.
 

@@ -1,11 +1,12 @@
 // CPU self-check of the motion kit: `node src/kit/motion/selftest.ts` from a film that has `three`
 // installed (Node 22.6+ runs TypeScript directly). The GPU side (fx, Shutter) is checked by eye
 // and by re-rendering a frame twice (see README).
-import {Quaternion, Vector3} from 'three';
+import {Box3, PerspectiveCamera, Quaternion, Vector3} from 'three';
 import {arrive, energy, flash, kick, move, ramp, spring, stagger, timeline} from './time.ts';
 import {explode, fly, plan} from './parts.ts';
 import {hinge, piston, screw, spin} from './mech.ts';
 import {burst, heat} from './physics.ts';
+import {budget} from './budget.ts';
 import {orbit, pixelSpeed, rig, shake} from './camera.ts';
 
 const ok = (c: unknown, m: string) => { if (!c) throw new Error('motion selftest: ' + m); };
@@ -66,6 +67,23 @@ for (let i = 0; i < 60; i++) for (let f = 5; f < 50; f += 0.25) {
   if (a1 >= 0) ok(p1.y >= -1e-6 && a1 <= 1, 'burst floor and age');
 }
 ok(heat(0)[0] > heat(1)[0], 'heat cools');
+ok(burst({n: 4, seed: 1, at: 0, origin: new Vector3(), speed: [1, 2]}).life.every((l) => l <= 0.36), 'short default life');
+// budget: caps live particles, fades older bursts, hides what is in front of the hero
+{
+  const cam = new PerspectiveCamera(40, 0.5625, 0.1, 1000); cam.position.set(0, 0, 50); cam.lookAt(0, 0, 0); cam.updateMatrixWorld();
+  const big = burst({n: 400, seed: 3, at: 0, origin: new Vector3(0, 0, 0), speed: [0, 0.01], life: [1, 1]});
+  const fx = budget({maxLive: 30});
+  fx.frame(5, cam, null); let n = 0; fx.each([big], () => n++);
+  ok(n > 15 && n <= 45, `budget caps live particles (${n})`);
+  const hero = new Box3(new Vector3(-2, -2, -2), new Vector3(2, 2, 2));
+  fx.frame(5, cam, hero);
+  ok(fx.alpha(new Vector3(0, 0, 20)) < 0.1 && fx.alpha(new Vector3(0, 0, -20)) === 1 && fx.alpha(new Vector3(30, 0, 20)) === 1, 'budget hero cover');
+  const a = burst({n: 10, seed: 4, at: 0, origin: new Vector3(40, 0, 0), speed: [0, 0.01], life: [2, 2]});
+  const b = burst({n: 10, seed: 5, at: 10, origin: new Vector3(40, 0, 0), speed: [0, 0.01], life: [2, 2]});
+  const c = burst({n: 10, seed: 6, at: 20, origin: new Vector3(40, 0, 0), speed: [0, 0.01], life: [2, 2]});
+  const fx2 = budget({maxBursts: 2}); fx2.frame(30, cam, null); const seen = new Set<unknown>(); fx2.each([a, b, c], (bb) => seen.add(bb));
+  ok(seen.size === 2 && !seen.has(a), 'budget keeps the newest bursts');
+}
 // camera: keys are hit exactly, shake is quiet outside its window
 const C = new Vector3(0, 5, 0), r = rig([{at: 0, pos: orbit(C, 50, 0, 0), look: C}, {at: 20, pos: orbit(C, 50, 5, 90), look: C, mm: 50}, {at: 30, pos: orbit(C, 40, 0, 120), look: C}]);
 ok(r(20).pos.distanceTo(orbit(C, 50, 5, 90)) < 1e-6 && near(r(20).mm, 50) && r(100).pos.distanceTo(orbit(C, 40, 0, 120)) < 1e-6, 'rig keys');
