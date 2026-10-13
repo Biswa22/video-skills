@@ -67,4 +67,6 @@ A gate the user waives is named in the delivery report.
 Density gets cut when each animator hand-writes it. Before the acts start, put the film's shared
 motion into the kit: parametric staggers for multi-part motion, particle and debris systems,
 trails and motion blur, impact flashes that light their surroundings, and camera moves with speed
-ramps. Shots then call primitives instead of re-deriving them.
+ramps. Shots then call primitives instead of re-deriving them. For three.js, start from
+`templates/parts/src/kit/motion/` ([README](../templates/parts/src/kit/motion/README.md)): it has
+these primitives, tested on a dense shot, plus motion rules taken from feature-film work.
