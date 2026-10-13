@@ -20,6 +20,7 @@ after the user approves them. A standing approval recorded in the user's profile
    - a visual style's bar and mechanics → its `style-*.md` file, listed in `styles.md`
    - rig lessons → `character-rig.md`
    - graphics lessons → `motion-graphics.md`
+   - motion design and its gates → `choreography.md` (and `templates/remotion-film/motion_check.py`)
    - review and stop rules → `review-loop.md`
    - reusable, style-neutral code → `../templates/`
    When a project's specifics illustrate a lesson, label

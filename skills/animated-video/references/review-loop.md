@@ -53,12 +53,22 @@ same way, from a frame every second or so:
   distance under a threshold).
 - **Motion:** frame-difference energy over time. Separate camera movement from objects moving,
   because a panning camera over a still subject reads as busy in the numbers and dead on screen.
-- **Holds:** the share of time a frame matches the frame 4 s earlier (normalised correlation of
-  small, blurred grey frames above about 0.75). Ambient motion over an unchanged composition
-  counts as a hold. One example: a cut the user found "constant, playing in the background" held
-  12% of its runtime; the accepted film it was judged against held 3–4%. It measures composition,
-  not information, so pair it with the sound-off retell.
+- **Separate movers:** how many distinct things move at once, second by second, against the bar
+  film: `templates/remotion-film/motion_check.py film` (it also writes frame strips of the
+  stillest seconds). Total motion can match the bar while far fewer things move.
 Put matched beats of the film and the reference side by side at the same size.
+
+## Mute test
+Does the picture tell the story without the voice? Run it on the animatic and on the final cut,
+and once on the bar film to calibrate.
+1. Render the cut with no captions and no sound; captions would hand the judge the narration.
+2. Give a fresh judge (it has never seen the script, the plans or your notes) three frames per
+   two seconds in order, with timestamps, and ask: "Describe what happens and what it explains,
+   second by second. Say where you can't tell."
+3. List the script's claims, one per sentence. A claim is recovered when the judge's account
+   states it or shows its mechanism.
+4. Pass: at least 80% recovered, and no lower than the bar film's score. Each missed claim goes
+   back to its shot with the judge's words.
 
 ## Restart after a rejected cut
 When the user rejects a whole cut ("low quality", "not immersive", "start over"), don't route

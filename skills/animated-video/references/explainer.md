@@ -84,7 +84,7 @@ actually looks, and list facts you could not verify in `NOTES.md`.
 - Every line has a place, and every mechanism is an event, not a label.
 - With the sound off, each line's claim can be read from the picture, and its subject is on
   screen at its word.
-- No composition holds for more than about 3 s while the voice explains (measure it: [holds](review-loop.md#measures-that-separate-a-full-film-from-an-empty-one)).
+- The motion script and the mute test pass ([choreography](choreography.md)).
 - Any visual code is taught on screen before it carries meaning.
 - A slow-motion or scale gauge is set up by the voice or the picture, and never jumps without a
   visible reason.

@@ -34,7 +34,8 @@ answer and a one-line reason, so "yes" or "your call" is a complete reply.
 
 - **Short (under about 60s, one or two acts), narrated or not:** one agent through every step,
   building scene by scene and checking stills. Skip the rig freeze, parallel animators and judge
-  panel unless a review shows a problem only they fix.
+  panel unless a review shows a problem only they fix. The motion script, its checks and the
+  mute test still run; the same agent may write the script, with a fresh critic.
 - **Longer, or many acts and sets:** run the full production below.
 - **Parallel from the start:** when the user wants parallel agents early, give them research,
   recurring assets and audio. Keep the concept, world and animatic with one agent until the user
@@ -141,11 +142,14 @@ canvas, finish, the still, render, contact-sheet and align scripts). Wire up act
 scenes, captions and audio, and render stills across the whole timeline.
 [Pipeline reference and gotchas](references/remotion-pipeline.md).
 
-When the film's meaning lives in motion (an explainer's mechanisms, a chase, a build), turn the
-skeleton into a rough **animatic** before the key-frame board: simple blocked shapes moving over
-the real VO, with any presenter inserts in place, reviewed as dense frame strips (and played,
-when a tool allows). It passes when every line's event reads with the sound off. A board of good
-stills can hide a film in which the camera pans and nothing happens.
+Then design the motion in writing: the **motion script**, a beat every ~0.75 s with what the
+viewer learns from the picture, the hero action and the other things moving at once, written by a
+choreographer, attacked by a fresh critic and checked by `motion_check.py script`
+([choreography](references/choreography.md)). Build the **animatic** from it before the key-frame
+board: simple blocked shapes performing every beat over the real VO, with any presenter inserts
+in place, reviewed as dense frame strips (and played, when a tool allows). It passes the film gate
+and the [mute test](references/review-loop.md#mute-test). A board of good stills can hide a film
+in which one thing drifts while the voice explains.
 
 Then render the **key-frame board**: one still per beat in the approved style, showing each
 beat's composition, hero object, light and text. Detail may stay rough; the look may not. Show it
@@ -206,7 +210,9 @@ the chosen style's bar from its reference, and this **finish bar**, which holds 
 - **Detail in the picture.** Sophistication comes from objects, light and motion. Leave out
   decorative scaffolding: HUD kickers, tick marks, corner brackets, fake readouts.
 
-Then write per-act briefs (line, picture, action), each pointing at the key-frame board.
+Then write per-act briefs (line, picture, action), each pointing at the key-frame board and at
+its shots in the motion script, which is the spec: animators build every beat, and a beat that
+can't be built goes back to the choreographer, not quietly out.
 
 - In the full production, run one animator per act in parallel, each owning its own files; the
   shared kit, lib and film shell stay read-only. Throttle rendering on a shared machine.
@@ -219,15 +225,16 @@ Then write per-act briefs (line, picture, action), each pointing at the key-fram
   the same constants that draw it). The director owns one cue sheet built from those events;
   per-act sound quotas multiply into clutter.
   [Sound events](references/remotion-pipeline.md#sound-events).
-- Every shot changes meaningfully every 1.5–3s and lands its action on its word within a few
-  frames.
+- Each hero action is exported in the act's events on its frame (the sound uses the same file),
+  and lands on its word within a few frames. Each act preview runs `motion_check.py events` and
+  `motion_check.py film` against the bar film; read every strip it writes.
 - Draw every frame from the frame number and seeded randomness, so stills and renders match.
 - Watch for recurring breakages: limbs lost when a shot is cropped, ghosting from opacity fades,
   recurring entities changing scale, an empty first frame after a canvas mounts, and a blurred
   or unstable final frame.
 
 Done when: each act's contact sheet tells its beat with the sound off and meets the finish bar
-beside its key frame, the events file exists, and the typecheck is clean.
+beside its key frame, both motion checks pass, and the typecheck is clean.
 
 ## 7. Review by frames and measurements
 
@@ -258,8 +265,9 @@ lenses, route issues to their owners by time range, fix in parallel, re-render, 
 
 ## 8. Deliver
 
-Before the first full cut goes to the user, give it to one fresh judge with only the films (this
-cut and the bar from step 7, not your plans), and act on what it finds. A defect you can name is
+Before the first full cut goes to the user, run `motion_check.py film` on it against the bar
+film and give it to one fresh judge for the mute test (no captions, no sound, no plans), and act
+on what they find. A defect you can name is
 fixed before delivery when the fix costs a render or less; listing it as a weak spot is not a pass.
 
 Render the final (the template normalizes loudness for social); for a long or heavy film,

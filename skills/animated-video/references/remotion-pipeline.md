@@ -51,6 +51,8 @@
   events into the mix.
 - Captions come from hand-authored sense-unit lines, verified against the transcript at load.
   Their look (font, stroke, highlight) is a per-project design choice.
+- Give the film shell a `captions` prop (on by default) so the [mute test](review-loop.md#mute-test)
+  can render the cut without them: `--props='{"captions":false}' --muted`.
 
 ## Platform facts (Instagram Reels 9:16, as of 2026-09; recheck)
 - The top ~220px and bottom ~420px are covered by UI, and so is a right rail (x > 930 at
