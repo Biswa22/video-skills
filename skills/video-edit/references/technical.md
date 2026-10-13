@@ -322,10 +322,16 @@ one frame per scene. Static samples still do not prove animation or listening qu
 
 ## Reusable media library
 
-Use the project's existing asset index if one exists. Otherwise keep a small
-manifest alongside the edit with original identity, local path, source URL,
-source time range, credit or license requirements, selection status, spoken cue,
-and where the asset was used. No separate catalog service is required.
+When the asset-library skill is installed, its library is the index: search it
+before sourcing, ingest new picks with provenance, register reusable things when
+they work, declare each delivered cut's selections with the exact files placed,
+and follow its delivery step. Its commands and record fields are in that skill;
+this section covers what any index or manifest must preserve.
+
+Without it, use the project's existing asset index if one exists. Otherwise keep
+a small manifest alongside the edit with original identity, local path, source
+URL, source time range, credit or license requirements, selection status, spoken
+cue, and where the asset was used. No separate catalog service is required.
 
 Preserve original identity across renamed files and crops. Count source works
 separately from useful variants, such as one music recording in source, extended,

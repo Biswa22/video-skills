@@ -10,8 +10,11 @@ description: >-
 
 # Animated video
 
-Turn a brief into a finished animated video in which every image is drawn in code (collage-like
-styles may also use sourced images, treated in code). Treat it as a film production: agree the story, choose the visual style, build an audio spine, approve a
+Turn a brief into a finished animated video in which every image is made in code: drawn
+procedurally, or built from approved sourced assets (photos for collage, textures, sky maps, 3D
+models) placed and rendered deterministically in code. Honour a code-only brief and the user's
+privacy and rights rules about sourced material. Footage from image or video generators is a
+separate route (step 2). Treat it as a film production: agree the story, choose the visual style, build an audio spine, approve a
 key-frame board, make recurring assets once, animate shots, then review renders through frames
 and measurements. A film is finished when each line of the script is shown on screen, the
 opening earns attention, every shot meets the finish bar, and the review checks pass.
@@ -33,6 +36,19 @@ answer and a one-line reason, so "yes" or "your call" is a complete reply.
   building scene by scene and checking stills. Skip the rig freeze, parallel animators and judge
   panel unless a review shows a problem only they fix.
 - **Longer, or many acts and sets:** run the full production below.
+- **An insert for another timeline** (an animated or 3D shot inside a camera edit): the
+  requester's shot brief is the brief. Take from it the frames, fps, size, cue frames, layer
+  order and any approved look; keep its timing, because the requester's cutlist is the timing
+  authority. Skip step 1 and the key-frame board. If no look is approved, show one style frame
+  of the shot's hardest moment and wait for the pick. Build with steps 5–7, then return the clip
+  (with alpha when it plays over footage), its sound events, the cue frames it was timed from,
+  and the library entries it used (ID and version) for the requester's cut declaration. The
+  requester keeps the timeline, the mix and the cue sheet.
+
+**The deliverable decides who owns the timeline.** A fully animated film is this skill's
+timeline, even with a camera insert. An edit of camera footage with animated shots is
+video-edit's, and this skill supplies inserts to it. When the brief doesn't say which, ask once,
+with a recommendation.
 
 ## 1. Direct the story with the user
 
@@ -61,8 +77,11 @@ wrong format.
 - Otherwise offer two or three visual styles that genuinely differ and fit the brief, and show
   each as a style frame of the same beat, so the user compares like with like.
   [Visual styles](references/styles.md).
-- Ask about the production route and its cost. Drawn in code is free and gives exact
-  consistency. AI video costs per clip and drifts between shots. Users may rule a route out.
+- Ask about the production route and its cost. Made in code costs nothing per shot and gives
+  exact consistency. AI video costs per clip and drifts between shots. Users may rule a route out.
+- For a photoreal or physically detailed world (real places, materials, weather, vegetation,
+  vehicles), read [realistic 3D](references/realistic-3d.md) before making style frames: it
+  chooses the renderer and tests one moving shot before the look is approved.
 - If a real person appears, ask where reference footage or photos live, and pull frames with
   ffmpeg instead of searching personal folders.
 - References: use any the user gives (a frame, a video they like), and look first for ones they
@@ -89,7 +108,8 @@ sound bed sets the timing: choose or build it first and cue beats to it.
    word on the voice, the key word landing hardest. Later emphasis is chosen per word for what
    it means, not one highlight style for every keyword.
 5. Plan music and sound effects now; they ship with the first cut. Source them in this order:
-   the user's files; samples on disk (such as the video-edit skill's `assets/sfx` library);
+   the user's files; the asset library when installed, or samples on disk (such as the
+   video-edit skill's `assets/sfx` library);
    sound synthesized in code (start from `templates/parts/audio/designed.py`), labelled as
    synthetic because you can't audition it. Given a
    reference video, measure its music (key, tempo, drop-outs) and match its role.
@@ -119,6 +139,10 @@ key-frame board.
 
 ## 5. Recurring assets: design, review, freeze
 
+When the asset-library skill is installed, search it for each of these before building
+([search before building](../asset-library/SKILL.md#1-search-before-sourcing-or-building)), and
+follow the user's profiles on which may be reused as is.
+
 Build what appears in more than one shot first: characters, props, sets, real interfaces,
 camera language, the finish, and a scale constant for anything recurring. Build each to the
 finish bar (step 6) at every scale the story needs: a design that holds in a wide shot can fall
@@ -131,7 +155,9 @@ apart at 4x.
   and an iPhone running iMessage are in `templates/parts/`; restyle them rather than reuse their look.
 
 Done when: a showcase composition shows every recurring asset at the size it is used, and
-animators can use them from an API summary without reading the source.
+animators can use them from an API summary without reading the source. With the asset library
+installed, register each frozen asset another film could use now, with the showcase as its
+example ([register when it works](../asset-library/SKILL.md#3-register-reusable-things-as-soon-as-they-work)).
 
 ## 6. Animate the shots
 
@@ -175,8 +201,10 @@ beside its key frame, the events file exists, and the typecheck is clean.
 
 ## 7. Review by frames and measurements
 
-Agents can't watch or hear video. Review by extracting frames (contact sheets, plus dense
-frames around cuts) and by measuring audio with ffmpeg. Use independent judges with different
+Review with the perception this session actually has. When a tool can play the render or let you
+listen to it, use it; either way, extract frames (contact sheets, plus dense frames around cuts)
+and measure audio with ffmpeg. Say in the report which of these happened, and never report a
+viewing or listening that did not. Use independent judges with different
 lenses, route issues to their owners by time range, fix in parallel, re-render, and repeat.
 [Review loop](references/review-loop.md).
 
@@ -184,17 +212,30 @@ lenses, route issues to their owners by time range, fix in parallel, re-render, 
 - Put each act's frames beside its anchor: the reference video's frame for the same beat when
   there is one, otherwise the approved key frame. Check finish against the bar, not only
   breakage. A shot sparser than its anchor is not ready.
-- Stop when a round gains less than about half a point, or when the top issue needs the user.
-  Keep open issues in `ISSUES.md` (time range, owner, severity, status).
+- Stills miss what happens between them: flicker, popping, sliding contacts, swimming
+  textures, stutter. For each shot with continuous camera or object motion, inspect a run of
+  consecutive frames across its fastest second. 3D shots also get the
+  [temporal checks](references/realistic-3d.md#temporal-review).
+- Stop iterating when a round gains less than about half a point, or when the top issue needs
+  the user. That bounds the loop; it does not pass the film. Each finish-bar item, each realism
+  criterion agreed in `LOOK.md`, and the user's acceptance of a test shot is met or unmet on its
+  own. Keep open issues in `ISSUES.md` (time range, owner, severity, status).
 - On long runs, send progress (latest contact sheet, ETA) at each stage boundary.
 
 ## 8. Deliver
 
 Render the final (the template normalizes loudness for social). Check the first frame (it's
-the cover), the last second, and the loudness. Report the path, the open issues, any sourced
-images, and anything synthetic or invented (voice, names, messages, stand-in images). Commit each version in the
+the cover), the last second, and the loudness. Report the path, the open issues, every agreed
+criterion still unmet (a stopped review loop is not a pass), any sourced images, and anything synthetic or invented (voice, names, messages, stand-in images). Commit each version in the
 project's local git repo (`git init` at setup). For changes to a finished film (speed, trim, a caption), take the
 cheapest route that preserves quality, such as an ffmpeg pass on the delivered file, and offer
 a re-render only if that route visibly falls short.
+
+Then close the catalog. With the asset-library skill installed, follow its steps 4–5: write the
+cut's declaration from the cue sheet and the snapshots the film copied, record the uses, register
+anything reusable not yet registered (a rig, a kit, a set, a sound), and deliver with the
+registered versions or the reason none qualify. Without it, list them in `NOTES.md` with their
+paths and what each does. Report the film and the catalog status
+separately; an unfinished catalog does not hold back the film.
 
 When the user asks for a reflection, follow [the reflection protocol](references/reflection.md).

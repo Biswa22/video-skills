@@ -165,9 +165,11 @@ something nameable reads as filler and makes the edit look simple.
 Maintain a visual manifest with original identity, local file, URL/credit,
 publication context, spoken cue, explanatory purpose, crop/highlight, layout, and
 timing. Distinguish an existing policy from a new agreement and a risk scenario
-from a confirmed event. Track selection/rejection separately from file existence;
-index reusable visual, music and SFX assets with provenance and deduplication
-evidence. Use an existing asset index or a project manifest as in the
+from a confirmed event. Track selection/rejection separately from file existence.
+Before sourcing a visual, music or effect, search the asset library when the
+asset-library skill is installed, ingest new picks there with their provenance
+and deduplication evidence, and register anything this edit builds that another
+project could reuse as soon as it works; otherwise keep a project manifest, as in the
 [library procedure](references/technical.md#reusable-media-library).
 Highlight only words actually present in the source.
 Keep the research bibliography in notes and necessary qualifications readable.
@@ -193,6 +195,14 @@ a clean easy frame cannot validate the whole treatment. This is an internal
 check, not a mandatory approval stop.
 When generation would explain a beat better, use the connected generation skill
 for a bounded candidate and inspect it before extending the treatment.
+
+When a beat needs an animated or 3D shot built in code, this edit keeps the
+timeline: give the animated-video skill a shot brief (frame range in the
+normal-speed cutlist, fps, size, cue words with their frames, layer order such
+as camera, animation, then a cutout of the speaker, approved look, references) and place the clip and
+sound events it returns; the library entries it reports join this cut's declaration. Playback speed applies to the insert with everything
+else. When the deliverable is an animated film with a camera insert, the roles
+reverse: animated-video owns that timeline.
 
 Place visuals by the [placement guidance](references/style.md#placement).
 
@@ -238,7 +248,7 @@ requested, make their contribution perceptible in a short exported mix under
 speech and in pauses. File presence and total-mix loudness do not establish
 music or effect audibility. Plan attribution needs when choosing the track so
 publishing does not unexpectedly expand a requested short caption.
-Pick effects from the profile's libraries and the bundled
+Pick effects from the asset library when installed, the profile's libraries, and the bundled
 [sound-effect library](assets/sfx/README.md); read its rights note before publishing.
 Keep one cue sheet for the whole video, even when beats are built in parallel; count
 uses per file before rendering and justify every repeat (per-beat quotas multiply into clutter).
@@ -293,6 +303,13 @@ Independent frame review may add bounded coverage alongside useful local work;
 it does not establish taste or fluent playback. Avoid rerunning unchanged work.
 Deliver one unmistakably named current file, native project when applicable, and
 brief change summary. A DRP referencing local media is not a portable media archive.
+
+Then close the catalog. With the asset-library skill installed, follow its steps
+4–5: write the cut's declaration from the selected rows of the visual manifest and
+the cue sheet (the exact files placed, not rejected candidates), record the uses,
+register anything reusable not yet registered, and deliver with the registered
+versions or the reason none qualify. Without it, the project manifest is the record. Report delivery and catalog status separately; a blocked
+catalog step does not hold back the delivered file.
 
 ## Maintain the skill
 

@@ -11,8 +11,21 @@ These are the skills that I use almost every day. I am always adding more skills
 | [video-edit](skills/video-edit/SKILL.md) | Edits talking-head videos, reels, demos, and screen recordings. Covers audio recovery, take selection, supporting visuals, Resolve revisions, captions, and final-export checks. |
 | [animated-video](skills/animated-video/SKILL.md) | Makes animated videos in code with Remotion, in 2D or 3D: explainers, character stories, motion graphics, kinetic type, and animated infographics. Directs the story or explainer, picks a visual style from side-by-side style frames, gets a key-frame board approved, times everything from the voiceover, holds every shot to a finish bar, animates in parallel with sound cued to picture events, and reviews renders by frames and audio measurements. |
 | [video-script](skills/video-script/SKILL.md) | Brainstorms short-form video ideas and writes scripts from the creator's own analytics: who has a stake, a hook that lands in 3 seconds, a second sentence that keeps viewers, and proof on screen. Also turns posted-video insights into lessons, with a script that reads retention curves from screenshots. |
+| [asset-library](skills/asset-library/SKILL.md) | Keeps one local library of reusable footage, images, music, sound effects, characters, animation code and 3D sets across projects. Agents search it before sourcing or building, register reusable things as versioned bundles as soon as they work, and record which version each delivered cut used. |
 
 Each skill lives in its own directory under `skills/` and can be installed separately.
+
+## The video skills together
+
+video-script writes the script and stops. video-edit makes edits of camera footage;
+animated-video makes films drawn in code. The deliverable decides which of the two owns the
+final timeline: an edit with animated shots is video-edit's, and animated-video builds the
+shots to its brief; an animated film is animated-video's, even with one camera insert.
+asset-library is shared by both.
+
+Every one works alone. Without asset-library, video-edit and animated-video keep a manifest
+in the project instead of a shared library, and nothing else changes. Install all four to get
+reuse across projects.
 
 ## Install
 
@@ -26,8 +39,12 @@ cd cstack
 Choose a skill, then link it into your agent's skills directory. Run the appropriate commands from the repository root.
 
 ```sh
-skill_name=reflect  # or rsi, video-edit, animated-video, video-script
+skill_name=reflect  # or rsi, video-edit, animated-video, video-script, asset-library
 ```
+
+To install the video skills together, run either block below once per name in
+`video-script video-edit animated-video asset-library`, or wrap it in
+`for skill_name in video-script video-edit animated-video asset-library; do … done`.
 
 For Codex:
 
@@ -83,7 +100,8 @@ use supporting visuals that match the spoken claims, and check the actual export
 ```
 
 On first use the skill runs `scripts/preflight.py`, which checks for FFmpeg,
-Python 3, and [uv](https://docs.astral.sh/uv/) (for local Whisper transcription).
+Python 3, and [uv](https://docs.astral.sh/uv/), which runs local transcription
+(Phonon on Apple silicon, Whisper elsewhere).
 It shows the install command for anything missing and runs it only if you agree.
 [DaVinci Resolve](https://www.blackmagicdesign.com/products/davinciresolve) (free)
 is recommended for a native, editable project; without it the skill renders with
@@ -118,6 +136,35 @@ parts from past films (a globe with a cable web, an iPhone running iMessage, syn
 effects) sit beside it to copy and restyle. Characters, art direction, and creative defaults are
 designed per project or supplied by you.
 
+For photoreal or physically detailed worlds, the skill reads the references for scale,
+materials, light and motion, chooses between three.js in Remotion and an optional
+[Blender](https://www.blender.org/) render, and gets one moving test shot accepted before the
+full build. For the three.js route it starts from a tested realism kit in `templates/parts/`:
+sky and sun with environment lighting and haze, shadows that hold still under a moving camera,
+seeded grass, trees and stone, frame-driven wind, and cause-driven weathering. A runnable outdoor
+example shot ([examples/realistic-3d](examples/realistic-3d/README.md)) renders at under half a
+second per 720p frame and checks that re-rendered frames are identical. It is a detailed 3D
+starting point that still reads as CGI, not photographic quality.
+
+Asked by video-edit (or by you) for a single animated or 3D shot inside a camera edit, it skips
+the story steps, works to the edit's frames and returns the clip with its sound events.
+
+## Use Asset Library
+
+```text
+Use the asset-library skill to set up a library for my video projects.
+Before sourcing anything for this edit, search it, and register what we build as soon as it works.
+```
+
+The library is one SQLite database plus your files, under one folder you choose, driven by
+`scripts/library.py` (Python 3, FFmpeg for probing and previews). There is no server. Media is
+versioned by content hash; characters, code and 3D sets are snapshotted as bundles with their
+files, dependencies, an example, a preview and a validation command, so a cut recorded with a
+version can always find what it used. At delivery the producing skill declares which library
+entries the cut selected, and the check fails until each has a use for that cut and version;
+whether an asset was worth keeping stays your call. Put the library's location and
+your reuse rules in `~/.asset-library/profile.md`.
+
 ## Use Video Script
 
 ```text
@@ -151,6 +198,17 @@ python3 skills/video-edit/scripts/test_make_captions.py
 This checks caption generation, time mapping, raw transcript preservation, and
 known warning/error behavior. It does not validate a Resolve installation,
 listening quality, visual taste, or an end-to-end video edit on your machine.
+
+Run Asset Library's check, which builds a throwaway library in a temporary folder:
+
+```sh
+python3 skills/asset-library/scripts/test_library.py
+```
+
+It checks ingest and duplicate detection, bundle versions and their publishing, use recording,
+the project check against a cut declaration, and that an older database is backed up and
+migrated without losing rows. It says nothing about
+whether the assets in your library are any good.
 
 ## Icons
 
