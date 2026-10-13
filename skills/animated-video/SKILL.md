@@ -36,6 +36,9 @@ answer and a one-line reason, so "yes" or "your call" is a complete reply.
   building scene by scene and checking stills. Skip the rig freeze, parallel animators and judge
   panel unless a review shows a problem only they fix.
 - **Longer, or many acts and sets:** run the full production below.
+- **Parallel from the start:** when the user wants parallel agents early, give them research,
+  recurring assets and audio. Keep the concept, world and animatic with one agent until the user
+  approves them, then fan out the acts.
 - **An insert for another timeline** (an animated or 3D shot inside a camera edit): the
   requester's shot brief is the brief. Take from it the frames, fps, size, cue frames, layer
   order and any approved look; keep its timing, because the requester's cutlist is the timing
@@ -67,7 +70,9 @@ follow through it. The look comes after (step 2); a palette or a rulebook chosen
 film with nowhere to be. When the video-script skill is installed, check narration against its script
 checklist.
 
-Done when: the user has approved the concept and beat sheet, or supplied a finished script.
+Done when: the user has approved the concept and beat sheet. A finished script settles the words,
+not the film: still pitch three visual concepts for it (the world, what we follow, how each beat
+is shown) and stop for approval.
 
 ## 2. Lock the format and the visual style
 
@@ -144,7 +149,7 @@ as one contact sheet with each frame's line beside it, and wait for the user's n
 the cheapest point to change shots; a full render is the most expensive.
 
 Done when: every act renders end to end with captions and audio, and the user has approved the
-key-frame board.
+animatic (when the film's meaning lives in motion) and the key-frame board.
 
 ## 5. Recurring assets: design, review, freeze
 
@@ -173,10 +178,9 @@ example ([register when it works](../asset-library/SKILL.md#3-register-reusable-
 Write the art bible before animators start: look, colour script, cast, staging, safe zones,
 the chosen style's bar from its reference, and this **finish bar**, which holds in every style:
 
-- **A place.** Every shot happens somewhere in the film's world. An abstract or dark set is still
-  a place, filled with objects and texture; more light does not fix an empty frame.
-- **Full frame.** Compose for the aspect ratio; no shot leaves more than about a quarter of the
-  frame as flat colour. The picture continues behind captions and app UI, calm enough to read.
+- **Full frame.** Compose for the aspect ratio, inside the film's world; no shot leaves more than
+  about a quarter of the frame as flat colour, and more light does not fix an empty frame. The
+  picture continues behind captions and app UI, calm enough to read.
 - **Depth.** Foreground, subject and background, with parallax from a camera that rarely
   stops. Flat styles get depth from overlap, scale and value.
 - **Light.** One brightest thing per shot, and light sources affect their surroundings: a glow
@@ -190,8 +194,6 @@ the chosen style's bar from its reference, and this **finish bar**, which holds 
 - **Intent.** Every camera move answers an event (it follows, reveals or arrives); no idle
   panning over an unchanged subject. Each shot layers a primary action with secondary action
   and ambient life, so several purposeful things move at once.
-- **Performed, not labelled.** A mechanism happens on screen as cause and effect. A label, a
-  number or a colour change never stands in for the event.
 - **Transitions through content.** A morph, a push through an object, particles that reform.
   Carry colour and momentum across the cut; skip crossfades and flat-colour flashes.
 - **Detail in the picture.** Sophistication comes from objects, light and motion. Leave out
@@ -231,8 +233,9 @@ lenses, route issues to their owners by time range, fix in parallel, re-render, 
 
 - After each render, spot-check every flagged moment yourself. Fixers introduce regressions.
 - Put each act's frames beside its anchor: the reference video's frame for the same beat when
-  there is one, otherwise the approved key frame. Check finish against the bar, not only
-  breakage. A shot sparser than its anchor is not ready.
+  there is one, otherwise the approved key frame, plus a comparable frame from the user's most
+  recent accepted film of the same kind, which sets the finish bar even when the look differs.
+  Check finish against the bar, not only breakage. A shot sparser than its anchor is not ready.
 - Stills miss what happens between them: flicker, popping, sliding contacts, swimming
   textures, stutter. For each shot with continuous camera or object motion, inspect a run of
   consecutive frames across its fastest second. 3D shots also get the
@@ -247,6 +250,9 @@ lenses, route issues to their owners by time range, fix in parallel, re-render, 
   [Restart after a rejected cut](references/review-loop.md#restart-after-a-rejected-cut).
 
 ## 8. Deliver
+
+Before the first full cut goes to the user, give it to one fresh judge with only the films (this
+cut and the bar from step 7, not your plans), and act on what it finds.
 
 Render the final (the template normalizes loudness for social); for a long or heavy film,
 render it in short chunks ([pipeline gotchas](references/remotion-pipeline.md#gotchas)). Check

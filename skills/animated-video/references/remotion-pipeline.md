@@ -92,8 +92,9 @@ Sound stays on the picture when both come from the same numbers.
   then render stills from the bundle.
 - Many agents rendering on one machine starve each other, and a full render can be killed
   (exit 137). Throttle, and render final cuts when the machine is quiet.
-- A long render's memory grows until the machine runs out; one 3D-heavy film crashed a laptop
-  rendering 3,500 frames in one call alongside another segment. Render finals in short chunks
+- Long renders can exhaust a shared machine: one 3D-heavy film's 3,500-frame render, run beside
+  another segment, ended in a machine crash the user attributed to memory, and 300-frame chunks
+  then rendered cleanly. Render finals in short chunks
   (about 300 frames, low concurrency, one at a time), skip chunks already on disk so a rerun
   resumes, then join with FFmpeg's concat demuxer (`-c copy`) and mux the mix. Check the joined
   frame count against `TOTAL`.

@@ -28,11 +28,6 @@ and where the viewer feels the story. For each line, name the place and what phy
 there. A film built from a palette, a rulebook or a set of disconnected setups has nowhere to
 be, and no lighting, detail or camera work makes it immersive afterwards.
 
-If one element of the world is hard to render well (people, a crowd, a complex interior),
-reframe it (silhouettes, hands at the frame edge, backs of heads, a cut-away) or change its
-production route. Don't dissolve the world around it into an abstract stage; an empty stage
-makes the whole film feel unplaced.
-
 ## Devices
 Tools that make a mechanism watchable. Choose the few that serve this topic; a film that uses
 all of them feels like a formula.
@@ -99,10 +94,3 @@ right now (the photo is on the Pacific floor at this moment), 200 ms slowed 750x
 millisecond clock in the corner, one numbered packet followed throughout, packets lost and
 re-sent as the stakes, a garden hose and a hair for scale, and the 1858 telegraph cable as the
 turn. Those were that topic's devices. A different topic needs its own shape and devices.
-
-A counter-example from the same month: an explainer about how wireless earbuds receive music
-fixed its palette and a strict physics rulebook before choosing a world, then dissolved its
-train setting into a dark abstract stage when the people in it rendered poorly. The film was
-rejected as not immersive: devices floated in a void, the camera panned while nothing happened,
-and its mechanisms (hopping, collisions, resending) were named by labels and colour changes
-instead of happening on screen.
