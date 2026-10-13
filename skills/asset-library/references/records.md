@@ -100,6 +100,9 @@ until unique.
   version's `validation` (`passed`, `failed`, `not-run`) and a `test` note with the exit status
   and output tail. Validation shows the command exits 0 from the snapshot; it does not judge how
   the result looks, and a setup that needs the network or a licensed tool fails without them.
+  The snapshot keeps file contents, not permission bits, so a script is not executable in it:
+  name the interpreter in the validation command (`bash check.sh`, `python3 script.py`), or
+  `chmod +x` it in `setup` when it must run as `./script`.
 - **Legacy**: assets registered before bundles existed have no known historical version. Their
   past uses keep `artifact_version` empty, meaning unknown. A bundle captured from today's files
   is a new version with today's `created_at`; it is never back-dated onto old uses. The first
