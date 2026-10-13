@@ -3,7 +3,8 @@ name: video-script
 description: >-
   Brainstorm short-form video ideas and write scripts that hold viewers, using the creator's
   own video analytics. Use when deciding what to post next, choosing an angle or hook, writing
-  or tightening a script before filming, or turning a posted video's insights into lessons.
+  or tightening a script before filming (talking-head or narrated explainer), or turning a
+  posted video's insights into lessons.
 ---
 
 # Video script
@@ -69,6 +70,8 @@ Done when three ideas are fully developed and every other candidate stays in the
    - Background after 15 s, only if the story needs it. Background is anything the viewer needs only to follow a later detail: history, who someone is, how something works. The test: if moving a line to after 15 seconds loses nothing in the first 15, it's background.
    - Payoff: the hook's promise, shown on screen. This is the strongest content line, and the last one.
    - One call to action, in one short line after the payoff.
+
+   For an **explainer** (how something works), the body is a problem chain and the payoff is a recap: read [explainers](references/explainers.md) before writing beats.
 4. Give every beat its picture: what is on screen, and the capture it needs (screen recording, document, the real person or product). Frame 1 shows the subject the first sentence names. A new picture comes at least every 5 seconds.
 5. Check the script against the checklist below, the findings file, and the platform notes the profile names (for example, what the platform declines to recommend). Revise until every item passes or has a stated reason.
 6. Deliver:
@@ -95,7 +98,7 @@ Done when the checklist passes, every factual claim has a source or a verify fla
 - Each line moves the story forward. Lines that restate or announce what's coming are cut.
 - The video opens one question and answers it with a real answer.
 - The payoff is the last content line, followed by one short call to action.
-- Runtime is as short as the story allows: most single-idea videos 30 to 60 seconds, lists under about 40, skits under about 25.
+- Runtime is as short as the story allows: most single-idea videos 30 to 60 seconds, lists under about 40, skits under about 25. Explainers run as long as their chain needs.
 
 ## 3. Review a posted video
 
