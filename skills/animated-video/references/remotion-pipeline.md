@@ -79,6 +79,10 @@ Sound stays on the picture when both come from the same numbers.
   is heard for a picture that isn't on screen.
 
 ## Audio mechanics
+- Keep the narrator's voice close to their raw recording: a high-pass, one gain per take, a linear
+  loudness pass, no compressor unless the raw needs it. Choose the speed-up stretcher by a round
+  trip on the actual voice, and play the result beside the raw at matched loudness before
+  delivery ([video-edit's audio notes](../../video-edit/references/technical.md)).
 - Before the VO exists, mix music and effects at the level they will sit under the voice, so the
   first cut previews the final balance.
 - Duck music by phrase (merge words less than 0.4s apart, ramp over about 0.2s). Per-word

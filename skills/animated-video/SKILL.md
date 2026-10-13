@@ -200,7 +200,8 @@ the chosen style's bar from its reference, and this **finish bar**, which holds 
   style's language, never a box or a coloured rectangle standing in. When a line describes a
   human action (a tap, a press, a hand holding), show the hand doing it. A named company,
   school, product or place appears as its real logo or a faithful likeness, never a generic
-  symbol.
+  symbol. A stand-in (a placeholder cover, a mock screen) gets the same care as the real thing:
+  centred, aligned and at its true size, because it is just as visible.
 - **Life.** Secondary motion that belongs to the scene; anticipation, overshoot and settle.
 - **Intent.** Every camera move answers an event (it follows, reveals or arrives); no idle
   panning over an unchanged subject. Each shot layers a primary action with secondary action
@@ -225,6 +226,9 @@ can't be built goes back to the choreographer, not quietly out.
   the same constants that draw it). The director owns one cue sheet built from those events;
   per-act sound quotas multiply into clutter.
   [Sound events](references/remotion-pipeline.md#sound-events).
+- Build dense motion from the [motion kit](templates/parts/src/kit/motion/README.md) (multi-part
+  transforms, mechanisms, physics, impacts, speed-ramped camera, an effects budget) rather than
+  hand-writing it per shot.
 - Each hero action is exported in the act's events on its frame (the sound uses the same file),
   and lands on its word within a few frames. Each act preview runs `motion_check.py events` and
   `motion_check.py film` against the bar film; read every strip it writes.
