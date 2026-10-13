@@ -49,6 +49,11 @@ all of them feels like a formula.
   on an image that answers the opening.
 
 Whatever the devices, these rules hold:
+- **The picture explains; the voice confirms.** A viewer with the sound off should learn each
+  step from what happens on screen. When a line names a thing (the topic itself, an object, an
+  action the viewer is invited to take), that thing is on screen at its word; showing where it
+  happens is not showing it. A shot whose only change is ambient motion (a wave flowing,
+  particles drifting, a slow push) while the voice explains is a hold, not a beat.
 - **Perform the mechanism; don't label it.** Each step happens on screen as cause and effect
   to the thing being followed: it is cut, sent, hit, broken, copied, resent, scrambled. A label,
   a number or a change of colour never stands in for the event.
@@ -77,6 +82,9 @@ actually looks, and list facts you could not verify in `NOTES.md`.
 - Each beat changes something on screen; scenery is not a beat, and neither is a camera move
   over an unchanged subject.
 - Every line has a place, and every mechanism is an event, not a label.
+- With the sound off, each line's claim can be read from the picture, and its subject is on
+  screen at its word.
+- No composition holds for more than about 3 s while the voice explains (measure it: [holds](review-loop.md#measures-that-separate-a-full-film-from-an-empty-one)).
 - Any visual code is taught on screen before it carries meaning.
 - A slow-motion or scale gauge is set up by the voice or the picture, and never jumps without a
   visible reason.

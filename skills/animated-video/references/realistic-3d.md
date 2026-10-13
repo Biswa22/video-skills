@@ -41,7 +41,14 @@ Choose from the shot list, the look and the render budget, not by habit.
 
 Estimate the budget before choosing: seconds per frame on the test shot (step 4) times the
 film's frame count, at the machine's real speed. Ask the user before a route whose estimate
-runs past their deadline. Test the route you chose. Compare the other route only to settle a
+runs past their deadline.
+
+Count choreography in the budget, not only render time. An offline renderer turns every timing
+change into a queued re-render, and rendering the set once with animated layers over it (a frozen
+world) makes a static plate the cheap default; films made that way drift toward long holds where
+one ambient thing moves while the narration explains. Block and approve the whole film's motion in
+a real-time animatic first (three.js, or Blender's viewport or Workbench render), check event
+density per shot against the bar film, then commit to offline renders. Test the route you chose. Compare the other route only to settle a
 real question (for example, the three.js test fails the reference on interior bounce light).
 
 Blender is optional. Check for it in preflight; never assume it is installed. A Blender route
@@ -242,3 +249,39 @@ Colour has to be transformed once on the way. Remotion composites display-ready 
 
 When Blender frames and three.js layers share a shot, give both the same transform and exposure,
 or render the overlay from Blender too; mismatched curves show at the seam.
+
+- **Speed change after rendering.** Frames sampled on the old output grid can be re-rendered on
+  the new one at fractional positions: `scene.frame_set(int(x), subframe=x - int(x))`, with every
+  per-frame script reading x as a float. Check that a half-frame lands halfway between its
+  neighbours before full runs. Cheaper still: lock the delivery speed before final renders.
+- **One governor for every heavy process.** Compositing scripts, encoders and the director's own
+  jobs go through the same render queue and memory watchdog as Blender; one unguarded compositor
+  started beside two renders is enough to get a render killed.
+
+## Compositing CG with camera footage
+
+When CG appears behind or around a presenter filmed on camera (a view through their window, a
+world behind them, a portal into their room), viewers judge the composite before the content.
+"It looks green-screened" comes from these, roughly in order:
+
+- **Plausibility.** Composite only what that camera could see there: a view out of a window at
+  the window's height, distance and scale, not an interior or floating graphics at eye level.
+- **Light agrees.** The plate's light already says what is outside: a daylit room cannot have a
+  dark view, and a window cannot be darker than the blind or wall it lights. Relight or grade the
+  room to the new view, and let the CG spill onto the person (a rim or colour wrap on hair and
+  shoulders) when it is bright or coloured.
+- **Match the camera.** Lift CG blacks to the plate's darkest value, match white point, contrast,
+  grain, sharpness, compression softness and depth of field, and add a glass layer (a faint
+  reflection of the room, slight haze) when the CG sits behind glass.
+- **Edges.** Segmentation mattes break on hair against bright or busy backgrounds and boil in
+  motion. Keep high-contrast CG away from the hair line or refine the matte, and check edges
+  across a moving second, not on a still.
+- **Pushes.** A 2D push of several times into phone footage blurs the room and flattens the person
+  into a cutout. Cut or whip instead, or plan the push when filming and shoot wider.
+- **Test first.** Before compositing every insert, finish one clip at full size and judge it beside
+  an untouched frame of the same footage. Clean hard cuts to the presenter are always available
+  when no composite passes.
+
+One example: a real window replaced by a CG view read as green-screened with CG blacks at 2–4 of
+255 under a plate whose darkest pixel was about 43, and the window darker than the daylit blind
+above it. Another composite needs its own measurements.

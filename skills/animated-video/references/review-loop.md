@@ -53,6 +53,11 @@ same way, from a frame every second or so:
   distance under a threshold).
 - **Motion:** frame-difference energy over time. Separate camera movement from objects moving,
   because a panning camera over a still subject reads as busy in the numbers and dead on screen.
+- **Holds:** the share of time a frame matches the frame 4 s earlier (normalised correlation of
+  small, blurred grey frames above about 0.75). Ambient motion over an unchanged composition
+  counts as a hold. One example: a cut the user found "constant, playing in the background" held
+  12% of its runtime; the accepted film it was judged against held 3–4%. It measures composition,
+  not information, so pair it with the sound-off retell.
 Put matched beats of the film and the reference side by side at the same size.
 
 ## Restart after a rejected cut

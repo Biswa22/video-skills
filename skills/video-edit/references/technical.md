@@ -192,6 +192,16 @@ restore detail in a low-resolution asset.
 Apply tempo changes consistently to video, audio, captions, and overlays.
 Do not use source seconds as output seconds after a speed change. Preserve
 natural voice pitch with the available tempo filter and check delivery in context.
+Stretchers differ audibly on speech: in one measured case at 1.15x, ffmpeg
+`atempo` (WSOLA, splices the recorded waveform) kept 95% of the transient energy
+over a speed-up-and-back round trip, against 86% for rubberband's R3 engine and
+69% for R2. Run the same round trip on your source and listen before choosing.
+
+Process a voice recording as little as it needs: a high-pass, one gain per take
+so lines sit level, and a linear loudness pass. Add compression only when the
+raw needs it, because it lifts quiet syllables, breaths and room tone. Before
+delivery, play the processed voice beside the raw at matched loudness; users
+notice when their own voice sounds worse than their recording.
 
 For audio, start near -14 LUFS with peak headroom, for example
 `highpass=f=70,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000`, adapting to the

@@ -70,6 +70,10 @@ follow through it. The look comes after (step 2); a palette or a rulebook chosen
 film with nowhere to be. When the video-script skill is installed, check narration against its script
 checklist.
 
+If the film will be sped up for delivery, agree the speed now and lock it before final renders:
+shots rendered on the delivered frame grid must be re-rendered (or re-timed at subframes) when
+it changes.
+
 Done when: the user has approved the concept and beat sheet. A finished script settles the words,
 not the film: still pitch three visual concepts for it (the world, what we follow, how each beat
 is shown) and stop for approval.
@@ -130,7 +134,7 @@ Turn the approved beat sheet into `STORYBOARD.md`: the logline, the recurring mo
 scene table of timing, picture, on-screen text and the transition into the next scene. For each
 line, name the place, the thing on screen and what happens to it. When the presenter appears on
 camera over the animation, plan what stands behind them in each insert as part of the same
-world, from the start. List uncertain facts in `NOTES.md` and leave them out of the film.
+world, from the start, and composite it to [the compositing bar](references/realistic-3d.md#compositing-cg-with-camera-footage). List uncertain facts in `NOTES.md` and leave them out of the film.
 
 Copy the style-neutral infrastructure in `templates/remotion-film/` (timing lib, camera, 3D
 canvas, finish, the still, render, contact-sheet and align scripts). Wire up acts, placeholder
@@ -149,7 +153,10 @@ as one contact sheet with each frame's line beside it, and wait for the user's n
 the cheapest point to change shots; a full render is the most expensive.
 
 Done when: every act renders end to end with captions and audio, and the user has approved the
-animatic (when the film's meaning lives in motion) and the key-frame board.
+animatic (when the film's meaning lives in motion) and the key-frame board. Approving stills is not
+approving motion. When the user asks to go straight from stills to the build, say in one line what
+the animatic would catch and what it costs, recommend it, and let them choose; a skipped gate goes
+in the delivery report.
 
 ## 5. Recurring assets: design, review, freeze
 
@@ -252,11 +259,13 @@ lenses, route issues to their owners by time range, fix in parallel, re-render, 
 ## 8. Deliver
 
 Before the first full cut goes to the user, give it to one fresh judge with only the films (this
-cut and the bar from step 7, not your plans), and act on what it finds.
+cut and the bar from step 7, not your plans), and act on what it finds. A defect you can name is
+fixed before delivery when the fix costs a render or less; listing it as a weak spot is not a pass.
 
 Render the final (the template normalizes loudness for social); for a long or heavy film,
 render it in short chunks ([pipeline gotchas](references/remotion-pipeline.md#gotchas)). Check
-the first frame (it's the cover), the last second, and the loudness. Report the path, the open issues, every agreed
+the first frame (it's the cover), the last second, and the loudness. Report the path, the open issues, which gates ran and which were skipped
+(concepts, animatic, fresh judge, comparison with the bar film), every agreed
 criterion still unmet (a stopped review loop is not a pass), any sourced images, and anything synthetic or invented (voice, names, messages, stand-in images). Commit each version in the
 project's local git repo (`git init` at setup). For changes to a finished film (speed, trim, a caption), take the
 cheapest route that preserves quality, such as an ffmpeg pass on the delivered file, and offer
