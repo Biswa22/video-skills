@@ -4,7 +4,7 @@ Tested primitives for dense, layered, physical motion: many parts flying between
 own timing, machine-like secondary motion, ballistic sparks and debris, impacts that light their
 surroundings, a camera that ramps, whips, orbits and shakes, and a shutter with real motion blur.
 Writing this per shot is what gets cut under time pressure; calling it is cheap. It serves the
-motion script and gates in [choreography](../../../../../references/choreography.md).
+motion checks in [review](../../../../../references/review.md#motion-at-the-animatic).
 
 Everything is a pure function of a (float) frame number and seeds: no clocks, no `Math.random`, no
 state carried between frames. A still is the render, and the shutter can pose the scene at any

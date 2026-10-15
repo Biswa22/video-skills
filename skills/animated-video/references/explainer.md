@@ -11,94 +11,97 @@ Ask only what the request leaves open, each with your recommended answer and a o
 - Length, and how much of it the user appears on camera (if at all).
 - Tone (wonder, urgency, humour, calm authority) and any explainers they admire.
 
+## Find the pictures
+The pictures are where an explainer is won, and they are your work, done before any concept goes
+to the user. The user sees the results, not the steps.
+
+1. **Reference hunt.** Search for three to five strong explainers on this topic or a neighbouring
+   one (YouTube, Douyin, TikTok, Kurzgesagt, 3Blue1Brown, Veritasium, museum and textbook
+   diagrams). With `yt-dlp` and ffmpeg, pull a contact sheet of each; otherwise use stills and
+   transcripts. Write `REFS.md`: for each mechanism in the script, the picture each reference
+   used and why it works. Take ideas, not looks. A reference the user supplies comes first and is
+   studied shot by shot.
+2. **Divergent ideas.** Give a fresh agent only the script, the inventiveness principle in
+   SKILL.md and `REFS.md`, without the production rules. For every mechanism or claim it writes
+   at least five picture ideas that differ in kind: the literal picture, an everyday analogy, an
+   impossible or wacky one, a change of scale, a personified one, and the one a kid would draw.
+   One line each: what we see, and what happens to it.
+3. **Pick.** A second fresh agent scores each idea for clarity (could a viewer with the sound off
+   infer the mechanism?) and surprise (would someone screenshot it?), and picks one per beat. The
+   literal picture wins only when it is at least as clear and as surprising as the best
+   alternative. Then check the picks as a set: one world, a few connected places, or a chain in
+   which each picture turns into the next. A change of world is fine when it earns its place.
+4. Write the picks, with the runners-up for the biggest beats, into `PICTURES.md`. The concepts
+   are built from it.
+
+Done when: every claim in the script has a picked picture, with its rejected alternatives on
+record.
+
 ## Shapes
 Pick the shape that fits the topic; these are common ones, not a complete list:
-- **Journey:** follow one thing through a hidden system, start to finish (a message, a drop of
-  water, a dollar, a nerve signal).
-- **Build:** assemble the thing from parts, or take it apart (an exploded view, layer by layer).
+- **Journey:** follow one thing through a hidden system, start to finish.
+- **Build:** assemble the thing from parts, or take it apart.
 - **Scale:** zoom through orders of magnitude, in size, time or number.
 - **Before and after:** how it was, what changed, what that made possible.
 - **Myth and mechanism:** the common belief, then what actually happens.
 - **What if:** remove one part and watch what breaks; the mechanism shows by its absence.
 
-## World first
-Decide where the film happens before deciding how it looks. Imagine the environment: one
-continuous place, or a journey through named places, where every line of the script happens
-and where the viewer feels the story. For each line, name the place and what physically happens
-there. A film built from a palette, a rulebook or a set of disconnected setups has nowhere to
-be, and no lighting, detail or camera work makes it immersive afterwards.
+## Where it happens
+Every line happens somewhere, and something physically happens there: one continuous place, a
+journey through named places, or a set of worlds joined by transitions that grow out of the
+content. Decide the places with the pictures, before the look; a film made of disconnected setups
+has nowhere to be.
 
 ## Devices
-Tools that make a mechanism watchable. Choose the few that serve this topic; a film that uses
-all of them feels like a formula.
+Tools that make a mechanism watchable. Choose the few that serve this topic; a film that uses all
+of them feels like a formula.
 - **A hook that is true right now:** a surprising present fact about something the viewer owns
   or did today.
-- **A hero instance:** one specific item, named or numbered, followed through the whole film.
-  An object can carry a film as well as a character.
+- **A hero instance:** one specific item, named or numbered, followed through the film.
 - **A frame that makes it watchable:** slow time down, speed it up, shrink the viewer, or zoom
-  the camera, and keep a persistent gauge (a clock, a depth, a distance, a count) that places
-  every shot in the process.
-- **A transformation chain:** each beat turns the previous thing into the next. It keeps the
-  story moving and hands you transitions that grow out of the content.
-- **Plant and payoff:** show a detail early that turns out to matter, and make something go
-  wrong mid-process so the mechanism visibly recovers. Stakes keep an explainer from becoming
-  a tour.
+  the camera, with a gauge (a clock, a depth, a count) that places every shot in the process.
+- **A transformation chain:** each beat turns the previous thing into the next, which hands you
+  transitions that grow out of the content.
+- **Plant and payoff:** a detail early that turns out to matter, and something going wrong
+  mid-process so the mechanism visibly recovers.
 - **Comparisons the viewer can picture:** familiar objects at true relative scale, and numbers
   paired with a duration or a distance.
-- **A turn:** step back from the mechanism to the people, history or meaning behind it, and end
-  on an image that answers the opening.
+- **A turn:** step back to the people, history or meaning behind the mechanism, and end on an
+  image that answers the opening.
 
-Whatever the devices, these rules hold:
-- **The picture explains; the voice confirms.** A viewer with the sound off should learn each
-  step from what happens on screen. When a line names a thing (the topic itself, an object, an
-  action the viewer is invited to take), that thing is on screen at its word; showing where it
-  happens is not showing it. A shot whose only change is ambient motion (a wave flowing,
-  particles drifting, a slow push) while the voice explains is a hold, not a beat.
-- **Perform the mechanism; don't label it.** Each step happens on screen as cause and effect
-  to the thing being followed: it is cut, sent, hit, broken, copied, resent, scrambled. A label,
-  a number or a change of colour never stands in for the event.
-- **Metaphor serves legibility; accuracy is a check.** A visible lane, a labelled brick or a
-  pulse running down a path is fine when it is true in spirit and the narration names the
-  reality. Physical correctness checks the staging; it should not forbid the metaphor that makes
-  the idea readable. Deep accuracy no viewer can see is not a substitute for a clear event.
-- **Teach any visual code once.** If colour, shape or position carries meaning (colour as
-  frequency, red as loss), show the rule in one legible image before using it.
+## What every beat does
+- **The picture explains; the voice confirms.** A viewer with the sound off learns each step from
+  what happens on screen. Each line's idea is visible by its word, as the thing itself or as a
+  picture of it. A shot whose only change is ambient motion while the voice explains is a hold,
+  not a beat.
+- **Perform the mechanism.** Each step happens on screen as cause and effect: something is cut,
+  sent, hit, broken, copied, resent, scrambled. Labels, numbers and colour changes support the
+  event; the event carries the meaning.
+- **Metaphor serves legibility; accuracy is a check.** A picture that is true in spirit, with the
+  narration naming the reality, is the right picture. Physical correctness checks the staging.
+- **Teach any visual code once.** The colour key and any shape or position that carries meaning
+  are shown in one legible image before they are used.
 
 ## Concepts and beat sheet
-Pitch three concepts that differ in world, angle or shape, not three wordings of one idea. For
-each: the world, the thing followed through it, the question, the hook line, the shape, the
-devices, how each mechanism is performed, the stakes, the turn, and the final image. Recommend
-one and say why.
+Pitch three concepts built from `PICTURES.md` that differ in world, angle or shape, with one
+bolder than the others. For each: the world, what we follow (if anything), the question, the hook
+line, the shape, the devices, the picture for each mechanism, the stakes, the turn, and the final
+image. Recommend one and say why.
 
 Develop the chosen one into a beat sheet timed to the length: for every line, the place, the
-thing on screen, the event that happens to it, why the camera moves, and what else moves in the
-frame at the same time. A line with nothing to show is a candidate for the narrator on
-camera, a caption, or a cut. Look up how every real object, place and interface in the film
-actually looks, and list facts you could not verify in `NOTES.md`.
+picture, the event that happens in it, why the camera moves, and what else moves at the same time.
+A line with nothing to show is a candidate for the narrator on camera, a caption, or a cut. Look
+up how every real object, place and interface in the film actually looks, and list facts you
+could not verify in `NOTES.md`.
 
-## Explainer checks, before you show it
-- The opening question is concrete and answered by the end.
-- Every term is defined in words a newcomer follows, and every pronoun points at one thing.
-- Each beat changes something on screen; scenery is not a beat, and neither is a camera move
-  over an unchanged subject.
-- Every line has a place, and every mechanism is an event, not a label.
-- With the sound off, each line's claim can be read from the picture, and its subject is on
-  screen at its word.
-- The motion script and the mute test pass ([choreography](choreography.md)).
-- Any visual code is taught on screen before it carries meaning.
-- A slow-motion or scale gauge is set up by the voice or the picture, and never jumps without a
-  visible reason.
+## Checks, before you show it
+- The opening question is concrete, answered by the end, and the final image answers the opening.
+- Every term is defined in words a newcomer follows; numbers on screen equal the narration's.
+- Every line has a picture that is an event, chosen over its alternatives for clarity and surprise.
+- Visual codes, including the colour key, are taught before they carry meaning.
 - Something goes wrong or is at stake in the middle.
-- Numbers on screen equal the narration's numbers.
-- The ending answers the opening, ideally with an image or gauge that returns.
 
 ## Alignment stop
-Present the concepts with your recommendation, then the beat sheet for the recommended one, so
-the user can approve in one reply. Wait for approval before the storyboard or any build.
-
-## One example, among many possible
-A 2:42 vertical explainer (2026-10) followed one photo from Shanghai to Los Angeles: a hook true
-right now (the photo is on the Pacific floor at this moment), 200 ms slowed 750x with a
-millisecond clock in the corner, one numbered packet followed throughout, packets lost and
-re-sent as the stakes, a garden hose and a hair for scale, and the 1858 telegraph cable as the
-turn. Those were that topic's devices. A different topic needs its own shape and devices.
+Present the concepts with your recommendation, then the beat sheet for the recommended one with
+its pictures, so the user can approve in one reply. Wait for approval before the storyboard or any
+build.

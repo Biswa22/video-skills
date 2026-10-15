@@ -12,8 +12,8 @@ brief; a luminous film can be warm or cold, sparse or dense, stylised or near-ph
   scene). Additive sprites are for the bright core only.
 - **Value discipline.** Keep large surfaces under about 55% brightness so only true light
   sources bloom; one brightest thing per shot.
-- **Accent meaning.** A dark base plus a few accents, each meaning one thing in the story (for
-  example, one colour for the data being followed, one for infrastructure, one for failure).
+- **Accent meaning.** The colour key (SKILL.md) on a dark base: emissive light in the hero accent
+  is what the eye follows.
 - **Depth.** Fog fading toward the base colour, out-of-focus particles near the lens, far things
   smaller, dimmer and cooler, and a camera that drifts, pushes or orbits rather than holding.
   The template has no depth-of-field pass, so draw background props as soft sprites or blurred
@@ -28,7 +28,7 @@ the frame and the rest empty, one plane, glows that light nothing, and primitive
 for objects. Check the first stills for exactly this before building further. The tempting fix,
 better light (a black product stage with a soft key and a reflective floor around floating
 devices), is the same failure in a nicer finish. The fix is content: a place, the objects in it,
-and the thing being followed travelling through it.
+and something happening there.
 
 ## Mechanics
 - Stack: `@remotion/three`, `three`, `@react-three/fiber`. Use the template's
@@ -43,10 +43,3 @@ and the thing being followed travelling through it.
 - Budget: measure the heaviest frame with `npx remotion still` and keep it to a few seconds at
   full size; keep instance counts in the low hundreds of thousands.
 
-## One example, among many possible
-A 2026-10 vertical explainer about a photo crossing the Pacific used a navy base with amber for
-the photo's data, cyan for infrastructure and red for loss, a globe with a dense cable web, a
-seabed, a modelled phone running a messaging app, and rack routers. Its first cut was rejected
-as flat and sparse; the rebuild that met the bar above was accepted. Those colours and objects
-were that topic's; a film about, say, the immune system or a power grid would choose its own.
-Its globe and phone are in `templates/parts/` for films that need those objects.

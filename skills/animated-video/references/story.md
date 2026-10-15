@@ -16,6 +16,10 @@ with every question, so "yes" or "your call" is a complete reply:
 - Tone (funny, warm, bittersweet, epic) and any references they love.
 
 ## Concepts
+Before pitching, find the pictures for the key moments the way an explainer does
+([find the pictures](explainer.md#find-the-pictures)): references, several ideas per moment from
+a fresh agent, and a pick for surprise and clarity.
+
 Pitch three different stories, not three versions of one idea. Make one of them bolder than the
 others, and say which you recommend and why. For each, give one line of logline, then:
 - **Protagonist and want:** who we follow and what they are after.

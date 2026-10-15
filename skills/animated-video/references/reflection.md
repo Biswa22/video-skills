@@ -16,14 +16,14 @@ after the user approves them. A standing approval recorded in the user's profile
 4. Put each lesson in its one home:
    - workflow steps and the finish bar → `../SKILL.md`
    - pipeline commands and gotchas → `remotion-pipeline.md`
-   - story lessons → `story.md`; explainer lessons → `explainer.md`
+   - story lessons → `story.md`; explainer and picture-finding lessons → `explainer.md`
    - a visual style's bar and mechanics → its `style-*.md` file, listed in `styles.md`
    - rig lessons → `character-rig.md`
    - graphics lessons → `motion-graphics.md`
-   - motion design and its gates → `choreography.md` (and `templates/remotion-film/motion_check.py`)
-   - review and stop rules → `review-loop.md`
+   - motion checks, judges, mute test and stop rules → `review.md`
    - reusable, style-neutral code → `../templates/`
    When a project's specifics illustrate a lesson, label
    them as one example among many possible and say what would change for another brief.
-5. Prune stale or duplicate rules. Keep transcripts, credentials, personal project history and
+5. Before adding a rule, ask whether it narrows what the next film can imagine. A lesson about one
+   picture or one look is that project's note, not a ban for every film. Prune stale or duplicate rules. Keep transcripts, credentials, personal project history and
    machine-specific paths out of the skill.

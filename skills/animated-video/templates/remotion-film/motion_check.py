@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Choreography gates (references/choreography.md). Three checks, all strict by default:
+"""Motion checks (references/review.md#motion-at-the-animatic). Three checks, all strict by default:
 
   python3 motion_check.py script MOTION.json [--words words.json] [--gap 0.75] [--layers 2]
       the motion script before anything is built: beats close enough together, enough happening

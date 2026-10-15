@@ -48,7 +48,7 @@ change into a queued re-render, and rendering the set once with animated layers 
 world) makes a static plate the cheap default; films made that way drift toward long holds where
 one ambient thing moves while the narration explains. Block and approve the whole film's motion in
 a real-time animatic first (three.js, or Blender's viewport or Workbench render), run the
-[choreography gates](choreography.md) on it, then commit to offline renders. Test the route you chose. Compare the other route only to settle a
+[motion checks](review.md#motion-at-the-animatic) on it, then commit to offline renders. Test the route you chose. Compare the other route only to settle a
 real question (for example, the three.js test fails the reference on interior bounce light).
 
 Blender is optional. Check for it in preflight; never assume it is installed. A Blender route

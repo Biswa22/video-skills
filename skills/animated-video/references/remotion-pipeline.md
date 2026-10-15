@@ -27,6 +27,16 @@
   @types/react`, a tsconfig with `lib: ["ES2023","DOM"]`, a Python venv with `faster-whisper`,
   and `git init`.
 
+## Inserts for another timeline
+An animated or 3D shot inside a camera edit: the requester's shot brief is the brief. Take from it
+the frames, fps, size, cue frames, layer order and any approved look; keep its timing, because the
+requester's cutlist is the timing authority. Skip step 1 and the key-frame board, but still find
+the picture for the shot's idea. If no look is approved, show one style frame of the shot's
+hardest moment and wait for the pick. Build with steps 5–7, then return the clip (with alpha when
+it plays over footage), its sound events, the cue frames it was timed from, and the library entries
+it used (ID and version) for the requester's cut declaration. The requester keeps the timeline, the
+mix and the cue sheet.
+
 ## Before the VO exists
 - To build ahead of a recording, generate `words.json` from the script at the speaker's measured
   pace (words per second of an earlier recording) and build every beat from `cue()` as usual.
@@ -51,7 +61,7 @@
   events into the mix.
 - Captions come from hand-authored sense-unit lines, verified against the transcript at load.
   Their look (font, stroke, highlight) is a per-project design choice.
-- Give the film shell a `captions` prop (on by default) so the [mute test](review-loop.md#mute-test)
+- Give the film shell a `captions` prop (on by default) so the [mute test](review.md#mute-test)
   can render the cut without them: `--props='{"captions":false}' --muted`.
 
 ## Platform facts (Instagram Reels 9:16, as of 2026-09; recheck)
@@ -92,6 +102,9 @@ Sound stays on the picture when both come from the same numbers.
   without the VO to get the VO-to-bed ratio in the 1–4 kHz band.
 
 ## Gotchas
+- Recurring breakages to check in every contact sheet: limbs lost when a shot is cropped, ghosting
+  from opacity fades, recurring entities changing scale, an empty first frame after a canvas mounts,
+  and a blurred or unstable final frame.
 - `rsync --exclude src` also strips `node_modules/*/src`. Copy projects without node_modules
   and reinstall.
 - Parallel `remotion still` calls on the entry file race on the webpack cache. Bundle once,
