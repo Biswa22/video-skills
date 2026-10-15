@@ -63,6 +63,9 @@ mix and the cue sheet.
   Their look (font, stroke, highlight) is a per-project design choice.
 - Give the film shell a `captions` prop (on by default) so the [mute test](review.md#mute-test)
   can render the cut without them: `--props='{"captions":false}' --muted`.
+- Derive every on-screen number that depends on runtime (a video length, an elapsed-time chip) from
+  one delivery-speed constant, because the platform shows the sped-up length. A speed change after
+  the final render then needs those shots re-rendered; say so when the speed is chosen.
 
 ## Platform facts (Instagram Reels 9:16, as of 2026-09; recheck)
 - The top ~220px and bottom ~420px are covered by UI, and so is a right rail (x > 930 at
@@ -89,10 +92,17 @@ Sound stays on the picture when both come from the same numbers.
   is heard for a picture that isn't on screen.
 
 ## Audio mechanics
-- Keep the narrator's voice close to their raw recording: a high-pass, one gain per take, a linear
-  loudness pass, no compressor unless the raw needs it. Choose the speed-up stretcher by a round
-  trip on the actual voice, and play the result beside the raw at matched loudness before
-  delivery ([video-edit's audio notes](../../video-edit/references/technical.md)).
+- Keep the narrator's voice close to their raw recording: a high-pass, one static gain, a linear
+  loudness pass, no compressor unless the raw needs it. Give a take its own gain only when its level
+  is clearly off (another mic distance or session); never loudness-match takes to each other, since
+  the level changes between lines are the performance. Let the master limiter shave transients only
+  (lookahead, short release); if it pulls speech down more than about 1 dB for over half a second in
+  total, master quieter instead. Measure it: the narration stem's loudness range (`ebur128` LRA) in
+  the mix should sit within about 0.5 LU of the selected raw takes joined without gain. In one film,
+  matched takes plus a busy limiter measured 2.6 LU against 4.5 raw, and the narrator heard his voice
+  as flattened. Choose the speed-up stretcher by a round trip on the actual voice, and play the result
+  beside the raw at matched loudness before delivery
+  ([video-edit's audio notes](../../video-edit/references/technical.md)).
 - Before the VO exists, mix music and effects at the level they will sit under the voice, so the
   first cut previews the final balance.
 - Duck music by phrase (merge words less than 0.4s apart, ramp over about 0.2s). Per-word
@@ -102,6 +112,15 @@ Sound stays on the picture when both come from the same numbers.
   without the VO to get the VO-to-bed ratio in the 1–4 kHz band.
 
 ## Gotchas
+- A killed `remotion still` or `render` can orphan its `chrome-headless-shell` (parent pid 1). In a
+  long session with many agents they piled up to about 175 processes and 3 GB. Reap orphans before
+  each render: `ps -A -o pid=,ppid=,command= | awk '$2==1 && /chrome-headless-shell/ {print $1}' | xargs kill`.
+- Never rewrite a file a running render reads (a matte, texture, image sequence or audio): the render
+  can pick up a half-written file. Build replacements in a staging folder, swap them in between
+  renders, and re-render only the chunks that use them.
+- zsh (the macOS default) doesn't word-split unquoted variables: in `for r in "0 300" "600 900"; do
+  set -- $r`, `$1` stays `"0 300"`, so a chunk loop can render nothing and still exit 0. Call each
+  range explicitly or use arrays.
 - Recurring breakages to check in every contact sheet: limbs lost when a shot is cropped, ghosting
   from opacity fades, recurring entities changing scale, an empty first frame after a canvas mounts,
   and a blurred or unstable final frame.
