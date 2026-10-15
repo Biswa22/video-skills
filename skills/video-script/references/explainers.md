@@ -6,6 +6,8 @@ An explainer shows how something works. Two things decide whether it plays as a 
 
 - Each part answers a problem that the previous part created. Open the part by saying that problem out loud, as a turn the viewer can hear ("But that creates a new problem"), and follow it with the question the viewer would now ask.
 - State the problem in full, including why the obvious fix fails, before giving the answer. An answer that arrives before its problem reads as a fact dropped in.
+- Where the process carries, transforms or selects something, follow one concrete example of it through the stages, and say how each stage acts on it.
+- Before drafting or repairing a part, write one line stating the mechanism it must explain and why the viewer needs it at this point. Then remove each sentence that adds no cause, distinction or picture that line needs.
 - Choose the parts by following the chain inward from the viewer's everyday experience, not by listing the topic's components. When no problem leads to a component, either find the problem that makes the viewer need it or leave the component out.
 - End on a recap that runs through every part in order and lands back on the experience the video opened with. **Recap test:** every part appears in the recap. A part the recap doesn't need is a detour.
 

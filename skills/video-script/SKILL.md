@@ -85,6 +85,8 @@ Done when three ideas are fully developed and every other candidate stays in the
 
    Write the lines in the creator's voice, using the voice guide the profile names if it names one, and keep them easy to say aloud. Write full, connected sentences with the subject named and verbs that describe what happens. A line cut so short that it raises a question ("the full route" of what?) costs more than the seconds it saves. Save the script where the profile says, if it names a place.
 
+When the creator rewrites some of the lines, compare their version with yours before the next revision and apply the stylistic differences it supports to the lines you still own. Keep their wording unless asked to edit it, and raise factual problems in it separately.
+
 Done when the checklist passes, every factual claim has a source or a verify flag, every promise in the hook has a beat that pays it off, and the runtime is in range.
 
 ### Checklist
@@ -95,6 +97,7 @@ Done when the checklist passes, every factual claim has a source or a verify fla
 - The stake is framed by who it affects, in words a non-expert knows. Tool names and jargon come once the viewer has a reason to care.
 - Every claim is shown. Voice, caption and screen give the same number.
 - Every promise in the hook is paid off on screen before the end.
+- Every sentence, read on its own, says who does what to what, and where any result goes. Omitted objects and ambiguous references are replaced with the noun; pronouns whose referent is clear stay. Check again after every revision.
 - Each line moves the story forward. Lines that restate or announce what's coming are cut.
 - The video opens one question and answers it with a real answer.
 - The payoff is the last content line, followed by one short call to action.
