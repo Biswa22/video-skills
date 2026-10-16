@@ -13,102 +13,56 @@ A short video is mostly decided before filming, by three choices: the **stake** 
 
 ## Set up
 
-`SKILL_DIR` below means this skill's folder. Read `~/.video-script/profile.md` if it exists. It names the creator's video library, their findings file, platform notes, voice, pace and standing preferences. Before proposing anything, read the findings file (including any tests still running) and the library index, and cite the past videos an idea resembles.
+`SKILL_DIR` means this skill's folder. Read `~/.video-script/profile.md` if it exists: it names the creator's video library, findings file, platform notes, voice and pace. Before proposing anything, read the findings file (including tests still running) and the library index, and cite the past videos an idea resembles. Where the findings conflict with a default below, the findings win: they were measured on this audience.
 
-With no profile, ask once for the platform, the audience, and two past videos with their numbers (one that did well, one that didn't). Then offer to create the profile and a library in the [library format](references/library.md).
+With no profile, ask once for the platform, the audience, and a past video that did well and one that didn't, with their numbers. Then offer to create the profile and a library in the [library format](references/library.md).
 
-Current user instructions override the profile. Where the findings file's evidence conflicts with this skill's defaults, the findings win, because they were measured on this audience.
+**Goal** means what a video is built for: reach (views from non-followers), follows, saves or shares. When the request names none, assume reach and say so.
 
-**Goal** below means one of four things a video is built for: reach (views from non-followers), follows, saves or shares. Personal stories tend to earn follows, lists and tutorials saves, surprise and news shares and reach. The findings file refines this for the creator.
+The tasks are **Ideas**, **Script** and **Review** of a posted video. This skill ends at a script or a lesson: filming is the creator's, editing video-edit's, animation animated-video's.
 
-## Choose the task
+## Ideas
 
-- **Ideas**: what to make next. Go to section 1.
-- **Script**: turn an idea, notes, a transcript or a rough draft into a filmable script. Go to section 2.
-- **Review**: a posted video's insights or screenshots. Go to section 3.
+Start from the latest saved backlog (the profile says where) and fresh material: what the creator built, learned or lived through recently (ask; without an answer, use their latest project folders), news in their field from primary sources with dates, viewer questions if shared, and the library's winners and losers. Mark a premise you couldn't confirm at its source as unverified.
 
-A request that spans several runs them in that order. When the request doesn't name a goal, ask once, defaulting to reach. This skill ends at a script or a lesson. Filming belongs to the creator, editing to video-edit, animation to animated-video.
+Go wide before judging: candidates that differ in kind, not variations of one idea. They come out wider when a separate agent brainstorms from the material alone, without this skill's rules, and the judging happens afterwards.
 
-## 1. Ideas
+Judge them against the goal by the three choices: a stake that lands outside the niche, proof the creator has or can capture, and a hook that surprises about the viewer or what's on screen. A pattern that failed in the library is worth retrying as a deliberate test of a fix. Hold an idea that would muddle a running test until that test is read.
 
-1. Collect material:
-   - Ask the creator what they built, learned or lived through recently. Without an answer, use their most recent project folders.
-   - News in their field, from primary sources, with dates.
-   - Viewer questions, if the creator shares comments.
-   - The library's winners and losers.
+Develop the strongest for the creator to choose between, each with its first two sentences (the first finishing within 3 seconds), the proof the viewer will see, and the finding or open hypothesis it relies on or tests. Two versions of one idea that differ mainly in the opening are one [trial pair](references/insights.md#testing). Save the rest as a one-line backlog.
 
-   A premise you couldn't confirm at its source is marked unverified.
-2. Write at least ten candidates, one line each: the idea, who has a stake beyond insiders, and the format. Spread them across at least three formats: news with a stake, personal story, before/after demo, contrarian claim, tutorial or list, skit.
-3. Rank them, in this order:
-   - Reach: the stake lands with people outside the niche.
-   - Proof: showable with footage the creator has or can capture.
-   - Hook potential: something surprising that's about the viewer or what's on screen.
+## Script
 
-   Tag each with its goal. A pattern that failed in the library comes back only as a deliberate test of a fix. An idea that would muddle a test still running waits until that test is read.
-4. Develop the top three. For each give:
-   - the hook, a first sentence that finishes within 3 seconds
-   - the second sentence
-   - the proof the viewer will see
-   - the goal
-   - the library videos it resembles
-   - the finding or open hypothesis it relies on or tests
+State the idea in one sentence, with its goal. An idea that needs two sentences is two videos; ask which to make first.
 
-   When two versions of one idea differ mainly in the opening, present them as one [trial pair](references/insights.md#testing), not two ideas.
+Find the payoff and the strongest proof before the hook, then write the hook from the most surprising true claim or proof you have. Draft at the creator's pace (from the profile; default 3 spoken words a second). Three moments are tied to the clock; the rest takes the story's own shape:
 
-Save the ideas where the profile says, if it names a place, and read the latest saved backlog before writing new candidates.
+- **0–3 s, the hook**: about the viewer's stake or what's on screen. Credentials come later, as the reason to believe.
+- **3–10 s, the second sentence**: answers the hook or raises its stakes. Most avoidable losses happen here, so background waits. Background is anything the viewer needs only to follow a later detail (history, who someone is, how something works); the test: if moving a line past 15 s loses nothing in the first 15, it's background.
+- **The end**: the payoff, the hook's promise shown on screen, then at most one short call to action. Anything after the payoff plays to a leaving audience.
 
-Done when three ideas are fully developed and every other candidate stays in the one-line backlog.
+For an **explainer** (how something works), read [explainers](references/explainers.md) before drafting.
 
-## 2. Script
+Beside every line, write what the viewer sees and the capture it needs (screen recording, document, the real person or product). A line nobody could draw is one the viewer has to hold in their head. For an animated film this column is a note to animated-video, which designs the world.
 
-1. State the one idea in one sentence, and its goal. An idea that needs two sentences is two videos; ask which to make first.
-2. Find the payoff and the strongest proof first. Write the hook last, by moving the most surprising true claim or proof to second 0.
-3. Write the beats with times at the creator's pace (from the profile; default 3 spoken words per second):
-   - Hook, 0–3 s. It can be a statement or a question.
-   - Second sentence, 3–10 s. It answers the hook's question or raises the stakes.
-   - Proof or demo, the body.
-   - Background after 15 s, only if the story needs it. Background is anything the viewer needs only to follow a later detail: history, who someone is, how something works. The test: if moving a line to after 15 seconds loses nothing in the first 15, it's background.
-   - Payoff: the hook's promise, shown on screen. This is the strongest content line, and the last one.
-   - One call to action, in one short line after the payoff.
+Deliver, and save where the profile says: the script as time, spoken line and on-screen picture; the capture list; a draft caption carrying the caveats and links the spoken script can't; the estimated runtime; alternative hooks, each with its own second sentence, when the opening is still open; and the claims to verify, with sources (flag any source you couldn't open). Have a fresh agent check each claim as worded in the script against its source: research that is right can still be overstated in the script.
 
-   For an **explainer** (how something works), the body is a problem chain and the payoff is a recap: read [explainers](references/explainers.md) before writing beats.
-4. Give every beat its picture: what is on screen, and the capture it needs (screen recording, document, the real person or product). Frame 1 shows the subject the first sentence names. A new picture comes at least every 5 seconds.
-5. Check the script against the checklist below, the findings file, and the platform notes the profile names (for example, what the platform declines to recommend). Revise until every item passes or has a stated reason.
-6. Deliver:
-   - a table of time, spoken line and on-screen picture
-   - two alternative hooks, each with its own second sentence
-   - headline options for frame 1, if the creator uses on-screen headlines
-   - a draft post caption, carrying any caveats and links that don't fit the spoken script
-   - the capture list
-   - the claims to verify, with sources. A source you couldn't open is flagged for the creator to check before filming.
-   - the estimated runtime
-
-   Write the lines in the creator's voice, using the voice guide the profile names if it names one, and keep them easy to say aloud. Write full, connected sentences with the subject named and verbs that describe what happens. A line cut so short that it raises a question ("the full route" of what?) costs more than the seconds it saves. Save the script where the profile says, if it names a place.
-
-When the creator rewrites some of the lines, compare their version with yours before the next revision and apply the stylistic differences it supports to the lines you still own. Keep their wording unless asked to edit it, and raise factual problems in it separately.
-
-Done when the checklist passes, every factual claim has a source or a verify flag, every promise in the hook has a beat that pays it off, and the runtime is in range.
+When the creator rewrites some lines, carry the stylistic differences to the lines you still own. Keep their wording unless asked to edit it, and raise factual problems in it separately.
 
 ### Checklist
 
-- One idea. A list earns its place only when every item proves the same idea.
-- The first sentence finishes within 3 seconds and is about the viewer's stake or what's on screen. Credentials come later, as the reason to believe.
-- The second sentence answers the hook or raises the stakes. The seconds from 3 to 10 are where most avoidable losses happen, so they get background, a restated subject, a second credential, "let me explain" or "here are the top N" only as a deliberate test.
+Hold the script against these, the findings file and the platform notes before delivering it:
+
+- One idea. A list earns its place only when every item proves that idea.
 - The stake is framed by who it affects, in words a non-expert knows. Tool names and jargon come once the viewer has a reason to care.
 - Every claim is shown. Voice, caption and screen give the same number.
-- Every promise in the hook is paid off on screen before the end.
-- Every sentence, read on its own, says who does what to what, and where any result goes. Omitted objects and ambiguous references are replaced with the noun; pronouns whose referent is clear stay. Check again after every revision.
-- Each line moves the story forward. Lines that restate or announce what's coming are cut.
-- The video opens one question and answers it with a real answer.
-- The payoff is the last content line, followed by one short call to action.
-- Runtime is as short as the story allows: most single-idea videos 30 to 60 seconds, lists under about 40, skits under about 25. Explainers run as long as their chain needs.
+- Every promise in the hook is paid off on screen.
+- Every sentence, read on its own, says who does what to what, and where any result goes. Replace omitted objects and ambiguous references with the noun; keep pronouns whose referent is clear. Revisions break this, so check again after each one.
+- Lines are full, connected sentences in the creator's voice (the voice guide the profile names), easy to say aloud. A line cut so short that it raises a question ("the full route" of what?) costs more than the seconds it saves.
+- Each line moves the story forward (a line that restates the one before or announces what's coming doesn't), and the runtime is as short as the story allows.
 
-## 3. Review a posted video
+## Review a posted video
 
-1. Collect every number: views, viewers, average watch time, follows, interaction counts, each rate with its label, views by source, and the retention curve with its duration. From a screenshot, read the curve with `python3 SKILL_DIR/scripts/retention_curve.py SHOT --duration SECONDS` and check its area-based average against the app's figure ([reading insights](references/insights.md)). Identify each screenshot's video from its thumbnail, graph dates and view count. Ask when that evidence can't decide.
-2. Line the curve up with the final render's captions. For every **cliff** (a steep drop) and **plateau** (a flat stretch), record what was said and shown in the seconds before it.
-3. Compare with the library: videos in the same format, and every video's 3→10 s drop, which is where the second sentence acts.
-4. Write the video's library entry (analytics, cliffs, reflection) and its index row. Update the findings file. Add the evidence to each hypothesis it touches, and change a hypothesis's status only when two or more videos agree. Before saving, take every quoted line and time from the captions file, give a posting date only with its source, and check every ranking word (highest, lowest, only, best) against the index, scoped to the videos it covers.
-5. Delete source screenshots only when the user asks, after every number is recorded and checked against them. Move them to the Trash, not a permanent delete.
-
-Done when every number on every screenshot is either recorded or listed as skipped, every cliff has its passage, and the findings file reflects the new video.
+- Record every number: views, viewers, average watch time, follows, interaction counts, each rate with its label, views by source, and the retention curve with its duration ([reading insights](references/insights.md)). From a screenshot, read the curve with `python3 SKILL_DIR/scripts/retention_curve.py SHOT --duration SECONDS` and check its area-based average against the app's figure. Identify each screenshot's video from its thumbnail, graph dates and view count; ask when that evidence can't decide.
+- Line the curve up with the final render's captions: for every cliff and plateau, record what was said and shown in the seconds before it. Compare with the library: videos in the same format, and every video's 3→10 s drop.
+- Write the video's library entry and index row, then update the findings file: add the evidence to each hypothesis it touches, and change a status only when two or more videos agree. Before saving, take every quoted line and time from the captions file, not a summary; give a posting date only with its source; check every ranking word (highest, lowest, only, best) against the index, scoped to the videos it covers.

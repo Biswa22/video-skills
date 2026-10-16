@@ -20,15 +20,10 @@ Record the snapshot's date and time. Views keep growing, so every number needs i
 
 ## The retention curve
 
-- Read it at 1, 3, 5, 7, 10, 15, 20, 30, 45 and 60 s, and at the end. `scripts/retention_curve.py SHOT --duration SECONDS` does this by pixel and prints the average watch time implied by the curve's area. If that average differs from the app's by more than a few seconds, the reading is off. Crop to the chart, or read it by eye and say so.
+- `scripts/retention_curve.py SHOT --duration SECONDS` reads it by pixel at fixed seconds and prints the average watch time implied by the curve's area. If that average differs from the app's by more than a few seconds, the reading is off: crop to the chart, or read it by eye and say so.
 - Skip rate and the curve's 3-second value measure different things. The curve at 3 s has been found up to 10 points above 100 minus skip rate. Compare curve with curve and skip with skip.
 - A smooth curve can't point to an exact frame. Name the passage (what was said and shown in the few seconds before a drop), not the frame.
-- Useful shapes:
-  - **Cliff:** a steep drop.
-  - **Plateau:** a flat stretch. A committed audience is watching.
-  - **Bleed:** a steady slope. Each new beat loses more people.
-
-  The 3→10 s drop measures the second sentence.
+- Shapes: a **cliff** is a steep drop; a **plateau** a flat stretch, where a committed audience is watching; a **bleed** a steady slope, where each new beat loses more people. The 3→10 s drop measures the second sentence.
 
 ## Testing
 

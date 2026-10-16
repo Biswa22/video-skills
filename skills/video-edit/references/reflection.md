@@ -1,38 +1,37 @@
 # Editing-session reflection
 
-Review the result and the path taken, including incomplete or unsuccessful edits.
-A request to reflect authorizes review; apply reusable-instruction changes only
-when the user has approved them. Carry forward explicit approval already given,
-including a standing approval recorded in the user's profile.
+A request to reflect authorizes review. Apply instruction changes only with the user's
+approval, including a standing approval recorded in their profile. Reflection does not
+authorize another render, upload, publication, memory change or media deletion.
 
-1. Recover the brief, corrections, selected takes, edit manifest, QA evidence,
-   and delivered version. Compare early completion claims with later feedback.
-   Label missing evidence. Distinguish a changed brief from a missed requirement.
-2. Separate editorial judgment from technical checks. A decoded file does not
-   establish fluent delivery, perceptual sync, or an accepted visual treatment.
-   Inspect the timing evidence relevant to cuts, speed changes, and final bounds.
-3. Identify useful methods and avoidable work. Consider repeated transcription,
-   full rerenders after isolated changes, weak asset searches, premature assembly,
-   and checks that missed the reported defect. Explain the smaller useful next
-   action using what was known then. Quantify savings only when measured.
-4. Show concrete findings before inviting feedback. Incorporate corrections
-   already given and proceed if the user has nothing to add. Keep important
-   findings visible even when they do not justify another instruction.
-5. Read the existing guidance before proposing changes. Route general workflow
-   fixes to [SKILL.md](../SKILL.md), command details to
-   [technical.md](technical.md), and native operations to [resolve.md](resolve.md).
-   Keep personal preferences in the user's profile (`~/.video-edit/profile.md`)
-   and session evidence in the project or profile.
-   A missed existing rule may need a better check, not duplicate prose.
-6. Present exact proposed edits and their evidence. Keep speculative optimizations
-   as experiments with a check that could disprove them. Apply only approved
-   changes, preserve unrelated work, and verify links and any changed scripts.
+What a useful reflection finds:
 
-Present the reflection in conversation unless a saved report was requested or
-the project workflow calls for one. Keep reports in the project, separate from
-the distributable skill. Include outcome, evidence, useful methods, avoidable
-effort, proposed or approved changes, and unresolved checks as relevant.
+- Where early completion claims met later feedback, and whether each correction was a
+  changed brief or a missed requirement. Label missing evidence.
+- Where editorial judgment was mistaken for a technical check: a decoded file does not
+  establish fluent delivery, perceptual sync or an accepted look.
+- What helped and what was avoidable (repeated transcription, full rerenders after
+  isolated changes, weak asset searches, premature assembly, checks that missed the
+  defect), with the smaller move that was available at the time. Quantify only what
+  was measured.
 
-Reflection does not authorize another render, upload, publication, memory change,
-or deletion of media. Keep raw transcripts and private account details out of
-reusable instructions. File validation does not prove future editing outcomes.
+Show the findings and invite feedback; proceed if the user has nothing to add.
+
+Proposing changes:
+
+- Read the existing guidance first. A missed existing rule needs a better check or
+  mechanism, not a second copy of the rule.
+- Route each lesson to one home: right for every edit of every style →
+  [SKILL.md](../SKILL.md); craft for one style → its pack under
+  [styles](../styles/README.md); commands and tool gotchas → [technical.md](technical.md)
+  or [resolve.md](resolve.md); this user's taste and project evidence →
+  `~/.video-edit/profile.md` and the project. A lesson from one edit that would
+  constrain every future edit (a fixed look, a quota, a banned device) is taste or
+  style craft, not a core rule.
+- Prefer stating what the model needs to know over dictating how it must work; keep
+  speculative ideas as experiments with a check that could disprove them.
+- Present exact edits with their evidence. Apply only approved changes, remove what
+  they supersede, and verify links and any changed scripts.
+
+Keep reports in the project, not the skill, and keep raw transcripts and account details
+out of reusable instructions.

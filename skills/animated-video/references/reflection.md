@@ -1,30 +1,27 @@
 # Reflection protocol
 
-When the user asks for a reflection after an animated-video session, review the work and
-propose updates to this skill. Present findings and proposed changes, and apply edits only
-after the user approves them. A standing approval recorded in the user's profile counts.
+When the user asks for a reflection after an animated-video session, review the work and propose
+updates to this skill. Apply edits only after the user approves them; a standing approval in the
+user's profile counts.
 
-1. Read the session's corrections, the final render, the review scores and the open issues.
+1. Read the session's corrections, the final render, the review results and the open issues.
    Compare completion claims with what was actually checked, and label missing evidence.
 2. Separate explicit preferences, observed failures and their fixes, and untested experiments.
-3. Generalize before you promote. Anything that goes into this skill must hold for a different
-   brief, style and subject: a process step, a failure pattern, a check, or a tool gotcha. The
-   project's creative choices (palette, fonts, proportions, gags, shot list) and the user's
-   personal preferences stay in the project or in `~/.animated-video/profile.md`. When the
-   user was only partly satisfied, record the direction they endorsed and what they disliked,
-   not the output as a model.
+3. A lesson enters the skill only when a recorded failure or measurement stands behind it and it
+   holds for a different brief, style and subject: a process step, a failure pattern, a check, or
+   a tool gotcha. Ask whether it narrows what the next film can imagine; a lesson about one
+   picture or one look is that project's note. Prefer sharpening or deleting a line to adding
+   one, and prune what the change makes stale or duplicate.
 4. Put each lesson in its one home:
-   - workflow steps and the finish bar → `../SKILL.md`
-   - pipeline commands and gotchas → `remotion-pipeline.md`
-   - story lessons → `story.md`; explainer and picture-finding lessons → `explainer.md`
-   - a visual style's bar and mechanics → its `style-*.md` file, listed in `styles.md`
-   - rig lessons → `character-rig.md`
-   - graphics lessons → `motion-graphics.md`
-   - motion checks, judges, mute test and stop rules → `review.md`
+   - principles and workflow → `../SKILL.md`
+   - directing, picture finding → `direct.md`
+   - a style's build, bar and typical failure → its pack, `../styles/<style>/README.md`, indexed
+     in `../styles/README.md`; start a pack when a style without one yields lessons that
+     generalise
+   - pipeline commands and gotchas → `remotion-pipeline.md`; splicing and inserts →
+     `handoffs.md`; three.js → `three.md`; drawn characters → `characters.md`; presenter footage
+     → `compositing.md`
+   - motion checks, judges, mute test, restart → `review.md`
    - reusable, style-neutral code → `../templates/`
-   When a project's specifics illustrate a lesson, label
-   them as one example among many possible and say what would change for another brief.
-5. Before adding a rule, ask whether it narrows what the next film can imagine, and whether it can
-   replace or sharpen an existing line instead of adding one. A lesson about one
-   picture or one look is that project's note, not a ban for every film. Prune stale or duplicate rules. Keep transcripts, credentials, personal project history and
-   machine-specific paths out of the skill.
+   - the user's taste, project evidence and machine paths → `~/.animated-video/profile.md`, never
+     the skill

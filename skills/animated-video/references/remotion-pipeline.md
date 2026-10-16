@@ -1,170 +1,126 @@
 # Remotion pipeline
 
 ## Template (`templates/remotion-film/`): style-neutral infrastructure
-- `src/lib.ts`: `cue()`/`cueEnd()` (phrase to seconds), `f()` (seconds to frames), `prog()`
-  (eased 0→1), `pop()` (spring), `voLevel(fr)` (VO loudness), `chunk()` (hand-authored caption
-  lines checked against the transcript), and an `ACTS` table to fill in.
-- `src/kit/camera.tsx`: keyframed pan, zoom and rotate, shake, handheld drift, and parallax layers.
-- `src/kit/three-canvas.tsx`: a drop-in `ThreeCanvas` that holds each frame until the 3D scene
-  inside it has drawn, and `settle()` for releasing a `delayRender` after a state change.
-  Needs `npm i @remotion/three three @react-three/fiber @types/three`.
-- `src/kit/finish.tsx`: `Finish` wraps a scene with optional bloom, a vignette and fine grain.
-  Tune or drop each layer for the chosen style.
-- `audio/dsp.py`: numpy/scipy synthesis helpers (notes, filters, envelopes, reverb, echo, mix
-  with `put()`, 16-bit `write()`, `read()` and `loudness()` through FFmpeg) and `cue()`, which
-  reads the same `src/words.json` so sound is timed from the words too.
-- `align.py`: word timestamps (faster-whisper) and the per-frame VO envelope.
-- `snap.sh <dir> <secs…>`: stills from a shared bundle, two at a time, plus a contact sheet.
-- `render.sh <name>`: full MP4 with two-pass loudnorm (-14 LUFS, -1.5 dBTP, linear).
-- `sheet.py`: contact sheets. `board.py`: the key-frame board, each still labelled with its beat,
-  time and line.
-- Optional parts in `templates/parts/` ([README](../templates/parts/README.md)): a globe with
-  an undersea cable web, a modelled iPhone running iMessage, and about 30 synthesised sound
-  effects. They carry one film's look; copy only what the story needs and restyle it.
+
+Usage lines live in each script's header.
+- `src/lib.ts`: `cue()`/`cueEnd()` (phrase to seconds; a phrase said twice needs `nth`), `f()`
+  (seconds to frames), `prog()` (eased 0→1), `pop()` (spring), `voLevel(fr)` (VO loudness),
+  `chunk()` (hand-authored caption lines checked against the transcript), and an `ACTS` table.
+- `src/kit/camera.tsx`: keyframed pan, zoom and rotate, shake, handheld drift, parallax layers.
+- `src/kit/three-canvas.tsx`, `src/kit/finish.tsx`: see [three.js](three.md).
+- `audio/dsp.py`: numpy/scipy synthesis and mixing helpers, plus a `cue()` that reads the same
+  `src/words.json`, so sound is timed from the words too.
+- `align.py` (word timestamps and VO envelope), `snap.sh` (stills from one bundle plus a contact
+  sheet), `render.sh` (full MP4, two-pass linear loudnorm to -14 LUFS with a peak limiter),
+  `sheet.py`, `board.py` (key-frame board with each beat's time and line), `motion_check.py`.
+- Optional parts with a look of their own: [templates/parts/](../templates/parts/README.md).
 - Written per project: `src/index.ts`, `src/Root.tsx`, a film shell that switches acts and draws
   captions and audio, the scenes, and every visual asset.
 - Setup: `npm i remotion @remotion/cli @remotion/google-fonts react react-dom typescript
   @types/react`, a tsconfig with `lib: ["ES2023","DOM"]`, a Python venv with `faster-whisper`,
   and `git init`.
 
-## Inserts for another timeline
-An animated or 3D shot inside a camera edit: the requester's shot brief is the brief. Take from it
-the frames, fps, size, cue frames, layer order and any approved look; keep its timing, because the
-requester's cutlist is the timing authority. Skip step 1 and the key-frame board, but still find
-the picture for the shot's idea. If no look is approved, show one style frame of the shot's
-hardest moment and wait for the pick. Build with steps 5–7, then return the clip (with alpha when
-it plays over footage), its sound events, the cue frames it was timed from, and the library entries
-it used (ID and version) for the requester's cut declaration. The requester keeps the timeline, the
-mix and the cue sheet.
+## Structural conventions
 
-## Splicing new parts into a finished film
-- Render the finished film once from its own project as the base (picture only, the master's frame
-  grid). Each new part is a chapter over exact frame ranges, rendered through the same shell
-  (captions, overlays such as counters, talking-head inserts) and swapped in frame-accurately; check
-  ±3 frames at every seam.
-- Write each part's first and last frames as hand-offs with its neighbours; a match cut onto a
-  neighbour's framing gets a side-by-side check.
-- Audio: keep the narration and music as delivered. Inside the new ranges, mask the old film's event
-  effects with short fades but keep its ambience bed running, then add the new parts' effects from
-  their events.
-- Swapping the music is a remix muxed onto the finished video (copy the video stream). Slow the track
-  by 1/delivery-speed before fitting it, so the sped-up film plays it at its own tempo, and retune
-  pitched effects to its key. Move the replaced files to an archive folder rather than deleting them.
-
-## Before the VO exists
-- To build ahead of a recording, generate `words.json` from the script at the speaker's measured
-  pace (words per second of an earlier recording) and build every beat from `cue()` as usual.
-  Label it a stand-in. After recording, align the real VO and re-render; a cue phrase the speaker
-  changed throws by name, and so does the caption check at load, in every bundle that imports
-  them. Update the caption lines together with the words, then run a script that loads each act's
-  cue module on its own and lists every phrase that no longer resolves, with the nearest phrase
-  in the new transcript, so each act owner fixes only their own.
-
-## Procedural drawing
-- A `<canvas>` inside a Remotion component suits procedural art (grain, boil, particles). Redraw
-  it from `useCurrentFrame()` and take randomness from Remotion's `random(seed)`, never
-  `Math.random()`, so every render matches its stills.
-- Other deterministic HTML-to-MP4 renderers exist, such as HyperFrames. This template targets
-  Remotion; switch only if the user asks.
-
-## Structural conventions that paid off
-- Scene logic uses absolute frames (`fr`), with no nested `<Sequence>` offsets, so a cue means
-  the same frame everywhere.
-- Every time comes from `cue()`, so re-aligning a new VO re-times the film.
-- Scenes export `Scene({fr})` plus their sound events, and the director's cue sheet turns those
-  events into the mix.
+- Scene logic uses absolute frames (`fr`), with no nested `<Sequence>` offsets, so a cue means the
+  same frame everywhere. Every time comes from `cue()`, so re-aligning a new VO re-times the film.
+- Draw every frame from `useCurrentFrame()` and Remotion's `random(seed)`, never `Math.random()`
+  or a clock, so every render matches its stills. A `<canvas>` inside a component suits
+  procedural art (grain, boil, particles).
 - Captions come from hand-authored sense-unit lines, verified against the transcript at load.
-  Their look (font, stroke, highlight) is a per-project design choice.
-- Give the film shell a `captions` prop (on by default) so the [mute test](review.md#mute-test)
-  can render the cut without them: `--props='{"captions":false}' --muted`.
-- Derive every on-screen number that depends on runtime (a video length, an elapsed-time chip) from
-  one delivery-speed constant, because the platform shows the sped-up length. A speed change after
-  the final render then needs those shots re-rendered; say so when the speed is chosen.
+  Their look is a per-project choice. Give the film shell a `captions` prop (on by default) so the
+  [mute test](review.md#mute-test) can render without them.
+- If the film will be sped up for delivery, lock the speed before final renders, and derive every
+  on-screen number that depends on runtime (a video length, an elapsed-time chip) from one
+  delivery-speed constant: the platform shows the sped-up length.
 
 ## Platform facts (Instagram Reels 9:16, as of 2026-09; recheck)
-- The top ~220px and bottom ~420px are covered by UI, and so is a right rail (x > 930 at
-  y > 1100). Keep faces, key props and on-screen text inside the remaining area.
+
+- The top ~220 px and bottom ~420 px are covered by UI, and so is a right rail (x > 930 at
+  y > 1100). Keep faces, key props and on-screen text inside the rest.
+- Frame 0 is the cover: legible at phone size and already moving.
 - Deliver around -14 LUFS integrated and under -1.5 dBTP.
 
+## Before the VO exists
+
+Generate `words.json` from the script at the speaker's measured pace (words per second of an
+earlier recording) and build every beat from `cue()` as usual; label it a stand-in. After
+recording, align the real VO and re-render: a cue phrase the speaker changed throws by name, and
+so does the caption check at load. Update the caption lines with the words, then run a script that
+loads each act's cue module on its own and lists every phrase that no longer resolves, with the
+nearest phrase in the new transcript, so each act owner fixes only their own.
+
 ## Sound events
+
 Sound stays on the picture when both come from the same numbers.
-- Each act writes `src/scenes/<act>-events.ts`, a pure module (no React, three or DOM imports)
-  exporting `EVENTS: SoundEvent[]` (`{id, fr, dur?, what, x?}` from `lib.ts`): `fr` is the
-  frame the thing visibly happens (contact, not the approach), `dur` for anything that lasts,
-  `x` from -1 to 1 for its place on screen. The scene imports its timing constants from this
-  file, so moving a beat moves its sound. To hand them to a Python mixer, bundle a two-line
-  script that prints `JSON.stringify(EVENTS)`:
-  `npx esbuild dump-events.mts --bundle --platform=node --format=esm | node --input-type=module > out/events.json`.
-- List every appearance, hit, press, landing, start and end of a travelling object or camera
-  move, each transition, and each place change with its span (for an ambience bed). Repeated
-  events: each one up to about a dozen, otherwise first, last and a count. About 25–50 per
-  minute of film.
-- The director keeps one cue sheet mapping event ids to sounds, levels and treatments. Give
-  each place one ambience and each recurring thing one recognisable sound, and vary the rest so
-  effects stay diverse without repeating one sample.
-- Drop effects under any stretch replaced by other footage (a talking-head insert), so nothing
-  is heard for a picture that isn't on screen.
+- The template's convention: each act has a pure events module (no React, three or DOM imports)
+  exporting `EVENTS: SoundEvent[]` (`{id, fr, dur?, what, x?}` from `lib.ts`): `fr` is the frame
+  the thing visibly happens (contact, not the approach), `dur` for anything that lasts, `x` from -1
+  to 1 for its place on screen. The scene imports its timing constants from it. To hand them to a
+  Python mixer:
+  `npx esbuild dump-events.mts --bundle --platform=node --format=esm | node --input-type=module > out/events.json`
+  (a two-line script that prints `JSON.stringify(EVENTS)`).
+- List what visibly happens (appearances, hits, landings, travel and camera moves, transitions)
+  and each place change with its span, for an ambience bed; many repeats can be first, last and a
+  count.
+- One cue sheet maps event ids to sounds, levels and treatments: each place one ambience, each
+  recurring thing one recognisable sound, the rest varied so no sample repeats until it's noticed.
+- Drop effects under any stretch replaced by other footage (a talking-head insert).
 
 ## Audio mechanics
-- Keep the narrator's voice close to their raw recording: a high-pass, one static gain, a linear
-  loudness pass, no compressor unless the raw needs it. Give a take its own gain only when its level
-  is clearly off (another mic distance or session); never loudness-match takes to each other, since
-  the level changes between lines are the performance. Let the master limiter shave transients only
-  (lookahead, short release); if it pulls speech down more than about 1 dB for over half a second in
-  total, master quieter instead. Measure it: the narration stem's loudness range (`ebur128` LRA) in
-  the mix should sit within about 0.5 LU of the selected raw takes joined without gain. In one film,
-  matched takes plus a busy limiter measured 2.6 LU against 4.5 raw, and the narrator heard his voice
-  as flattened. Choose the speed-up stretcher by a round trip on the actual voice, and play the result
-  beside the raw at matched loudness before delivery
+
+- Keep the narrator's voice close to the raw recording: a high-pass, one static gain, a linear
+  loudness pass, no compressor unless the raw needs it. The level changes between lines are the
+  performance: give a take its own gain only when its level is clearly off (another mic distance
+  or session), not to match the others. The master limiter shaves transients only (lookahead,
+  short release); when it holds speech down, master quieter instead. Measure it: the narration
+  stem's loudness range (`ebur128` LRA) in the mix stays close to the selected raw takes joined
+  without gain (matched takes plus a busy limiter measured 2.6 LU against 4.5 raw, and the
+  narrator heard his voice as flattened). Choose the speed-up stretcher by a round trip on the actual voice
   ([video-edit's audio notes](../../video-edit/references/technical.md)).
-- Before the VO exists, mix music and effects at the level they will sit under the voice, so the
-  first cut previews the final balance.
-- Duck music by phrase (merge words less than 0.4s apart, ramp over about 0.2s). Per-word
-  ducking pumps.
-- Keep SFX off key spoken words. Place a hit 1–2 frames before the word it punctuates.
+- Before the VO exists, mix music and effects at the level they will sit under the voice.
+- Duck music by phrase, merging close words; per-word ducking pumps.
+- Keep effects off key spoken words.
 - Measure instead of guessing: `ffmpeg -af ebur128` for loudness and true peak; render a stem
-  without the VO to get the VO-to-bed ratio in the 1–4 kHz band.
+  without the VO for the VO-to-bed ratio in the 1–4 kHz band.
 
 ## Gotchas
-three.js gotchas (materials, environment maps, screen-space passes, framing, transparency) are in
-[luminous 3D mechanics](style-luminous-3d.md#mechanics); they hold for any three.js film.
-- A killed `remotion still` or `render` can orphan its `chrome-headless-shell` (parent pid 1). In a
-  long session with many agents they piled up to about 175 processes and 3 GB. Reap orphans before
-  each render: `ps -A -o pid=,ppid=,command= | awk '$2==1 && /chrome-headless-shell/ {print $1}' | xargs kill`.
-- Never rewrite a file a running render reads (a matte, texture, image sequence or audio): the render
-  can pick up a half-written file. Build replacements in a staging folder, swap them in between
-  renders, and re-render only the chunks that use them.
-- zsh (the macOS default) doesn't word-split unquoted variables: in `for r in "0 300" "600 900"; do
-  set -- $r`, `$1` stays `"0 300"`, so a chunk loop can render nothing and still exit 0. Call each
+
+- A killed `remotion still` or `render` can orphan its `chrome-headless-shell` (parent pid 1); in
+  one long multi-agent session they reached about 175 processes and 3 GB. Reap before each render:
+  `ps -A -o pid=,ppid=,command= | awk '$2==1 && /chrome-headless-shell/ {print $1}' | xargs kill`.
+- Never rewrite a file a running render reads (a matte, texture, image sequence or audio): build
+  replacements in a staging folder, swap them in between renders, re-render only the chunks that
+  use them.
+- zsh (the macOS default) doesn't word-split unquoted variables: in `for r in "0 300" "600 900";
+  do set -- $r`, `$1` stays `"0 300"`, so a chunk loop can render nothing and exit 0. Call each
   range explicitly or use arrays.
-- Recurring breakages to check in every contact sheet: limbs lost when a shot is cropped, ghosting
-  from opacity fades, recurring entities changing scale, an empty first frame after a canvas mounts,
-  and a blurred or unstable final frame.
-- `rsync --exclude src` also strips `node_modules/*/src`. Copy projects without node_modules
-  and reinstall.
-- Parallel `remotion still` calls on the entry file race on the webpack cache. Bundle once,
-  then render stills from the bundle.
 - Agents rendering on one machine starve each other: a full render can be killed (exit 137), and a
-  3,500-frame 3D render beside another job crashed a machine. Throttle, and render finals in
-  chunks of about 300 frames, one at a time, skipping chunks already on disk so a rerun resumes;
-  join with FFmpeg's concat demuxer (`-c copy`), mux the mix, and check the frame count against
+  3,500-frame 3D render beside another job crashed a machine. Route every heavy process
+  (renders, encoders, compositing scripts, your own jobs) through one queue, render finals in
+  chunks one at a time (300 frames worked), skip chunks already on disk so a rerun resumes, join
+  with FFmpeg's concat demuxer (`-c copy`), mux the mix, and check the frame count against
   `TOTAL`.
+- Parallel `remotion still` calls on the entry file race on the webpack cache. Bundle once, then
+  render stills from the bundle (`snap.sh` does).
 - A React component defined inside another component's body is a new type on every render, so it
-  remounts each frame: its geometry rebuilds and any state it set (materials, uniforms) resets.
-  It shows as one-frame pops and brightness differences between a sequence and a single still.
-  Define components at module level.
+  remounts each frame: geometry rebuilds and state it set resets. It shows as one-frame pops and
+  brightness differences between a sequence and a single still. Define components at module level.
+- `rsync --exclude src` also strips `node_modules/*/src`. Copy projects without node_modules and
+  reinstall.
 - To extract an exact frame from a render, use `-vf "select=eq(n\,N)"`; `-ss` before `-i` on a
-  concatenated file was off by one frame.
-- The last renderable frame is `TOTAL - 1`.
+  concatenated file was off by one frame. The last renderable frame is `TOTAL - 1`.
 - To re-cut a finished composition from source-frame segments, offset with nested sequences
   (`<Sequence from={outStart} durationInFrames={len}><Sequence from={-sourceIn}>…`).
   `<Freeze frame={n}>` clamps n to the host composition's last frame, so it silently shows the
   wrong frame for any source frame past the output length.
-- Full-frame SVG filters (turbulence grain) on every frame are slow.
+- Browser console output may not reach the CLI log during renders; print debug values into the
+  frame instead.
 - Whisper merges and splits words and hyphenations. Fix `words.json` with a kept script.
 - TTS job JSON can hold a voice-preview URL as well as the output. Take the job's result URL.
 
 ## Checking without watching
-- Stills: `./snap.sh out/check 0 1.5 3 …`, then Read the sheet.
-- From a render: extract with `ffmpeg -vf fps=2,scale=360:-1` for the whole piece, or fps=10
-  around cuts. Frame N at fps=2 is t=(N-1)/2.
+
+- Stills: `./snap.sh out/check 0 1.5 3 …`, then read the sheet.
+- From a render: `ffmpeg -vf fps=2,scale=360:-1` for the whole piece, or fps=10 around cuts.
+  Frame N at fps=2 is t=(N-1)/2.

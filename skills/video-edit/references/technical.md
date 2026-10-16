@@ -1,166 +1,124 @@
 # Local media reference
 
-Use the installed tools and existing project scripts before writing another helper.
-For native Resolve assembly and final render, follow [Resolve](resolve.md);
-FFmpeg cut/render recipes below support preprocessing, previews, or other briefs.
-Examples below are recipes, not commands to run blindly: replace `IN`, `OUT`,
-dimensions, paths, and range labels with the probed project values. Quote
-paths, keep source files untouched, and overwrite only known derived outputs.
-
 ## Probe and transcribe
 
 ```bash
 ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate,sample_aspect_ratio,pix_fmt,sample_rate,channel_layout:stream_tags=rotate:stream_side_data=rotation:format=duration -of json IN
 ffmpeg -v error -i IN -vn -ac 1 -ar 16000 audio.wav
-# English on Apple Silicon (replace SKILL_DIR with this skill's directory):
+# English on Apple silicon (Phonon-2):
 uv run "SKILL_DIR/scripts/transcribe.py" audio.wav --output-dir .
-# Whisper exception: unsupported language or concrete failure after Phonon retries:
+# Unsupported language, or a concrete failure that survives Phonon retries:
 uvx --from mlx-whisper mlx_whisper audio.wav --model mlx-community/whisper-large-v3-turbo --word-timestamps True --condition-on-previous-text False --output-format json --output-dir . --verbose False
-# Unsupported host for this Phonon helper (other macOS, Linux or Windows):
+# Other hosts (Intel macOS, Linux, Windows):
 uvx whisper-ctranslate2 audio.wav --model large-v3-turbo --word_timestamps True --output_format json --output_dir . --verbose False
 ```
 
-These write `segments[].words[].{word,start,end}` JSON, the input the caption
-helper reads; `preflight.py` prints the default for this host. Phonon-2 runs
-locally, batches inputs under one loaded model, and uses a speech detector plus
-shorter re-decodes to repair suspected omissions. Unresolved gaps stop output;
-review those windows with source audio and retry Phonon with useful context.
-Use Phonon for routine final-audio QA and restart checks too. Invoke Whisper
-only for unsupported input/host or a specific unresolved Phonon failure, and
-record the reason. An independent QA transcript means a fresh decode of final
-audio in a separate file; it does not require a second model. Preserve raw text separately
-from caption spelling corrections. Existing outputs require `--force` with
-Phonon; use another output directory for independent checks. Reuse model caches.
-Probe rotation, color/HDR information when relevant, and displayed geometry;
-encoded width/height alone may describe a rotated source incorrectly.
+All three write `segments[].words[].{word,start,end}`, the caption helper's input;
+`preflight.py` prints this host's default. Phonon re-decodes suspected omissions in
+shorter windows and stops on gaps it cannot resolve: review those windows against the
+audio and retry with context. An independent QA transcript is a fresh decode of the final audio into a separate file,
+not a second model. Encoded width and height can describe a rotated source wrongly;
+probe rotation and the displayed geometry.
 
-For silence candidates use `silencedetect=noise=-35dB:d=0.25` in an FFmpeg
-audio filter and inspect its output. Adjust to the recording's noise floor.
-Compare low-energy consonants with nearby waveform/frame evidence before
-moving boundaries. The threshold is a search aid, not a rule to delete every pause.
+ASR suppresses repeated words across adjacent takes, hallucinates over silence, misses
+weak onsets, stretches timestamps over padding and misspells names. Keep the raw
+transcript beside your corrections, and never repair a missing spoken word by editing
+captions; recognition is not proof of an intact phoneme. For pause
+candidates use `silencedetect=noise=-35dB:d=0.25`, adjusted to the noise floor, as a
+search aid rather than a rule to delete every pause.
 
-ASR can suppress repeated words across adjacent takes, hallucinate over silence, miss weak onsets, absorb padding into
-word timestamps, and misspell names. Keep the raw transcript and a separate
-checked spelling map. Do not fix missing or incomplete spoken words by
-changing captions. ASR recognition is not proof of an intact phoneme.
+## Repeated-speech checks
 
-## Measure a reference reel
+`scripts/restart_scan.py` splits each selected segment at its pauses and flags speech
+that repeats what came just before; it catches the restarts whole-clip ASR merges. Its
+flags are candidates: confirm with the envelope and a listen.
 
-Public Instagram, TikTok and YouTube posts usually download without login. Keep
-references in the project's `refs/` and do not pass browser cookies.
-
-```bash
-uvx yt-dlp -o "refs/%(id)s.%(ext)s" --write-info-json URL      # info.json has likes, comments, caption
-ffmpeg -i REF -vf "select='gt(scene,0.25)',showinfo" -f null - 2>&1 | grep -o 'pts_time:[0-9.]*'   # hard cuts
-ffmpeg -i REF -af silencedetect=noise=-40dB:d=0.3 -f null - 2>&1 | grep silence_   # audio dips before a drop
-ffmpeg -i REF -vf "fps=2,scale=360:-1,tile=8x4" -frames:v 1 sheet.jpg   # tile n = n/2 seconds
-```
-
-Identify the music (unofficial Shazam client; needs network; try each half of an
-edited meme sound separately):
-
-```bash
-ffmpeg -i REF -vn -ac 1 -ar 44100 ref.wav
-uv run --with shazamio python -c "import asyncio,sys;from shazamio import Shazam;t=asyncio.run(Shazam().recognize(sys.argv[1])).get('track') or {};print(t.get('title'),'|',t.get('subtitle'))" ref.wav
-```
-
-Measure camera moves, speed changes and transitions before copying a style, so
-the edit adds only what the reference does (`scripts/ref_motion.py REF`, run with
-the `uv` line in its docstring). A dip to black shows as luma falling to near 0
-over a few frames, and the shot table splits there.
-
-Lower the scene threshold (0.05) when a known cut is missed. Measure text
-position and size from one full-resolution frame. `drawtext` may be missing;
-count tile positions instead of stamping timecodes.
+- First survey of a long take-heavy recording: transcribe per speech island (split at
+  silences) with previous-text conditioning off. Whole-file decoding with conditioning
+  on has looped one sentence for ten minutes, and chunked decoding still merged restarts.
+- A word with an implausibly long timestamp may hide repeated speech; inspect the audio.
+- At each join, decode overlapping windows that contain the outgoing phrase, the join
+  and the first phrase of the incoming clip. Words at clipped window edges are suspect.
+  Tiny windows localize a repeat but can hallucinate too: reconcile conflicts against
+  source context, waveform and listening, then verify the combined join again.
 
 ## Camera moves on still footage
 
-`zoompan` rounds its crop to whole pixels and jitters on slow moves. Use
-`perspective` with `eval=frame` and cubic interpolation for subpixel push-ins and
-drift. With zoom `Z(t)` toward point (ax, ay) on a WxH frame, the source corners are
-`x0=ax*(1-1/Z)`, `y0=ay*(1-1/Z)`, `x1=x0+W/Z`, `y2=y0+H/Z`; time is `in/FPS`.
-Quote each expression in the filtergraph (`x0='…'`) because they contain commas.
-Ease with `u=clip((t-start)/dur,0,1)`, `u*u*(3-2*u)`. For handheld drift, add two
-summed sines of 3–4 px at 0.3–0.8 Hz to x0 and y0, and start at zoom 1.02 so the
-edges never show. To copy a reference reel's
-handheld path instead, use `scripts/borrow_camera.py`.
+`zoompan` rounds its crop to whole pixels and jitters on slow moves. Use `perspective`
+with `eval=frame` and cubic interpolation for subpixel push-ins and drift. With zoom
+`Z(t)` toward point (ax, ay) on a WxH frame, the source corners are `x0=ax*(1-1/Z)`,
+`y0=ay*(1-1/Z)`, `x1=x0+W/Z`, `y2=y0+H/Z`; time is `in/FPS`. Quote each expression in
+the filtergraph (`x0='…'`) because they contain commas. Ease with
+`u=clip((t-start)/dur,0,1)`, `u*u*(3-2*u)`. For handheld drift, add two summed sines of
+3–4 px at 0.3–0.8 Hz to x0 and y0, and start at zoom 1.02 so the edges never show. To
+copy a reference reel's handheld path instead, use `scripts/borrow_camera.py`.
 
 ## Shell gotchas in build scripts
 
-- Caption copy with an apostrophe breaks `${TEXT:-I can't…}` in bash. Assign it
-  first, `CAPTION="I can't…"; TEXT=${TEXT:-$CAPTION}`.
-- In zsh, `"$k[out]"` is an array subscript. Write `"${k}[out]"` when a variable
-  holding a filter sits right before a filtergraph label.
-- `bc` prints `.70` without a leading zero. ffmpeg accepts it, but integer
-  millisecond delays need `$(echo "$T*1000/1" | bc)`.
-- Overlay cues looked up by phrase (`at("company")`) match the first occurrence,
-  and punctuation-blind matching makes "startup." equal to an earlier "startup".
-  When a phrase is said more than once, pass the occurrence explicitly, or make
-  the lookup throw on ambiguity as the animated-video template's `cue()` does.
-- Run full-length renders and transcription as background jobs and cap their
-  parallelism (Remotion `--concurrency`, transcription in chunks). A job killed
-  for memory (exit 137) in the foreground can end the agent session with it; the
-  same job at lower load usually finishes.
+- Caption copy with an apostrophe breaks `${TEXT:-I can't…}` in bash. Assign it first:
+  `CAPTION="I can't…"; TEXT=${TEXT:-$CAPTION}`.
+- In zsh, `"$k[out]"` is an array subscript. Write `"${k}[out]"` when a variable holding
+  a filter sits right before a filtergraph label.
+- `bc` prints `.70` without a leading zero. FFmpeg accepts it, but integer millisecond
+  delays need `$(echo "$T*1000/1" | bc)`.
+- Overlay cues looked up by phrase (`at("company")`) match the first occurrence, and
+  punctuation-blind matching makes "startup." equal an earlier "startup". When a phrase
+  is said more than once, pass the occurrence, or make the lookup throw on ambiguity as
+  the animated-video template's `cue()` does.
+- Run full-length renders and transcription as background jobs at capped parallelism
+  (Remotion `--concurrency`, transcription in chunks). A foreground job killed for
+  memory (exit 137) can end the agent session with it; the same job at lower load
+  usually finishes.
 
 ## Quiet external audio and separate recordings
 
-Measure channels independently before mixing or applying gain. A stereo file can
-contain one silent channel and usable speech on the other. Inspect speech level,
-noise and isolated peaks across early, middle and late passages. A single peak
-near full scale does not mean speech is loud enough, and fixed gain can clip it.
-Test extraction of the active channel, gentle filtering, adaptive gain/compression
-and normalization on representative samples before processing the full recording.
-Preserve originals and decoded timing. Measure the encoded listening copy as well
-as the PCM master: AAC overshoot can require more headroom.
-When downmixing a stereo recording to mono, average the channels
-(`pan=mono|c0=0.5*c0+0.5*c1`). Summing raises identical channels by 6 dB, and FFmpeg's
-`-ac 1` raises them by about 3 dB (measured), either of which clips a voice that
-peaked near full scale. Process in floating point and write integer PCM only once, at the
-end; a filter applied to an already-clipped 16-bit file clips again. Check the
-edited voice for samples at full scale and flat-topped runs before mixing.
-Usable recovered speech is a reason to test salvage before suggesting a retake;
-signal checks cannot establish the original app/input-setting cause or listening quality.
+Measure channels independently before mixing or adding gain: a stereo file can hold one
+silent channel and usable speech on the other. Check speech level, noise and isolated
+peaks across the recording; one peak near full scale does not mean the speech is loud
+enough, and fixed gain can clip it. Recoverable speech is a reason to try salvage
+(channel extraction, gentle filtering, adaptive gain) before suggesting a retake.
 
-With camera reference audio, locate a coarse offset using speech envelopes, then
-refine on selected waveform windows. Check multiple positions per recording for
-drift; do not infer a single offset across unrelated camera files. Account for
-encoder/start timestamps separately from decoded sample positions. With silent
-video, match distinctive mouth movements and reactions to the transcript and
-audio, record the uncertainty, and seek a user anchor only if the available
-evidence cannot resolve the alignment. Transcript similarity alone cannot prove sync.
+- Downmix stereo by averaging (`pan=mono|c0=0.5*c0+0.5*c1`). Summing raises identical
+  channels by 6 dB and `-ac 1` by about 3 dB (measured); either clips a voice that
+  peaked near full scale.
+- Process in floating point and write integer PCM once, at the end; a filter applied to
+  an already clipped 16-bit file clips again. Check the edited voice for full-scale
+  samples and flat-topped runs before mixing, and measure the encoded copy as well as
+  the PCM master: AAC overshoot can need more headroom.
 
-## Preflight and source color
+Sync to camera reference audio with a coarse offset from speech envelopes, refined on
+waveform windows. Check several positions per recording for drift, and never carry one
+offset across unrelated camera files; encoder start timestamps and decoded sample
+positions differ. With silent video, match distinctive mouth movements and reactions to
+the transcript and audio, record the uncertainty, and ask the user for an anchor only
+when the evidence cannot resolve it. Transcript similarity alone cannot prove sync.
 
-Estimate disk use before a long preview, source conversion, or installation.
-Reuse completed transcripts and frame surveys after a storage failure. Resume
-only the failed stage; do not delete original or unrelated files to make room.
+## Source color and storage
 
-Compare a short actual export against the source appearance before full finishing.
-iPhone HLG/Dolby Vision can become washed out through the wrong transform.
-One checked workflow normalized selected full-resolution source windows
-with half-second handles, then used unmanaged Rec.709 in Resolve to avoid a
-second HDR transform. This was technical normalization, not a creative grade.
+After a storage failure, resume only the failed stage and reuse finished transcripts
+and surveys; never delete originals or unrelated files to make room.
 
-The verified FFmpeg filter for that particular source was:
+iPhone HLG and Dolby Vision turn washed out through the wrong transform. Compare a short
+export against the source before finishing. One checked workflow normalized the
+selected full-resolution windows (half-second handles) with:
 
 ```text
 zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=hable:peak=10:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p
 ```
 
-It was encoded at full upright 1080x1920/60fps with H.264 VideoToolbox at 40 Mbps,
-tagged BT.709. Resolve used `davinciYRGB` with Rec.709 Gamma 2.4 timeline/output.
-These values are a source-specific working example, not a universal iPhone LUT.
-Some FFmpeg builds lack `zscale` (and `drawtext`); check `ffmpeg -filters`. On macOS,
-`avconvert -s IN -p Preset1920x1080 -o OUT --start S --duration D` gave upright BT.709
-SDR with Apple's tone mapping that matched the source by eye (one project, 2026-09).
-Its trims land a few tens of milliseconds off: re-sync each window by audio
-cross-correlation rather than trusting `--start`.
-Probe each recording, inspect the sample, and retain original HDR media. Reuse
-normalized windows for revisions whose source ranges remain within their handles.
+encoded upright 1080x1920/60 fps with H.264 VideoToolbox at 40 Mbps tagged BT.709, then
+used an unmanaged Rec.709 Gamma 2.4 Resolve timeline (`davinciYRGB`) to avoid a second
+HDR transform. That worked for one source; it is not a universal LUT. Some
+FFmpeg builds lack `zscale` and `drawtext` (check `ffmpeg -filters`). On macOS,
+`avconvert -s IN -p Preset1920x1080 -o OUT --start S --duration D` gives upright BT.709
+SDR with Apple's tone mapping, matched to the source by eye once; its trims land tens
+of milliseconds off, so re-sync each window by audio cross-correlation. Keep the
+original HDR media, and reuse normalized windows for revisions that stay inside their
+handles.
 
 ## Cut and render
 
-For simple synchronized cuts, write an FFmpeg filter file from the cutlist:
+For synchronized cuts, write an FFmpeg filter file from the cutlist:
 
 ```text
 [0:v]trim=start=A:end=B,setpts=PTS-STARTPTS[v0];
@@ -169,53 +127,44 @@ For simple synchronized cuts, write an FFmpeg filter file from the cutlist:
 [v0][a0][v1][a1]concat=n=2:v=1:a=1[vout][aout]
 ```
 
-Snap `A` and `B` to frame boundaries (a multiple of 1/fps) so each segment's
-picture and audio have the same length; `DUR_MINUS_008` is the segment duration
-minus 0.008 s. Micro-fades reduce clicks; make them short enough to preserve consonants.
-For independent picture/audio cuts, concatenate each track separately and
-check matching total durations. Record the incoming pre-roll and picture
-join explicitly. Do not create a frozen face to fill every missing handle.
+Snap `A` and `B` to frame boundaries (multiples of 1/fps) so each segment's picture and
+audio have the same length. Micro-fades reduce clicks; keep them short enough to keep
+consonants. For split edits, concatenate each track separately and check that the
+totals match. Match fps, dimensions, SAR, audio layout and sample rate across
+concatenated sources.
 
-Use a smaller, fast-encoded preview until the story and layout settle.
-For final social delivery, these are starting settings, not platform mandates:
+Starting settings for final social delivery (current FFmpeg reads a filter file with `-/filter_complex`; newer builds
+dropped `-filter_complex_script`):
 
 ```bash
 ffmpeg -i IN -/filter_complex filters.txt -map '[vout]' -map '[aout]' -c:v libx264 -crf 19 -preset medium -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart master.mp4
 ```
 
-An upload copy can use CRF 23 and AAC 128k when it remains visually adequate.
-Prefer generating final variants from the same high-quality source over
-chaining unnecessary lossy transcodes. Match fps, dimensions, SAR, audio
-layout, and sample rate across concatenated sources. Upscaling does not
-restore detail in a low-resolution asset.
+An upload copy can use CRF 23 and AAC 128k. Make every variant from the same
+high-quality source rather than chaining lossy transcodes.
 
-Apply tempo changes consistently to video, audio, captions, and overlays.
-Do not use source seconds as output seconds after a speed change. Preserve
-natural voice pitch with the available tempo filter and check delivery in context.
-Stretchers differ audibly on speech: in one measured case at 1.15x, ffmpeg
-`atempo` (WSOLA, splices the recorded waveform) kept 95% of the transient energy
-over a speed-up-and-back round trip, against 86% for rubberband's R3 engine and
-69% for R2. Run the same round trip on your source and listen before choosing.
+Speed changes apply to video, audio, captions and overlays alike; source seconds are not
+output seconds afterwards. Stretchers differ audibly on speech: in one measured case at
+1.15x, `atempo` kept 95% of the transient energy over a speed-up-and-back round trip,
+against 86% for rubberband R3 and 69% for R2. That was one source; yours may differ.
 
-Process a voice recording as little as it needs: a high-pass, one gain per take
-so lines sit level, and a linear loudness pass. Add compression only when the
-raw needs it, because it lifts quiet syllables, breaths and room tone. Before
-delivery, play the processed voice beside the raw at matched loudness; users
-notice when their own voice sounds worse than their recording.
+## Voice, loudness and mixing
 
-For audio, start near -14 LUFS with peak headroom, for example
-`highpass=f=70,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000`, adapting to the
-source and mix. On a quiet source whose true peak is already near the ceiling,
-`loudnorm` cannot reach the target linearly and silently switches to dynamic mode;
-measure first (`loudnorm=print_format=json`), and if so apply gentle compression
-and a limiter (for example `acompressor`, then `volume`, then `alimiter`) before a
-final linear pass. `alimiter` delays its output by its lookahead (5 ms by default)
-unless `latency=1`; set it when the limited mix is muxed against picture. Its
-`level` option defaults to auto-level, which raises the output after limiting;
-set `level=0` for a plain ceiling. Measure the actual final export because encoding/mixing
-can change loudness and peaks. Sparse sound effects should sit below speech.
+Process a voice as little as it needs: a high-pass, one gain per take so lines sit
+level, and a linear loudness pass. Compression lifts quiet syllables, breaths and room
+tone, so add it only when the raw needs it. Before delivery, play the processed voice
+beside the raw at matched loudness; people notice when their own voice sounds worse.
 
-Place effects on the speech track with `adelay` and mix without auto-normalizing:
+Start near -14 LUFS with peak headroom, e.g.
+`highpass=f=70,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000`. On a quiet source whose
+true peak already sits near the ceiling, `loudnorm` cannot reach the target linearly and
+silently switches to dynamic mode: measure first (`loudnorm=print_format=json`) and, if
+so, apply gentle compression and a limiter before a final linear pass. `alimiter` delays
+its output by its lookahead (5 ms) unless `latency=1`, and its `level` option defaults
+to auto-level, which raises the output after limiting; use `level=0:latency=1` when the
+mix is muxed against picture. Measure the actual final export.
+
+Place effects with `adelay` and mix without auto-normalizing:
 
 ```text
 [1:a]volume=-10dB,adelay=500|500[s1];
@@ -223,92 +172,51 @@ Place effects on the speech track with `adelay` and mix without auto-normalizing
 [speech][s1][s2]amix=inputs=3:normalize=0:duration=first[mix]
 ```
 
-Delays are milliseconds in final output time; gains are starting points to adjust.
-For a reported inaudible bed, compare the stem, intended mix, and exported mix
-in matching speech and pause intervals. Stereo-side energy can be dominated by
-camera ambience, so it does not reliably isolate music. Native pitch correction
-may change PCM between renders; a hash mismatch alone does not identify a mix
-fault. Use contextual audio review when available and report the limits of
-signal measurements. For brief SFX, whole-clip RMS can conceal a strong transient:
-compare short active windows with speech at the same instant as well as the whole
-effect. Short windows, such as 50 ms, are a diagnostic, not an audibility threshold.
-A positive effect-to-speech ratio during a speech pause does not establish masking.
-Keep project-specific gain changes in the project.
+Delays are milliseconds in final output time; gains are starting points. For a bed the
+user cannot hear, compare the stem, the intended mix and the export in matching speech
+and pause windows. For brief effects, whole-clip RMS hides a strong transient: compare
+~50 ms active windows with speech at the same instant. Native pitch correction can change
+PCM between renders, so a hash mismatch alone does not locate a mix fault.
 
 ## Captions
 
-When overlays change position, inspect captions at entry/exit boundaries as well
-as settled frames. A caption starting just before a layout boundary can continue
-into the next visual and collide. Use a phrase-specific position override rather
-than moving an entire caption track. Fit product crops with contain when the
-whole silhouette matters; fill/crop can accidentally truncate the object.
-
-For an FFmpeg/ASS caption path, reuse [make_captions.py](../scripts/make_captions.py); its docstring defines
-the input schema. A minimal cutlist looks like:
-
-```json
-{
-  "segments": [{"src_start": 25.29, "src_end": 28.77, "out_start": 0}],
-  "fix": {"Alexx": "Alex"},
-  "style": {"play_res": [1080, 1920], "font": "Arial", "size": 72,
-            "margin_lr": 100, "margin_v": 350}
-}
-```
-
-These sample margins are not a universal safe area. Measure the actual
-face/content and account for the destination's interface.
+For an FFmpeg/ASS path, use [make_captions.py](../scripts/make_captions.py); its
+docstring defines the cutlist schema and the chunking rules.
 
 ```bash
 python3 SKILL_DIR/scripts/make_captions.py audio.json cutlist.json captions.ass --expected expected.txt
+python3 SKILL_DIR/scripts/test_make_captions.py   # dependency-free self-check
 ```
 
-The generator uses short chunks, punctuation/gap breaks, and caption timing
-clamped against the next chunk. Require zero overlaps. Check captions against
-the final duration and ensure the last selected word survives the cutlist's
-boundary filter. Correct name spelling without changing the spoken meaning.
-For speed changes, supply word timings in final output time or map them
-explicitly; this generator's source-to-output offset alone does not scale time.
+- Its sample margins are not a safe area: measure the face, the content and the
+  destination's interface.
+- Review every word it reports as clamped or lowercased. Its overlap warning does not
+  fail the exit code; read the count and repair timing before burning.
+- It shifts source time by each segment's offset but does not scale time: after a speed
+  change, supply word timings in output time.
+- Emphasis is not automatic: add ASS override tags to the chosen lines, and review text
+  containing ASS control characters.
+- Check that the last selected word survives the cutlist's boundary filter, and burn
+  from a working directory where the subtitle paths resolve. Keep the uncaptioned render.
 
-The helper expects checked local JSON and uses fixed phrase/timing heuristics.
-It keeps words that reach at least 50 ms into a cut, clamps ones that start
-before it, joins split numbers, lowercases mid-sentence segment capitals, and
-adds caption padding that never starts before a clip or ends after the export.
-Review every word it reports as clamped or lowercased. Emphasis styling is not
-automatic: add ASS override tags to the chosen lines. Very close phrases can still overlap because of the minimum
-display duration. The overlap warning does not produce a failing exit code;
-inspect the reported count and repair timing before burning. Review caption text
-containing ASS control characters before rendering it.
-
-Run its dependency-free CLI check with:
-
-```sh
-python3 SKILL_DIR/scripts/test_make_captions.py
-```
-
-Burn with the ASS/subtitles filter from a working directory where its paths
-resolve. Preserve the uncaptioned render when useful for later changes.
+When overlays move, inspect captions at entry and exit boundaries as well as settled
+frames: a caption that starts just before a layout change can run into the next visual.
+Override that phrase's position rather than moving the whole track. Fit product crops
+with contain when the whole silhouette matters.
 
 ## Visual geometry and evidence
 
-For punch-ins, derive even crop dimensions from the zoom factor and anchor
-the crop to keep relevant content visible. Recalculate caption/overlay bounds
-after cropping. Only add a zoom or end card when it serves the brief.
+For punch-ins, derive even crop dimensions from the zoom factor, anchor the crop on the
+content, and recompute caption and overlay bounds afterwards. In a split edit the
+picture join is not the audio join; inspect frames at the picture join.
 
-Extract a survey using an FFmpeg `fps`, `scale`, and `tile` filter; inspect
-specific frames around each changed picture cut and overlay transition.
-Use the actual picture join, not only the audio cut, for split edits. Check
-the caption band at representative times throughout the edit, using the
-configured caption location rather than assuming the bottom 260 pixels.
+When the brief limits reuse or coverage, count original identities across crops and
+renames, and compute coverage as the complement of the union of visible overlay
+intervals from 0 to the final duration, treating fades conservatively.
 
-Check original asset identity across aliases/crops. Calculate the union of
-visible overlay intervals, then measure its complement from time zero to
-the final duration. Include fades conservatively; do not rely on an almost
-transparent image to satisfy the active coverage limit.
-
-For a reported freeze, compare consecutive frames around that transition
-and inspect actual motion. For a reported pause, inspect audio around the
-join. Combine these with contextual playback/listening when available;
-duplicate-frame and silence tests alone cannot certify natural pacing.
+For a reported freeze, compare consecutive frames around the transition; for a reported
+pause, inspect the audio around the join. Duplicate-frame and silence tests alone cannot
+certify natural pacing.
 
 ## Delivery checks and caching
 
@@ -317,108 +225,64 @@ ffmpeg -v error -i OUT -f null -
 ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate:format=duration,size -of json OUT
 ```
 
-Extract final mixed audio for one independent local transcription and
-compare substantive speech against the selected dialogue. Keep that QA
-transcript separate from caption inputs so a new ASR error cannot silently
-rewrite verified captions.
+Keep the final-audio QA transcript separate from caption inputs so a new ASR error
+cannot rewrite checked captions. Reuse transcripts and caption timing after a
+picture-only change only when the audio is proven unchanged (same artifact, identical
+decoded PCM); a filename proves nothing.
 
-Reuse transcription and caption timing after a picture-only change only
-when the audio and edit timeline remain unchanged. An unchanged audio
-artifact, identical decoded PCM, or equivalent pipeline evidence can establish
-reuse; a filename alone cannot. Recheck affected joins, speed/mix changes,
-and the final ending when audio does change. Decode each delivered file.
-
-Render only changed overlay scenes and reuse unchanged assets. Cache validity
-depends on source identity, timing and layout inputs, not output-file existence:
-invalidate the affected MOV after changing its manifest. Generate review sheets
-after their full-frame images are ready; a stale thumbnail caused a false subtitle
-report in a prior edit. Resolve a suspected defect against the current full-size frame
-before rerendering. Sample each delayed layer entry and outgoing context, not only
-one frame per scene. Static samples still do not prove animation or listening quality.
+Render only changed overlay scenes. A cache is valid when its source identity, timing
+and layout inputs are unchanged, not because an output file exists: invalidate the
+affected render after its manifest changes. Generate review sheets after their
+full-size frames are ready (a stale thumbnail once caused a false subtitle report), and
+confirm a suspected defect on the current full-size frame before rerendering. Sample
+each delayed layer entry, not one frame per scene; stills never prove animation or
+listening quality.
 
 ## Reusable media library
 
-When the asset-library skill is installed, its library is the index: search it
-before sourcing, ingest new picks with provenance, register reusable things when
-they work, declare each delivered cut's selections with the exact files placed,
-and follow its delivery step. Its commands and record fields are in that skill;
-this section covers what any index or manifest must preserve.
+With the asset-library skill installed, its library is the index and its steps cover
+search, ingest, registration, declarations and delivery. Without it, use the project's
+existing index, or a small manifest beside the edit that records each asset's original
+identity, source and licence, and where the cut uses it.
 
-Without it, use the project's existing asset index if one exists. Otherwise keep
-a small manifest alongside the edit with original identity, local path, source
-URL, source time range, credit or license requirements, selection status, spoken
-cue, and where the asset was used. No separate catalog service is required.
-
-Preserve original identity across renamed files and crops. Count source works
-separately from useful variants, such as one music recording in source, extended,
-and ducked forms. Exact hashes detect identical files; audio deduplication may
-need aligned, gain-normalized waveform comparison and review of likely matches.
-Similar whooshes are not automatically duplicates. Enforce any brief-specific
-reuse limits against original identities rather than filenames.
-
-For sound compilations, inspect each onset and tail for neighboring sounds or
-truncation. Mark uncertain effects provisional and choose sounds for actual cues.
-Keep rejected candidates out of active selections while preserving files used by
-older projects. Source provenance is not publication permission.
+- Count source works separately from useful variants (one recording in source, extended
+  and ducked forms). Exact hashes find identical files; audio duplicates need aligned,
+  gain-normalized waveform comparison, and similar whooshes are not automatically
+  duplicates.
+- In sound compilations, inspect each onset and tail for neighboring sounds or
+  truncation; mark uncertain effects provisional.
+- Keep rejected candidates out of active selections while preserving files older
+  projects use. Source provenance is not publication permission.
 
 ## Extending a short music recording
 
-Find a musically matching phrase return and crossfade it instead of blindly
-restarting the track at its end. Preserve pitch if a small tempo fit is needed;
-align intro/outro to the final timeline, duck under speech, and keep a requested
-music-free hook silent in the music stem. Inspect loop boundaries in context when
-listening is available. Loop length and crossfade duration depend on the recording;
-numeric settings alone do not prove a seamless audible loop.
+Find a musically matching phrase return and crossfade there instead of restarting the
+track at its end. Preserve pitch for a small tempo fit, align intro and outro to the
+final timeline, duck under speech, and keep a requested music-free hook silent in the
+music stem. Loop length and crossfade depend on the recording; listen to the seam.
 
-When ducking a bed with `sidechaincompress`, pad the speech key with `apad` and trim
-the output to the final duration with `atrim`. The filter stops when the key ends,
-silently dropping the bed's tail and any fade scheduled there. Before mixing, confirm
-every stem (speech, music, effects) is as long as the picture.
-
-## Repeated-speech checks
-
-`scripts/restart_scan.py` automates the interior check below for a whole cutlist.
-For a first survey of a long take-heavy recording, transcribe per speech island
-(split at silences) with conditioning off: whole-file decoding with conditioning on
-has looped one sentence for minutes, and chunked decoding still merged restarts.
-
-Treat unexpectedly long word timestamps as a reason to inspect the underlying
-audio. A recognizer can assign a single word a long interval containing repeated
-speech. A long transcription and a short check ending at the previous take can
-both miss it.
-
-Decode each window separately. Phonon can batch files under one loaded model
-while writing a separate JSON for each input. Treat words at clipped window
-edges as suspect and include context. If a concrete failure justifies Whisper,
-use separate input calls with previous-text conditioning off.
-
-Inspect overlapping windows containing the outgoing phrase, the join, and the
-first phrase of the incoming clip. Include the interior of a selected passage
-when a word spans an implausibly long interval or the source contains restarts;
-a repeat can survive entirely within one clip. Use tiny source windows to localize a suspect
-repeat, then verify the combined final join again. Tiny-window ASR can also
-hallucinate; reconcile conflicting results against source context, waveform, and
-listening when available. An instruction to transcribe verbatim does not make
-the recognizer reliable by itself.
+When ducking with `sidechaincompress`, pad the speech key with `apad` and trim the output
+to the final duration with `atrim`: the filter stops when the key ends, silently dropping
+the bed's tail and any fade scheduled there. Before mixing, confirm every stem is as
+long as the picture.
 
 ## Cutting under a finished composition
 
-When animation, cards and captions are already cued to the old timeline, removing a
-span from the camera, cutout and dialogue can leave every layer untouched: map the
-composition frame to the old ("story") frame (`story = f < CUT ? f : f + N`), pass that
-to the layers, map effect cues back, and drop cues inside the removed span. Correct the
-word timings ASR had merged across the removed span first. Check the join's picture as
-well as its audio: elements whose entrances fell inside the span appear already in place.
+When animation, cards and captions are already cued to the old timeline, a span removed
+from the camera, cutout and dialogue can leave every layer untouched: map the composition
+frame to the old ("story") frame (`story = f < CUT ? f : f + N`), pass that to the
+layers, map effect cues back, and drop cues inside the removed span. Correct the word
+timings ASR merged across the removed span first. Check the join's picture as well as
+its audio: elements whose entrances fell inside the span appear already in place.
 
 ## Frame-rounded timing
 
-Keep source positions, normal-speed record frames, and final output frames
-separate. Use integer frames for edits; round only at conversion boundaries.
-After a removal, map every dependent layer through the same removed interval.
-After a speed change, compare predicted duration with the native result.
+Keep source positions, normal-speed record frames and final output frames separate. Edit
+in integer frames and round only at conversions. After a removal, map every dependent
+layer through the same interval; after a speed change, compare the predicted duration
+with the native result and use the observed one. Read one current speed rather than
+carrying per-item values from a previous version.
 
-For final manifests assert `0 <= start < end <= exported_duration`, caption
-bounds/no unintended overlap, and matching picture/audio end frames. Calculate
-visual coverage using merged intervals, not a sum of individual durations.
-Read or derive one current speed, rather than carrying per-item values from a
-previous version. Leave a small margin inside the current brief's timing limits.
+For final manifests, assert `0 <= start < end <= exported_duration`, caption bounds with
+no unintended overlap, and matching picture and audio end frames. Leave a small margin
+inside the brief's timing limits.

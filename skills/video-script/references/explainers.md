@@ -13,10 +13,11 @@ An explainer shows how something works. Two things decide whether it plays as a 
 
 ## Written to be seen
 
-The narration and the picture tell the story together. Draft the picture beside every line, even when the deliverable is plain prose: a line nobody could draw is one the viewer has to hold in their head.
+The narration and the picture tell the story together. Draft the picture beside every line even when the deliverable is plain prose.
 
 - Keep the details a viewer can picture or compare with something they know. Translate a figure or term that only means something to insiders into what it looks like or does, or leave it out.
-- Give abstract forces a body: a place where the problem happens, an object or character that stands for it. One such device can carry several parts.
+- Where the real term can be said plainly ("a higher frequency"), use it. A metaphor that replaces a sayable term has to earn its place by showing something the term can't.
+- An abstract force can get a body: a place where the problem happens, an object or character that stands for it. One such device can carry several parts.
 - Once a framing device is set up, the visuals carry it and the narration talks about the subject.
 - Give each thing one name and keep it for the whole script.
 
@@ -28,6 +29,6 @@ An analogy is a claim about how the thing works. Choose one whose steps correspo
 
 ## Tone and sources
 
-- Write for a smart viewer outside the field: the full mechanism in plain words, with the explanation itself as the interest. Humour sits beside a step, never in place of one.
+- Write for a smart viewer outside the field: the full mechanism in plain words, with the explanation itself as the interest.
 - From a reference video, borrow structure and never wording. Check its facts at primary sources; popular explainers often get the mechanism itself wrong.
 - Runtime follows the chain. When the target runtime is too short for the chain, cut parts rather than shrinking each part to one sentence.

@@ -1547,7 +1547,7 @@ EPILOG = """workflow:
   init ROOT                      create a library (once)
   search / show                  before sourcing or building anything
   ingest FILE                    bring in a sourced or recorded media file
-  register --kind code|...       snapshot a reusable bundle version as soon as it works
+  register --kind code|...       snapshot a bundle version another project is about to reuse
   used --from DECLARATION.json   record the uses a cut declares
   deliver --project --cut ...    run the project check, then record the delivery decision
 root: --root, else ASSET_LIBRARY_ROOT, else a 'Root: `PATH`' line in ~/.asset-library/profile.md"""

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Build checks and the temporal review for the shot (see realistic-3d.md, "Temporal review").
+# Build checks and the temporal review for the shot (see skills/animated-video/references/review.md, "Temporal checks").
 # usage: ./check.sh [outdir]      (default out/check; run `npm run kit` first in a fresh copy)
 # Writes: shot.mp4, hero.png, motion.png (one second of consecutive frames), sheet.png (every
 # 10th frame), yavg.csv (mean brightness per frame), report.txt (timings, re-render hashes).

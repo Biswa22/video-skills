@@ -8,8 +8,8 @@ and a drop falls from the spout every 1.3 s. Every value is seeded and every mot
 the frame number, so a re-render is bit-identical.
 
 It is a detailed procedural 3D starting point, not photographic quality, and not a recreation of
-any creator's scene, code or assets. It reads as CGI; `references/realistic-3d.md` ("What the kit
-does not do") lists the differences.
+any creator's scene, code or assets. It reads as CGI; the realistic-3D style pack
+(`skills/animated-video/styles/realistic-3d/README.md`, "What the kit does not do") lists the differences.
 
 ## Run it
 

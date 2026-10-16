@@ -11,181 +11,129 @@ description: >-
 # Animated video
 
 Turn a brief into a finished animated video in which every image is made in code: drawn
-procedurally, or built from approved sourced assets placed and rendered deterministically.
-Footage from image or video generators is a separate route (step 2). A film is finished when
-every line is shown by a picture worth watching, the opening earns attention, every shot meets
-the finish bar, and the review checks pass.
+procedurally, or built from approved sourced assets rendered deterministically. Footage from
+image or video generators is a separate route (step 2). Read `~/.animated-video/profile.md` first
+if it exists: the user's stated preferences come before the defaults here.
 
 ## What makes the film
 
 **Be as inventive as the idea allows.** For every concept the film shows, look for the most
 surprising picture that still makes it click. Wacky, impossible, funny or beautiful ideas are
 welcome, and each is judged by one test: does the viewer understand the mechanism faster, or
-remember it longer, than with the literal picture? The literal depiction is the fallback that
-wins only when nothing beats it. Accuracy checks an idea; a metaphor the narration grounds stays.
-Finding these pictures is your job, done before anything goes to the user
-([find the pictures](references/explainer.md#find-the-pictures)).
+remember it longer, than with the literal picture? The literal picture is the fallback that wins
+only when nothing beats it. Accuracy checks an idea; a metaphor the narration grounds stays.
 
-**Colour tells the eye where to look.** Before style frames, write a colour key: a quiet ground
-for the world (dark or pale, low in saturation); one hot accent reserved for the thing the viewer
-follows, always the brightest, most saturated thing in frame; and one or two more colours, each
-meaning exactly one thing (the infrastructure, the danger, the other side). Everything else stays
-desaturated. A colour keeps its meaning for the whole film, and a new meaning is taught on screen
-once. The palette is chosen per film; this structure holds in every style. To match a reference
-look, sample its colours from its frames and give animators the numbers: lights, fog and grading
-drift a named colour ("navy") toward grey, so stills are checked against the measured values.
+**The picture explains; the voice confirms.** With the sound off, a viewer learns each step from
+what happens on screen: the mechanism is performed as cause and effect (cut, sent, hit, copied),
+each line's idea visible by its word, with labels supporting the event rather than replacing it
+([motion](references/review.md#motion)).
 
-**Design fresh for each brief.** Every example in these references, and every past film, is one
-choice among many: take the principle, then design this brief's own answer. A past film the user
-liked sets the bar for finish and pace, never for ideas, devices or look.
+**Colour points the eye.** Decide what each colour means early: the thing the viewer follows
+carries the accent and is the brightest, most saturated thing in frame, and a colour keeps its
+meaning for the whole film. Give each other role its own colour and let everything that carries
+no meaning stay quiet. To match a reference look, sample its colours from its frames and give
+animators the numbers: lights, fog and grading drift a named colour toward grey.
+
+**Design fresh for each brief.** Style packs, parts and past films are head starts. A past film
+the user liked sets the bar for finish and pace, never the ideas, devices or look.
 
 **Feedback narrows a picture, never the imagination.** When the user rejects an idea, write down
 what was wrong with that idea (it confused, felt forced, looked cheap) and find a better one of
-any kind. A rejection becomes a rule about a whole category only when the user states it as one.
+any kind. It becomes a rule about a whole category only when the user states it as one, and the
+briefs you write for other agents carry only the rules the user stated.
 
-**Ask with a recommendation.** Each question to the user carries your recommended answer and a
-one-line reason, so "yes" is a complete reply. At the start, say once that this skill works best
-with Claude Opus 5.5 at high or max effort.
+**Ask with a recommendation,** so "yes" is a complete reply. Say once at the start that the skill
+works best with the strongest available model at high effort.
 
 ## Scale the production to the piece
 
-- **Short (under about 60s):** one agent through every step, checking stills; add parallel
-  animators or a judge panel only when a review shows a problem they fix. Finding the pictures and
-  the mute test always run.
-- **Longer, or many acts:** the full production below. When the user wants parallel agents early,
-  give them research, recurring assets and audio; the pictures, concept, look and animatic stay
-  with one agent until the user approves them. Mechanical lanes (splicing, renders, checks) can run on a
-  faster model; creative work stays with the strongest.
-- **A revision of a finished film:** ask which sections to rebuild, recommending the weakest; keep
-  the rest and [splice](references/remotion-pipeline.md#splicing-new-parts-into-a-finished-film)
-  the new parts into a render of the finished film.
+- **Short or simple:** one agent can carry it, checking stills. The brainstorm still goes to a
+  fresh agent and the mute test still runs.
+- **Longer, or many acts:** keep the pictures, concept and look with one agent until the user
+  approves them, then parallelise the build as suits it. The board fixes each beat's idea;
+  whoever animates owns how it moves and proposes a better picture when they see one. Keep one
+  cue sheet for the whole film so the sound stays intentional. On long runs, send status with a
+  still and the overall time left.
+- **A revision of a finished film:** ask which sections to rebuild, recommending the weakest;
+  keep the rest and [splice](references/handoffs.md#splicing-new-parts-into-a-finished-film)
+  the new parts in.
 - **An insert for someone else's timeline** (an animated shot inside a camera edit, which
-  video-edit owns): [inserts](references/remotion-pipeline.md#inserts-for-another-timeline). When
+  video-edit owns): [inserts](references/handoffs.md#inserts-for-another-timeline). When
   it's unclear who owns the timeline, ask once.
+- **A presenter on camera in the film:** [compositing](references/compositing.md) before those
+  shots are planned.
 
-## 1. Direct the story and find the pictures
+## 1. Find the pictures and the concept
 
-Pick the spine: [a story](references/story.md) (a character who wants something) or
-[an explainer](references/explainer.md) (how something works, why, what a number means). Either
-way: intake questions in one message; find the pictures yourself (references for this topic,
-several ideas per beat from a fresh agent, a pick for clarity, surprise and spectacle); then three concepts
-that genuinely differ, your recommendation, and the chosen one as a timed beat sheet with each
-beat's picture. A finished script settles the words, not the pictures. When the video-script
-skill is installed, check narration against its checklist. If the film will be sped up for
-delivery, lock the speed now.
+Pick the spine in [directing](references/direct.md): a story (someone who wants something) or an
+explainer (how something works, why, what a number means). The pictures come from a fresh
+brainstorm agent that sees no production rules, judged by a separate picker
+([find the pictures](references/direct.md#find-the-pictures)); then concepts that genuinely
+differ, your recommendation, and the chosen one as a timed beat sheet with each beat's picture. A
+finished script settles the words, not the pictures. With the video-script skill installed,
+check the narration against its checklist.
 
-Done when: the user has approved the concept and the beat sheet with its pictures, for short
-pieces too.
+Get the user's approval of the concept and its pictures before building, short pieces included.
 
-## 2. Lock the format and the visual style
+## 2. Lock the format and the style
 
-- When the request names the format and style, confirm it in one line. Otherwise offer two or
-  three styles that genuinely differ, each as a style frame of the same beat with its colour key
-  ([visual styles](references/styles.md)).
+- When the request names the format and style, confirm it in one line. Otherwise show styles that
+  genuinely differ as style frames of the same beat ([styles](styles/README.md)) and get a pick;
+  read the chosen style's pack when it has one.
 - Ask about the route and its cost: made in code is free per shot and consistent; AI video costs
-  per clip and drifts. For a photoreal or physically detailed world, read
-  [realistic 3D](references/realistic-3d.md) first.
-- Look up photos of the real objects, places and interfaces the film shows, so the drawing is true
-  in its own style. If a real person appears, ask where their footage lives and pull frames with
-  ffmpeg.
-- Read `~/.animated-video/profile.md` if it exists: the user's preferences and past projects.
-
-Done when: the user has picked a style frame and its colour key.
+  per clip and drifts.
+- Look up photos of the real objects, places and interfaces the film shows. If a real person
+  appears, ask where their footage lives and pull frames from it.
 
 ## 3. Build the audio spine
 
-Every beat times off the narration (or, without one, the music bed, chosen first).
-1. VO: prefer the user's recording; before it exists, use
-   [stand-in word timings](references/remotion-pipeline.md#before-the-vo-exists). Label TTS as a
-   stand-in.
-2. `templates/remotion-film/align.py` gives word timestamps and a loudness envelope; derive every
-   cue from words with `cue("phrase")`, so a new VO re-times the film.
-3. Write captions by hand as sense units. The opening caption is the hook, its own composition:
-   larger type revealed word by word, the key word landing hardest.
-4. Plan music and effects now; they ship with the first cut. Source: the user's files, the asset
-   library or samples on disk, then synthesis (`templates/parts/audio/designed.py`, labelled
-   synthetic). Given a reference video, match its music's role.
+Every beat times off the narration (without one, off the music bed, chosen first). Prefer the
+user's recording; before it exists, build on
+[stand-in word timings](references/remotion-pipeline.md#before-the-vo-exists), labelled.
+`templates/remotion-film/align.py` gives word timestamps and a loudness envelope; derive every
+cue from words with `cue("phrase")`, so a new VO re-times the film. Captions are hand-written
+sense units checked against the transcript. Music and effects ship with the first cut: the
+user's files, the asset library or samples on disk before synthesis
+(`templates/parts/audio/designed.py`), and anything synthetic is labelled.
 
-Done when: every cue resolves against the transcript or stand-in.
+## 4. Skeleton and board
 
-## 4. Skeleton, animatic and key-frame board
+Copy `templates/remotion-film/`, wire acts, captions and audio, and render stills across the
+timeline ([pipeline](references/remotion-pipeline.md)). Unverified facts stay out of the film.
 
-Write `STORYBOARD.md`: logline, colour key, and a scene table of timing, picture, on-screen text
-and transition. Plan what stands behind any presenter insert as part of the film
-([compositing bar](references/realistic-3d.md#compositing-cg-with-camera-footage)). Unverified
-facts go in `NOTES.md` and stay out of the film. Copy `templates/remotion-film/`, wire acts,
-captions and audio, and render stills across the timeline
-([pipeline](references/remotion-pipeline.md)).
+Show the user a **key-frame board** before the full animation: a still per beat in the chosen
+style, built in the real scene files so it grows into the finished shots. Approved stills don't
+show whether anything happens between them; when meaning lives in motion, an **animatic** (rough
+shapes performing the beats over the VO) shows it cheaply.
 
-When meaning lives in motion, build the **animatic**: blocked shapes performing every beat over
-the real VO, something visibly changing about every second, checked as frame strips and with the
-[mute test](references/review.md#mute-test). Then the **key-frame board**, rendered from the real scene
-files so the approved board grows into the finished shot: one still per beat in the approved style, as one contact sheet with each line beside its frame; wait for the user's notes.
+## 5. Build the assets and shots
 
-Done when: every act renders end to end with captions and audio, and the user has approved the
-animatic and the board. If they want to skip the animatic, say what it would catch, recommend it,
-and report a skipped gate at delivery.
+Search the asset library first when it's installed. Recurring pieces hold at every scale the
+story needs: drawn characters per [characters](references/characters.md);
+[parts](templates/parts/README.md) has a globe, an iMessage iPhone, designed sounds, a realism kit
+and a motion kit for dense three.js motion. Restyle what you take.
 
-## 5. Recurring assets
+When several agents animate, give them one written look and bar, taken from the style pack and
+the anchor frames (the reference film's frame for each beat, or the board). In every style, a
+real object, interface, company or place is recognisably itself, and a stand-in gets the same
+care. Derive each act's [sound events](references/remotion-pipeline.md#sound-events) from the
+constants that draw it, so moving a beat moves its sound.
 
-Search the asset library first when it's installed. Build what appears in more than one shot
-first (characters, props, sets, real interfaces, camera language, the finish), each holding at
-every scale the story needs: rigs per [character lessons](references/character-rig.md), graphics
-per [graphics lessons](references/motion-graphics.md). `templates/parts/` has a globe, an iPhone
-running iMessage and designed sounds; restyle them to the film.
+## 6. Review and deliver
 
-Done when: a showcase shows every recurring asset at its used size, with an API summary animators
-can use; register reusable ones in the asset library.
+Agents see frames, not playback: check motion as strips of consecutive frames
+([temporal checks](references/review.md#temporal-checks)) and audio by measurement, and say what
+was only measured. When you can't trust your own eye, have independent fresh agents judge
+([review](references/review.md)); stop iterating when a round gains little or the top issue
+needs the user.
 
-## 6. Animate the shots
+Before the first full cut goes to the user, a fresh judge runs the
+[mute test](references/review.md#mute-test) on it; fix what it can't follow. A rejected whole cut
+restarts from the pictures ([restart](references/review.md#restart-after-a-rejected-cut)).
 
-Write the art bible: look, colour key, cast, staging, safe zones, the style's bar, and this
-**finish bar**, which holds in every style:
-- **Full frame:** no more than about a quarter of the frame as flat colour; the picture continues
-  calmly behind captions.
-- **Depth:** foreground, subject, background, with parallax (flat styles use overlap and scale).
-- **Light:** the brightest thing is the one the eye should follow, in the hero accent; light
-  sources light their surroundings.
-- **Real things:** a real object, interface, company or place shown is recognisably itself in the
-  style's language; a stand-in gets the same care. A human action shows the hand doing it.
-- **Life and intent:** a primary action, secondary action and ambient life in each shot, with
-  anticipation and settle; every camera move answers an event.
-- **Transitions through content:** a morph, a push through an object, particles that reform.
-- **Detail in the picture,** from objects, light and motion; decorative scaffolding (HUD kickers,
-  tick marks, corner brackets, fake readouts) stays out.
-
-Per-act briefs point at the key frames and the animatic. The board fixes each beat's idea; the
-animator owns how it moves and the details that delight, and proposes a better picture when they
-see one. One animator per act, each owning its files; the shared kit stays read-only. The director
-owns legibility: could a newcomer retell every shot? Each act exports sound events from the
-constants that draw it ([sound events](references/remotion-pipeline.md#sound-events)), with hero
-actions on their words. Draw every frame from the frame number and seeded randomness. For dense
-three.js motion, use the [motion kit](templates/parts/src/kit/motion/README.md).
-
-Done when: each act's contact sheet tells its beats with the sound off and meets the finish bar
-beside its key frames, and the typecheck is clean.
-
-## 7. Review
-
-Extract frames (contact sheets, dense frames around cuts) and measure audio with ffmpeg; play or
-listen only when a tool allows, and report which happened. Run independent judges, route issues to
-owners by time range, fix in parallel, re-render ([review](references/review.md)).
-- Spot-check every flagged moment yourself after each render.
-- Compare each act with its anchor: the reference film's frame for that beat, or the key frame.
-- Check consecutive frames across each shot's fastest second for flicker, pops and stutter; 3D
-  shots also get the [temporal checks](references/realistic-3d.md#temporal-review).
-- Keep open issues in `ISSUES.md`; stop when a round gains little or the top issue needs the user.
-- When the user rejects a whole cut, restart from the pictures
-  ([restart](references/review.md#restart-after-a-rejected-cut)).
-
-## 8. Deliver
-
-Before the first full cut goes out, a fresh judge runs the mute test on it; fix any named defect
-that costs a render or less. Render the final (loudness normalized; long films in chunks), check
-the first frame, the last second and the loudness. Report the path, open issues, skipped gates,
-sourced images, and anything synthetic or invented. Commit each version in the project's git repo.
-Small changes to a finished film take the cheapest route that keeps quality, such as an ffmpeg
-pass. With the asset library installed, close its catalog (its steps 4–5); otherwise list reusable
-pieces in `NOTES.md`.
+Render the final (`render.sh` normalises loudness; long films in chunks) and check the first
+frame, the last second and the loudness. Report the path, open issues, skipped checks, sourced
+images, and anything synthetic or invented. Commit each version in the project's git repo. With
+the asset library installed, close its catalog.
 
 On request, reflect with [the reflection protocol](references/reflection.md).
