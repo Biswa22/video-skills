@@ -107,7 +107,7 @@ def recover_gaps(x, words, model):
         if not gaps:
             break
         for a, b in gaps:
-            # ponytail: bounded retries for missed speech; unresolved gaps stop automation.
+            # Bounded retries for missed speech; unresolved gaps stop automation.
             width = (8.0, 4.0, 2.0)[attempt]
             n = math.ceil((b - a) / width)
             for i in range(n):

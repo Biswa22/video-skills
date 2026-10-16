@@ -51,7 +51,7 @@
         "Pitches story concepts that genuinely differ, each with its protagonist, want and the pictures for its key beats",
         "Develops the chosen concept into a timed beat sheet in which every line has a picture with an event in it",
         "Checks the story for a protagonist who chooses, an escalating middle and a believable turn",
-        "Waits for the user to approve the beat sheet before writing the storyboard or building anything"
+        "Waits for the user to approve the concept and beat sheet with its pictures before building anything"
       ]
     },
     {
@@ -102,7 +102,7 @@
       "session": "A finished vertical explainer exists with its Remotion project. In an earlier round the user said one beat's picture (a desk lamp) 'feels too dark' and stated no other rule. The production notes contain a long finish bar and a style guide. The session can launch subagents and runs Claude Opus 5.5.",
       "checks": [
         "Gives the brainstorm to a fresh agent whose brief holds the section's script (with what comes before and after), the inventiveness test, any references and the user's stated rules, and nothing else",
-        "Keeps the finish bar, the style guide and production rules out of the brainstorm brief",
+        "Keeps the style pack, the look and production rules out of the brainstorm brief",
         "Records 'too dark' as a note on that lamp picture rather than banning lamps, metaphors or the earlier film's pictures",
         "Has a separate fresh agent score the ideas for clarity, surprise and spectacle and pick one per beat",
         "Shows the picked pictures to the user before building"

@@ -8,10 +8,10 @@ These are the skills that I use almost every day. I am always adding more skills
 | --- | --- |
 | [reflect](skills/reflect/SKILL.md) | Reviews outcomes and efficiency, shows findings before asking for feedback, and proposes improvements for approval. Works with completed, incomplete, and unsuccessful sessions. |
 | [rsi](skills/rsi/SKILL.md) | Tests changes to agent skills, instructions, tools, and working processes against the current version, with bounded runs and evidence for keeping or rejecting each change. |
-| [video-edit](skills/video-edit/SKILL.md) | Edits talking-head videos, reels, demos, and screen recordings. Covers audio recovery, take selection, supporting visuals, Resolve revisions, captions, and final-export checks. |
+| [video-edit](skills/video-edit/SKILL.md) | Edits talking-head videos, reels, skits, recreations, demos, and screen recordings. Covers audio recovery, take selection, supporting visuals, captions, Resolve or FFmpeg edits, and final-export checks, with optional style packs per format. |
 | [animated-video](skills/animated-video/SKILL.md) | Makes animated videos in code with Remotion, in 2D or 3D: explainers, character stories, motion graphics, kinetic type, and animated infographics. Finds inventive pictures with a separate brainstorm and picker, picks a visual style from side-by-side style frames (optional style packs give head starts), gets a key-frame board approved, times everything from the voiceover, animates in parallel with sound cued to picture events, and reviews renders by frames and audio measurements. |
 | [video-script](skills/video-script/SKILL.md) | Brainstorms short-form video ideas and writes scripts from the creator's own analytics: who has a stake, a hook that lands in 3 seconds, a second sentence that keeps viewers, and proof on screen. Also turns posted-video insights into lessons, with a script that reads retention curves from screenshots. |
-| [asset-library](skills/asset-library/SKILL.md) | Keeps one local library of reusable footage, images, music, sound effects, characters, animation code and 3D sets across projects. Agents search it before sourcing or building, register reusable things as versioned bundles as soon as they work, and record which version each delivered cut used. |
+| [asset-library](skills/asset-library/SKILL.md) | Keeps one local library of reusable footage, images, music, sound effects, characters, animation code and 3D sets across projects. Agents search it before sourcing or building, register something as a versioned bundle when another project is about to reuse it, and can record which version a delivered cut used. |
 
 Each skill lives in its own directory under `skills/` and can be installed separately.
 
@@ -123,9 +123,9 @@ Use the animated-video skill to turn this script into an animated video.
 Confirm the format and show me one style frame before building the full piece.
 ```
 
-For the best results, run it with Claude Opus 5.5 at high or max effort. Short
-unnarrated pieces take one agent and a storyboard; longer narrated films use the
-full production with parallel animators and a review panel.
+For the best results, run it with the strongest model you have at high effort. Short
+pieces take one agent; longer films can animate in parallel, with fresh agents judging
+the cut and a mute test before you see it.
 
 The skill needs a shell, Node.js with Remotion, FFmpeg/ffprobe, and Python 3
 with faster-whisper for word timings. Voiceover comes from the user or a
@@ -136,7 +136,7 @@ parts from past films (a globe with a cable web, an iPhone running iMessage, syn
 effects) sit beside it to copy and restyle. Characters, art direction, and creative defaults are
 designed per project or supplied by you.
 
-For photoreal or physically detailed worlds, the skill reads the references for scale,
+For photoreal or physically detailed worlds, the skill reads its realistic-3D style pack for scale,
 materials, light and motion, chooses between three.js in Remotion and an optional
 [Blender](https://www.blender.org/) render, and gets one moving test shot accepted before the
 full build. For the three.js route it starts from a tested realism kit in `templates/parts/`:
@@ -153,15 +153,15 @@ the story steps, works to the edit's frames and returns the clip with its sound 
 
 ```text
 Use the asset-library skill to set up a library for my video projects.
-Before sourcing anything for this edit, search it, and register what we build as soon as it works.
+Before sourcing anything for this edit, search it, and register anything another project will reuse.
 ```
 
 The library is one SQLite database plus your files, under one folder you choose, driven by
 `scripts/library.py` (Python 3, FFmpeg for probing and previews). There is no server. Media is
 versioned by content hash; characters, code and 3D sets are snapshotted as bundles with their
 files, dependencies, an example, a preview and a validation command, so a cut recorded with a
-version can always find what it used. At delivery the producing skill declares which library
-entries the cut selected, and the check fails until each has a use for that cut and version;
+version can always find what it used. When you want the record, the producing skill declares which
+library entries a delivered cut used, and the check confirms each has a use for that cut and version;
 whether an asset was worth keeping stays your call. Put the library's location and
 your reuse rules in `~/.asset-library/profile.md`.
 
