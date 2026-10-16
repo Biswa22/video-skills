@@ -11,7 +11,7 @@ Explain what helped or hindered the work and what should happen differently next
 
 This is a general-purpose reflection skill for any task, including work that is incomplete or unsuccessful. Use the current session unless the user names another session or a narrower focus.
 
-The default pass reads evidence, shows preliminary findings, invites feedback, and presents proposed edits. Wait for the user's approval of concrete edits before changing reusable instructions. Feedback, agreement with a finding, and a request to reflect are not approval to apply changes. Present proposals in the conversation; save a report only when requested or required by the task's established workflow.
+The default pass reads evidence, shows preliminary findings, invites feedback, and presents proposed edits. Wait for the user's approval of concrete edits before changing reusable instructions. Feedback, agreement with a finding, and a request to reflect are not approval to apply changes; a standing approval recorded in the user's instructions or preference profile is, for edits within its scope. Present proposals in the conversation; save a report only when requested or required by the task's established workflow.
 
 An approval of proposals already shown moves directly to section 8. Preserve that authorization across turns. A request to reflect does not expand permission to change memory, publish, install tools, modify production, or resume the underlying task. Follow the environment's rules for those actions.
 
@@ -33,7 +33,7 @@ For each failure, determine whether guidance was missing, wrong, hard to find, o
 
 Look for existing checks and tools before proposing new ones. Prefer a working deterministic check for a mechanical mistake; keep judgment in instructions. Inspect enough of the actual workflow to distinguish an absent check from a broken or unused one. Propose implementation changes separately when they need additional work or authorization.
 
-Check what earlier reflections changed in the guidance you inspected: its version history, change notes, or session records kept beside it. If an earlier edit targeted the same failure and the failure happened again, treat that edit's reasoning as weakened rather than rewording it. Change how the guidance reaches the agent instead (where it lives, when it loads, or which workflow step, checkpoint, template, or tool enforces it), or propose removing it. Do not re-propose a change the user already rejected unless new evidence changes the case.
+Check what earlier reflections changed in the guidance you inspected: its version history, change notes, or session records kept beside it. If an earlier edit targeted the same failure and the failure happened again, treat that edit's reasoning as weakened rather than rewording it. First weigh whether the guidance costs more than the failure it prevents; when it does, propose removing or narrowing it. Otherwise change how it reaches the agent (where it lives, when it loads) before adding enforcement. Do not re-propose a change the user already rejected unless new evidence changes the case.
 
 Removing or narrowing guidance is a valid proposal when this work shows it misled the agent, duplicates other guidance, or cost effort without benefit, or when earlier records show it repeatedly going unused. Guidance that loads for every task competes for attention on every task; an addition there must justify that cost, so prefer a location that loads only when relevant.
 
@@ -60,10 +60,11 @@ Keep consequential findings in the reflection regardless of whether they justify
 - A recognizable future situation and the action that should change.
 - Why it would still make sense, and still help, on an unfamiliar brief of the same kind of work, at the proposed scope. Names, values, and choices that fit only this task fail this test.
 - What it adds beyond existing instructions, artifacts, or readily available documentation.
+- Whether it tells the agent something it needs to know, or narrows how it must work or what the work can be (a ban, a fixed device or structure, a quota, a required step or artifact). Narrowing lessons from one task belong in that task's record or the user's preferences, not shared guidance, unless the narrowing itself is the requirement.
 
-Ask whether omitting the lesson would make a future agent repeat a meaningful mistake or redo substantial discovery. A single verified discovery or explicit preference can qualify; recurrence is useful evidence, not a required quota. Preserve helpful methods as well as failure prevention.
+Ask whether omitting the lesson would make a future agent repeat a meaningful mistake or redo substantial discovery. An explicit preference, or a single verified tool or platform fact, can qualify; a judgment lesson from one task needs evidence it would hold on another. Preserve helpful methods as well as failure prevention.
 
-Keep temporary outages, exact creative settings, and unverified optimizations out of general rules. Examples, templates, and pointers to worked examples steer future output as strongly as rules: carry one forward only when the user accepted it as a reference, and label it as a single instance. When one project seeds a new skill, keep its durable content to process, checks, failure patterns, and tool gotchas that would hold for a different brief; the project's creative choices stay in its session record. Retain an experiment only with its uncertainty and a check that could disprove it. Merge duplicates and narrow or replace stale guidance. Reject additions that demand open-ended effort ("keep refining until it's great") without a stopping point, and removals of a safeguard without a replacement. If nothing qualifies for a durable edit, report the consequential findings and explain that no instruction change is warranted.
+Keep temporary outages, exact creative settings, and unverified optimizations out of general rules. Examples, templates, and pointers to worked examples steer future output as strongly as rules: carry one forward only when the user accepted it as a reference, and label it as a single instance. When one project seeds a new skill, keep its durable content to process, checks, failure patterns, and tool gotchas that would hold for a different brief; the project's creative choices stay in its session record. Retain an experiment only with its uncertainty and a check that could disprove it. Merge duplicates and narrow or replace stale guidance. Reject additions that demand open-ended effort ("keep refining until it's great") without a stopping point, and removals of a safeguard whose recorded failure would return without it. Prefer replacing, sharpening or deleting an existing line to adding one; guidance that only grows stops being read. If nothing qualifies for a durable edit, report the consequential findings and explain that no instruction change is warranted.
 
 ## 6. Choose the smallest useful destination
 
@@ -100,7 +101,7 @@ When a proposed improvement needs an executed before-and-after comparison, recom
 
 For a new skill or other multi-file proposal, stage the draft outside the live location, point to it, and install only after approval.
 
-Ask which concrete proposals to apply, identifying any unresolved choice. Explain that this skill's review-first workflow is why application waits for approval. Stop before editing reusable instructions. Keep the output proportional to the findings; no fixed lesson count or compulsory long report.
+Ask which concrete proposals to apply, identifying any unresolved choice. Explain that this skill's review-first workflow is why application waits for approval, and stop before editing reusable instructions unless a standing approval covers them. Keep the output proportional to the findings; no fixed lesson count or compulsory long report.
 
 ## 8. Apply approved edits and verify
 
