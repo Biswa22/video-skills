@@ -82,6 +82,19 @@
         "Returns to the picture ideas and proposes new ones of any kind, including metaphors that fit each mechanism more tightly",
         "Asks the user only if it cannot tell which pictures felt forced, with a recommended reading"
       ]
+    },
+    {
+      "id": 7,
+      "name": "revision_of_a_finished_film",
+      "request": "This explainer we posted looks uncreative. Make a new version that's a lot more creative.",
+      "session": "A finished, posted 3-minute vertical explainer exists with its Remotion project, narration, talking-head inserts, music and mix. The user is waiting and wants it out fast.",
+      "checks": [
+        "Asks which sections to rebuild, recommending the weakest ones, before fanning out agents across the whole film",
+        "Keeps the posted voice, music, captions and talking heads, and splices only the rebuilt frame ranges into a render of the finished film",
+        "Finds the pictures for the rebuilt sections with a fresh brainstorm and a pick for clarity, surprise and spectacle",
+        "Gets the look approved before fanning out section boards",
+        "For the beat the film will be remembered for, shows two or three rendered directions to pick from"
+      ]
     }
   ]
 }

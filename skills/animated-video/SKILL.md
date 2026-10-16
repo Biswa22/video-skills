@@ -31,7 +31,9 @@ for the world (dark or pale, low in saturation); one hot accent reserved for the
 follows, always the brightest, most saturated thing in frame; and one or two more colours, each
 meaning exactly one thing (the infrastructure, the danger, the other side). Everything else stays
 desaturated. A colour keeps its meaning for the whole film, and a new meaning is taught on screen
-once. The palette is chosen per film; this structure holds in every style.
+once. The palette is chosen per film; this structure holds in every style. To match a reference
+look, sample its colours from its frames and give animators the numbers: lights, fog and grading
+drift a named colour ("navy") toward grey, so stills are checked against the measured values.
 
 **Design fresh for each brief.** Every example in these references, and every past film, is one
 choice among many: take the principle, then design this brief's own answer. A past film the user
@@ -51,8 +53,12 @@ with Claude Opus 5.5 at high or max effort.
   animators or a judge panel only when a review shows a problem they fix. Finding the pictures and
   the mute test always run.
 - **Longer, or many acts:** the full production below. When the user wants parallel agents early,
-  give them research, recurring assets and audio; the pictures, concept and animatic stay with one
-  agent until approved.
+  give them research, recurring assets and audio; the pictures, concept, look and animatic stay
+  with one agent until the user approves them. Mechanical lanes (splicing, renders, checks) can run on a
+  faster model; creative work stays with the strongest.
+- **A revision of a finished film:** ask which sections to rebuild, recommending the weakest; keep
+  the rest and [splice](references/remotion-pipeline.md#splicing-new-parts-into-a-finished-film)
+  the new parts into a render of the finished film.
 - **An insert for someone else's timeline** (an animated shot inside a camera edit, which
   video-edit owns): [inserts](references/remotion-pipeline.md#inserts-for-another-timeline). When
   it's unclear who owns the timeline, ask once.
@@ -62,7 +68,7 @@ with Claude Opus 5.5 at high or max effort.
 Pick the spine: [a story](references/story.md) (a character who wants something) or
 [an explainer](references/explainer.md) (how something works, why, what a number means). Either
 way: intake questions in one message; find the pictures yourself (references for this topic,
-several ideas per beat from a fresh agent, a pick for surprise and clarity); then three concepts
+several ideas per beat from a fresh agent, a pick for clarity, surprise and spectacle); then three concepts
 that genuinely differ, your recommendation, and the chosen one as a timed beat sheet with each
 beat's picture. A finished script settles the words, not the pictures. When the video-script
 skill is installed, check narration against its checklist. If the film will be sped up for
@@ -113,8 +119,8 @@ captions and audio, and render stills across the timeline
 
 When meaning lives in motion, build the **animatic**: blocked shapes performing every beat over
 the real VO, something visibly changing about every second, checked as frame strips and with the
-[mute test](references/review.md#mute-test). Then the **key-frame board**: one still per beat in
-the approved style, as one contact sheet with each line beside its frame; wait for the user's notes.
+[mute test](references/review.md#mute-test). Then the **key-frame board**, rendered from the real scene
+files so the approved board grows into the finished shot: one still per beat in the approved style, as one contact sheet with each line beside its frame; wait for the user's notes.
 
 Done when: every act renders end to end with captions and audio, and the user has approved the
 animatic and the board. If they want to skip the animatic, say what it would catch, recommend it,

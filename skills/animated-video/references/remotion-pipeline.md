@@ -37,6 +37,20 @@ it plays over footage), its sound events, the cue frames it was timed from, and 
 it used (ID and version) for the requester's cut declaration. The requester keeps the timeline, the
 mix and the cue sheet.
 
+## Splicing new parts into a finished film
+- Render the finished film once from its own project as the base (picture only, the master's frame
+  grid). Each new part is a chapter over exact frame ranges, rendered through the same shell
+  (captions, overlays such as counters, talking-head inserts) and swapped in frame-accurately; check
+  ±3 frames at every seam.
+- Write each part's first and last frames as hand-offs with its neighbours; a match cut onto a
+  neighbour's framing gets a side-by-side check.
+- Audio: keep the narration and music as delivered. Inside the new ranges, mask the old film's event
+  effects with short fades but keep its ambience bed running, then add the new parts' effects from
+  their events.
+- Swapping the music is a remix muxed onto the finished video (copy the video stream). Slow the track
+  by 1/delivery-speed before fitting it, so the sped-up film plays it at its own tempo, and retune
+  pitched effects to its key. Move the replaced files to an archive folder rather than deleting them.
+
 ## Before the VO exists
 - To build ahead of a recording, generate `words.json` from the script at the speaker's measured
   pace (words per second of an earlier recording) and build every beat from `cue()` as usual.
@@ -112,6 +126,8 @@ Sound stays on the picture when both come from the same numbers.
   without the VO to get the VO-to-bed ratio in the 1–4 kHz band.
 
 ## Gotchas
+three.js gotchas (materials, environment maps, screen-space passes, framing, transparency) are in
+[luminous 3D mechanics](style-luminous-3d.md#mechanics); they hold for any three.js film.
 - A killed `remotion still` or `render` can orphan its `chrome-headless-shell` (parent pid 1). In a
   long session with many agents they piled up to about 175 processes and 3 GB. Reap orphans before
   each render: `ps -A -o pid=,ppid=,command= | awk '$2==1 && /chrome-headless-shell/ {print $1}' | xargs kill`.
@@ -128,38 +144,18 @@ Sound stays on the picture when both come from the same numbers.
   and reinstall.
 - Parallel `remotion still` calls on the entry file race on the webpack cache. Bundle once,
   then render stills from the bundle.
-- Many agents rendering on one machine starve each other, and a full render can be killed
-  (exit 137). Throttle, and render final cuts when the machine is quiet.
-- Long renders can exhaust a shared machine: one 3D-heavy film's 3,500-frame render, run beside
-  another segment, ended in a machine crash the user attributed to memory, and 300-frame chunks
-  then rendered cleanly. Render finals in short chunks
-  (about 300 frames, low concurrency, one at a time), skip chunks already on disk so a rerun
-  resumes, then join with FFmpeg's concat demuxer (`-c copy`) and mux the mix. Check the joined
-  frame count against `TOTAL`.
+- Agents rendering on one machine starve each other: a full render can be killed (exit 137), and a
+  3,500-frame 3D render beside another job crashed a machine. Throttle, and render finals in
+  chunks of about 300 frames, one at a time, skipping chunks already on disk so a rerun resumes;
+  join with FFmpeg's concat demuxer (`-c copy`), mux the mix, and check the frame count against
+  `TOTAL`.
 - A React component defined inside another component's body is a new type on every render, so it
   remounts each frame: its geometry rebuilds and any state it set (materials, uniforms) resets.
   It shows as one-frame pops and brightness differences between a sequence and a single still.
   Define components at module level.
-- A wrapper that clones materials (for a per-subtree effect) keeps the clones from seeing
-  per-frame updates the original material's owner makes, and a compile hook that closes over the
-  original makes every clone read the original's uniforms. Bind hooks to the material being
-  compiled, and avoid wrapping subtrees that animate their own materials.
-- three.js (r186): a standard or physical material lit by `scene.environment` ignores
-  `envMapIntensity` unless it has its own `envMap`; assign the environment texture explicitly to
-  scale one material's reflections. A floor's metalness also needs lowering when you lower its
-  specular, or metallic Fresnel keeps it mirror-bright at grazing angles.
-- A screen-space pass that gathers neighbours (depth of field, bloom) spreads one NaN or infinite
-  pixel into a black disc or bar. Sanitise its input (non-finite to 0, clamp to the half-float
-  range).
 - To extract an exact frame from a render, use `-vf "select=eq(n\,N)"`; `-ss` before `-i` on a
   concatenated file was off by one frame.
 - The last renderable frame is `TOTAL - 1`.
-- 3D framing: with a vertical field of view F, a camera at distance d frames a height of
-  2·d·tan(F/2). Set distances from the size the subject must fill, before modelling detail.
-- Nested transparent parts (an x-ray reveal, glass over a chip) need explicit `renderOrder`, or
-  the outer surface paints over what it should reveal.
-- Render a placeholder still of the hardest shot early in the build; scale and framing problems
-  surface there, before hundreds of lines of world-building.
 - To re-cut a finished composition from source-frame segments, offset with nested sequences
   (`<Sequence from={outStart} durationInFrames={len}><Sequence from={-sourceIn}>…`).
   `<Freeze frame={n}>` clamps n to the host composition's last frame, so it silently shows the

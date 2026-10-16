@@ -27,12 +27,18 @@ to the user. The user sees the results, not the steps.
    impossible or wacky one, a change of scale, a personified one, and the one a kid would draw.
    One line each: what we see, and what happens to it.
 3. **Pick.** A second fresh agent scores each idea for clarity (could a viewer with the sound off
-   infer the mechanism?) and surprise (would someone screenshot it?), and picks one per beat. The
+   infer the mechanism?), surprise (would someone screenshot it?) and spectacle (does the motion
+   itself hold the eye: scale, many parts moving together, light? one line or one drifting object is
+   thin), and picks one per beat. The
    literal picture wins only when it is at least as clear and as surprising as the best
    alternative. Then check the picks as a set: one world, a few connected places, or a chain in
    which each picture turns into the next. A change of world is fine when it earns its place.
 4. Write the picks, with the runners-up for the biggest beats, into `PICTURES.md`. The concepts
-   are built from it.
+   are built from it. A device that links sections (a thread, a trail, a recurring copy) connects
+   pictures; it never stands in for a beat's own picture.
+5. For the one or two beats the film will be remembered for, build two or three directions in
+   parallel (a few stills and a few seconds of motion each) and let the user pick from rendered
+   frames, not descriptions.
 
 Done when: every claim in the script has a picked picture, with its rejected alternatives on
 record.

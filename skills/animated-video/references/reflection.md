@@ -24,6 +24,7 @@ after the user approves them. A standing approval recorded in the user's profile
    - reusable, style-neutral code → `../templates/`
    When a project's specifics illustrate a lesson, label
    them as one example among many possible and say what would change for another brief.
-5. Before adding a rule, ask whether it narrows what the next film can imagine. A lesson about one
+5. Before adding a rule, ask whether it narrows what the next film can imagine, and whether it can
+   replace or sharpen an existing line instead of adding one. A lesson about one
    picture or one look is that project's note, not a ban for every film. Prune stale or duplicate rules. Keep transcripts, credentials, personal project history and
    machine-specific paths out of the skill.
