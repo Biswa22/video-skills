@@ -42,7 +42,8 @@ These are screening, not pass marks.
 Independent fresh agents judge a render against the current brief and platform, extracting frames
 themselves and relating them to `words.json`. Useful output: issues with time ranges and fixes,
 plus what to keep, so fixes don't break what works. Between them, cover:
-- **Motion:** on-model consistency, acting, continuity across cuts, broken frames.
+- **Motion:** on-model consistency, acting, continuity across cuts, broken frames, a presenter's
+  eyeline at every cut.
 - **Story and ideas:** does frame 0 stop the scroll; can a newcomer retell what physically
   happens in each line with the sound off; which pictures would a viewer share, and which are the
   literal default a better idea would beat; dead stretches.

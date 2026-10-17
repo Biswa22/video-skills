@@ -26,6 +26,9 @@ in order:
   chest-up frame left a band about a fifth of the height above the head, and a mechanism staged
   there failed the mute test twice at phone size. Ask for a wider frame, or show the mechanism as
   a full-frame cutaway while the voice continues.
+- **Cut points.** When the presenter's picture follows the VO cut, the VO's pauses are where they
+  look at notes. Trim each on-camera shot to eyes on the lens (video-edit's speech-cut rules) and
+  let the background or an insert carry the pause.
 - **Test first.** Finish one clip at full size and judge it beside an untouched frame of the same
   footage before compositing every insert. Clean hard cuts to the presenter are always available
   when no composite passes.

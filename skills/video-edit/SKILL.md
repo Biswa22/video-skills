@@ -166,6 +166,9 @@ Editorial and technical evidence answer different questions.
   changed joins, the brief's visual constraints). Reuse evidence only for what is
   provably unchanged; for audio that means identical decoded PCM. Use a check that
   tests the reported defect; a similarity score with an arbitrary threshold is not one.
+- On camera, check eyeline on the export: a face-size strip of each on-camera shot's
+  first and last half second and its middle. Thumbnail contact sheets hide where the
+  eyes are.
 - After a cut, speed or mix change, re-transcribe the final mixed audio into a
   separate QA file and check changed joins with overlapping windows. A correction is
   verified only when the check covers its full context, including the next clip.
