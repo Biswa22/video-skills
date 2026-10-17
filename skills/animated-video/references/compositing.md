@@ -22,6 +22,10 @@ in order:
   second, not a still.
 - **Pushes.** A 2D push of several times into phone footage blurs the room and flattens the person
   into a cutout. Cut or whip instead, or plan the push when filming and shoot wider.
+- **Framing.** When animation must explain behind the presenter, plan the frame before filming. A
+  chest-up frame left a band about a fifth of the height above the head, and a mechanism staged
+  there failed the mute test twice at phone size. Ask for a wider frame, or show the mechanism as
+  a full-frame cutaway while the voice continues.
 - **Test first.** Finish one clip at full size and judge it beside an untouched frame of the same
   footage before compositing every insert. Clean hard cuts to the presenter are always available
   when no composite passes.

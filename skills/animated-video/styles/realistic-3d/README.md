@@ -124,6 +124,10 @@ record where each came from.
 
 Judge a still of the hero framing beside the matching reference at the same size.
 
+When 3D cuts against real footage of the same object and can't match it, cut on motion or a
+shared shape (a gas burst, matching circles, a fast move) rather than holding the two side by side
+or dissolving slowly between them.
+
 ## People in a realistic film
 
 Hands and faces are where a real-time render reads as CGI first, especially at macro: rubbery

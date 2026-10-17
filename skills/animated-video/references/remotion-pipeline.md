@@ -66,6 +66,8 @@ Sound stays on the picture when both come from the same numbers.
 - One cue sheet maps event ids to sounds, levels and treatments: each place one ambience, each
   recurring thing one recognisable sound, the rest varied so no sample repeats until it's noticed.
 - Drop effects under any stretch replaced by other footage (a talking-head insert).
+- Exported events are candidates, not cues: sound the ones that carry meaning. Acts that export
+  everything they draw can hand the mixer several events a second.
 
 ## Audio mechanics
 
@@ -81,6 +83,8 @@ Sound stays on the picture when both come from the same numbers.
 - Before the VO exists, mix music and effects at the level they will sit under the voice.
 - Duck music by phrase, merging close words; per-word ducking pumps.
 - Keep effects off key spoken words.
+- Real footage brings its own sound (crowd, engines); duck it under speech like music, or it
+  reads as a random burst over the voice.
 - Measure instead of guessing: `ffmpeg -af ebur128` for loudness and true peak; render a stem
   without the VO for the VO-to-bed ratio in the 1–4 kHz band.
 
@@ -96,13 +100,17 @@ Sound stays on the picture when both come from the same numbers.
   do set -- $r`, `$1` stays `"0 300"`, so a chunk loop can render nothing and exit 0. Call each
   range explicitly or use arrays.
 - Agents rendering on one machine starve each other: a full render can be killed (exit 137), and a
-  3,500-frame 3D render beside another job crashed a machine. Route every heavy process
+  3,500-frame 3D render beside another job crashed a machine. Before fanning out, check memory,
+  swap and load (`memory_pressure`, `sysctl vm.swapusage`, `uptime`): with swap 95% full and load
+  20 on 12 cores every agent crawled, and stopping an idle VM halved the load. Route every heavy process
   (renders, encoders, compositing scripts, your own jobs) through one queue, render finals in
   chunks one at a time (300 frames worked), skip chunks already on disk so a rerun resumes, join
   with FFmpeg's concat demuxer (`-c copy`), mux the mix, and check the frame count against
   `TOTAL`.
 - Parallel `remotion still` calls on the entry file race on the webpack cache. Bundle once, then
-  render stills from the bundle (`snap.sh` does).
+  render stills from the bundle (`snap.sh` does). Keep the bundle between batches and rebuild it
+  only after source changes; deleting it per batch cost about 2 minutes each under load. Layout
+  and motion checks can run at `--scale=0.5`; judge finish at full size.
 - A React component defined inside another component's body is a new type on every render, so it
   remounts each frame: geometry rebuilds and state it set resets. It shows as one-frame pops and
   brightness differences between a sequence and a single still. Define components at module level.

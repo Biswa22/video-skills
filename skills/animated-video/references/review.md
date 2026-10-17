@@ -54,13 +54,19 @@ Scores plateau fast and recalibrate between rounds (one film's judges stuck at 6
 across rework): track open issues, not the number. The top issue after a couple of rounds is
 usually one only the user can decide.
 
+**Real footage:** each real clip must show what the words over it claim. A fresh agent checking
+frames it extracts itself, through the crop actually used, catches what descriptions hide: on one
+film a crop centred on the wrong rocket stage, misspelled creator handles, and a borrowed clip's
+trailing frames.
+
 Breakages to look for on every contact sheet: limbs lost when a shot is cropped, ghosting from
 opacity fades, recurring entities changing scale, an empty first frame after a canvas mounts, and
 a blurred or unstable final frame.
 
 ## Mute test
 
-Does the picture tell the story without the voice? Run it on the first full cut, and on an
+Does the picture tell the story without the voice? Run it on each act as it lands (a miss found
+only at the full cut costs a late act re-render), on the first full cut, and on an
 animatic when there is one.
 1. Render the cut with no captions and no sound (`--props='{"captions":false}' --muted`);
    captions would hand the judge the narration.

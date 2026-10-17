@@ -53,7 +53,8 @@ works best with the strongest available model at high effort.
   approves them, then parallelise the build as suits it. The board fixes each beat's idea;
   whoever animates owns how it moves and proposes a better picture when they see one. Keep one
   cue sheet for the whole film so the sound stays intentional. On long runs, send status with a
-  still and the overall time left.
+  still and the overall time left; have agents stamp status lines with the machine clock, since
+  self-reported times can drift by hours.
 - **A revision of a finished film:** ask which sections to rebuild, recommending the weakest;
   keep the rest and [splice](references/handoffs.md#splicing-new-parts-into-a-finished-film)
   the new parts in.
