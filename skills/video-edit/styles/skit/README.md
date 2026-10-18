@@ -41,9 +41,9 @@ before/after, or a dialogue-free POV with the camera as the other person.
 Start from the platform's text-tool look (condensed grotesk, upper third) and make it
 read instantly on a phone. Plain white outline text on a busy background reads as
 unfinished; the in-app "background" style (black text on white rounded line boxes that
-merge into one shape) fixes readability on its own. A colored highlight on the key
-phrase or a closing emoji is optional; use an accent that contrasts with the scene
-(blue on warm brick and skin, not red on red).
+merge into one shape) fixes readability on its own. Put the key word or phrase on a
+colored highlight when one carries the joke; use an accent that contrasts with the
+scene (blue on warm brick and skin, not red on red). A closing emoji is optional.
 
 - Size: about 3.5% of frame height per line, lines at most about 80% of frame width,
   centered, block center around 20–28% of height, above the subject's head. A list

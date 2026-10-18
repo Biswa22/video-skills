@@ -133,6 +133,13 @@ is not a native composition.
   blur are opt-in.
 - Text: follow the pack. Keep copy editable (caption data plus an SRT, or the build
   script), spell names right, and use the user's exact words for supplied copy.
+  Make standalone lines (a hook, headline, skit caption or cover) as short as the idea
+  allows; a longer line is fine when the point needs it. Where one word or number
+  carries the point, set it apart in another color, as colored type or on a filled
+  box, and pick the color against the scene rather than one fixed accent.
+  [text_overlay.py](scripts/text_overlay.py) draws both looks: `--style highlight`
+  (bold white type, the key word on a color box) and `--style box` (black on white line
+  boxes, the key word on its own color box).
   Captions never paper over wrong spoken words. Translate foreign speech for the
   audience without inventing emotion.
 - Sound: speech dominant with measured peak headroom. Add music or effects when the

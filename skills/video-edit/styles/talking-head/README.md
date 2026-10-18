@@ -61,7 +61,9 @@ independently.
 - The opening caption is the hook. Design it as its own composition rather than the
   first subtitle, whether or not a headline was requested; keep it clear of the face
   and hand over to the body captions at a cut. A requested headline uses the user's
-  exact words and stays separate from the subtitles.
+  exact words and stays separate from the subtitles. Hooks and headlines follow the
+  [text rule](../../SKILL.md#assemble-finish-and-revise): brief, with the key word in
+  its own color.
 - Spread emphasis across the whole dialogue (strong claims, contrasts, numbers,
   payoffs) with quieter phrase captions between them. Pick each
   treatment for what it means: scale, color, placement, a staged reveal, a number

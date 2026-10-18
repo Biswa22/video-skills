@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Render Reel overlay text to a transparent 1080x1920 PNG.
 
-    text_overlay.py OUT.png "line one|*key words* 💀" --y 0.25 [--style outline|box] [--hang-emoji [--hide-emoji]]
+    text_overlay.py OUT.png "line one|*key words* 💀" --y 0.25 [--style outline|box|highlight] [--hang-emoji [--hide-emoji]]
         [--size 66] [--accent "#FFD23F"] [--wrap 0.72] [--font PATH] [--index 5]
 
 `|` forces a line break; long lines wrap at --wrap of frame width. `*...*` marks
@@ -11,12 +11,16 @@ accent words. Emoji (Apple Color Emoji) must be separated from words by spaces.
 Styles mimic the in-app Instagram/TikTok text tool:
   outline  white text, black outline, accent words filled with --accent
   box      black text on white rounded line boxes that merge into one shape;
-           accent words get their own --accent box with white text (a fully
-           accented line becomes one --accent box)
+           accent words get their own --accent box (a fully accented line
+           becomes one --accent box)
+  highlight  white text with a soft shadow, no line boxes; accent words sit on
+           a filled --accent box (a bold headline or cover look)
+
+Text on an --accent box is black or white, whichever contrasts more with it.
 """
 import argparse
 import re
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageColor, ImageDraw, ImageFilter, ImageFont
 
 W, H = 1080, 1920
 FONT = "/System/Library/Fonts/Avenir Next Condensed.ttc"
@@ -29,7 +33,7 @@ def parse_args(argv=None):
     p.add_argument("out")
     p.add_argument("text")
     p.add_argument("--y", type=float, default=0.25)
-    p.add_argument("--style", choices=["outline", "box"], default="outline")
+    p.add_argument("--style", choices=["outline", "box", "highlight"], default="outline")
     p.add_argument("--size", type=int, default=66)
     p.add_argument("--accent", default="#FFD23F")
     p.add_argument("--hide-emoji", action="store_true", help="omit emoji (and their box space) for a pre-reveal layer; use with --hang-emoji")
@@ -53,6 +57,14 @@ def words_of(chunk):
         if end:
             accent = False
     return out
+
+
+def on_accent(color):
+    """Black on light accents (yellow, mint), white on the rest. Strict contrast math would put
+    black on mid reds and blues, where white is the expected look."""
+    r, g, b = ImageColor.getrgb(color)[:3]
+    lum = lambda c: (c / 255 / 12.92) if c <= 10 else ((c / 255 + 0.055) / 1.055) ** 2.4
+    return "black" if 0.2126 * lum(r) + 0.7152 * lum(g) + 0.0722 * lum(b) > 0.35 else "white"
 
 
 def emoji_image(text, height):
@@ -99,6 +111,8 @@ def render(a):
     pitch = line_h - 1 if box else a.size * 1.18
     block_top = a.y * H - (pitch * (len(lines) - 1) + line_h) / 2
     stroke = max(2, a.size // 14)
+    ink = on_accent(a.accent)
+    shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))  # highlight: soft shadow under the white words
 
     whole = lambda ws: box and all(w[1] or w[2] for w in ws) and any(w[1] for w in ws)
     if box:  # draw all line boxes first so they merge into one shape
@@ -124,12 +138,23 @@ def render(a):
                     d.rounded_rectangle((x - a.size * 0.12, baseline + top - pad_y * 0.5,
                                          x + ww + a.size * 0.12, baseline + bottom + pad_y * 0.5),
                                         radius=a.size * 0.18, fill=a.accent)
-                d.text((x, baseline), text, font=font, anchor="ls", fill="white" if accent else "black")
+                d.text((x, baseline), text, font=font, anchor="ls", fill=ink if accent else "black")
+            elif a.style == "highlight":
+                if accent:
+                    gap = space / 2 if any(o is not w and o[1] for o in ws) else a.size * 0.14
+                    d.rectangle((x - gap, baseline + top - a.size * 0.06, x + ww + gap, baseline + bottom),
+                                fill=a.accent)
+                else:
+                    ImageDraw.Draw(shadow).text((x, baseline + a.size * 0.04), text, font=font, anchor="ls",
+                                                fill=(0, 0, 0, 200), stroke_width=stroke, stroke_fill=(0, 0, 0, 200))
+                d.text((x, baseline), text, font=font, anchor="ls", fill=ink if accent else "white")
             else:
                 d.text((x + 3, baseline + 4), text, font=font, anchor="ls", fill=(0, 0, 0, 110))
                 d.text((x, baseline), text, font=font, anchor="ls", fill=a.accent if accent else "white",
                        stroke_width=stroke, stroke_fill="black")
             x += ww + space
+    if a.style == "highlight":
+        img = Image.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(a.size * 0.12)), img)
     return img
 
 

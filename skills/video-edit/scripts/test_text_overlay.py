@@ -39,3 +39,20 @@ with tempfile.TemporaryDirectory() as tmp:
     assert changed.min() > 540, changed.min()  # only the right side (emoji) changes
     assert ((b[:, :, 0] > 200) & (b[:, :, 1] > 120) & (b[:, :, 2] < 90)).sum() > 50  # yellow emoji pixels
 print("ok reveal")
+
+# Highlight: white words, accent words on a filled box; black ink on a light accent, white on red.
+with tempfile.TemporaryDirectory() as tmp:
+    for accent, ink in (("#FFD23F", 0), ("#E5322D", 255)):
+        out = Path(tmp) / "h.png"
+        subprocess.run([sys.executable, str(SCRIPT), str(out), "PLAIN *KEY*", "--style", "highlight",
+                        "--accent", accent], check=True)
+        px = np.asarray(Image.open(out)).astype(int)
+        rgb = tuple(int(accent[i:i + 2], 16) for i in (1, 3, 5))
+        fill = (np.abs(px[:, :, :3] - rgb).sum(2) < 6) & (px[:, :, 3] == 255)
+        cols = np.where(fill.any(0))[0]
+        assert cols.min() > 540, cols.min()  # the box sits on the second word only
+        inside = px[fill.any(1)][:, cols.min():cols.max() + 1]
+        assert (np.abs(inside[:, :, :3] - ink).sum(2) < 30).sum() > 200, accent  # legible ink in the box
+        left = px[:, :cols.min() - 20]
+        assert ((left[:, :, :3] > 240).all(2) & (left[:, :, 3] == 255)).sum() > 200  # white plain word
+print("ok highlight")
