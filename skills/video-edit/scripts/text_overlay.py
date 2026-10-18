@@ -2,7 +2,7 @@
 """Render Reel overlay text to a transparent 1080x1920 PNG.
 
     text_overlay.py OUT.png "line one|*key words* 💀" --y 0.25 [--style outline|box|highlight] [--hang-emoji [--hide-emoji]]
-        [--size 66] [--accent "#FFD23F"] [--wrap 0.72] [--font PATH] [--index 5]
+        [--size 66] [--accent "#FFD23F"] [--accent-ink "#FFFFFF"] [--wrap 0.72] [--font PATH] [--index 5]
 
 `|` forces a line break; long lines wrap at --wrap of frame width. `*...*` marks
 accent words. Emoji (Apple Color Emoji) must be separated from words by spaces.
@@ -16,7 +16,8 @@ Styles mimic the in-app Instagram/TikTok text tool:
   highlight  white text with a soft shadow, no line boxes; accent words sit on
            a filled --accent box (a bold headline or cover look)
 
-Text on an --accent box is black or white, whichever contrasts more with it.
+Text on an --accent box is --accent-ink, or black on light accents and white on
+the rest when it is not given.
 """
 import argparse
 import re
@@ -36,6 +37,7 @@ def parse_args(argv=None):
     p.add_argument("--style", choices=["outline", "box", "highlight"], default="outline")
     p.add_argument("--size", type=int, default=66)
     p.add_argument("--accent", default="#FFD23F")
+    p.add_argument("--accent-ink", help="color of words on an --accent box (default: black or white by the accent)")
     p.add_argument("--hide-emoji", action="store_true", help="omit emoji (and their box space) for a pre-reveal layer; use with --hang-emoji")
     p.add_argument("--hang-emoji", action="store_true", help="center lines on their text so trailing emoji hang right and can appear without moving the text")
     p.add_argument("--font", default=FONT)
@@ -111,7 +113,7 @@ def render(a):
     pitch = line_h - 1 if box else a.size * 1.18
     block_top = a.y * H - (pitch * (len(lines) - 1) + line_h) / 2
     stroke = max(2, a.size // 14)
-    ink = on_accent(a.accent)
+    ink = a.accent_ink or on_accent(a.accent)
     shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))  # highlight: soft shadow under the white words
 
     whole = lambda ws: box and all(w[1] or w[2] for w in ws) and any(w[1] for w in ws)

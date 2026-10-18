@@ -62,8 +62,8 @@ independently.
   first subtitle, whether or not a headline was requested; keep it clear of the face
   and hand over to the body captions at a cut. A requested headline uses the user's
   exact words and stays separate from the subtitles. Hooks and headlines follow the
-  [text rule](../../SKILL.md#assemble-finish-and-revise): brief, with the key word in
-  its own color.
+  [text rule](../../SKILL.md#assemble-finish-and-revise): brief, and without a
+  background the key word goes on a color box.
 - Spread emphasis across the whole dialogue (strong claims, contrasts, numbers,
   payoffs) with quieter phrase captions between them. Pick each
   treatment for what it means: scale, color, placement, a staged reveal, a number

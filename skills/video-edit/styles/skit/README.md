@@ -41,9 +41,8 @@ before/after, or a dialogue-free POV with the camera as the other person.
 Start from the platform's text-tool look (condensed grotesk, upper third) and make it
 read instantly on a phone. Plain white outline text on a busy background reads as
 unfinished; the in-app "background" style (black text on white rounded line boxes that
-merge into one shape) fixes readability on its own. Put the key word or phrase on a
-colored highlight when one carries the joke; use an accent that contrasts with the
-scene (blue on warm brick and skin, not red on red). A closing emoji is optional.
+merge into one shape) fixes readability on its own, so it needs no colored highlight
+on top. A closing emoji is optional.
 
 - Size: about 3.5% of frame height per line, lines at most about 80% of frame width,
   centered, block center around 20–28% of height, above the subject's head. A list
@@ -54,8 +53,7 @@ scene (blue on warm brick and skin, not red on red). A closing emoji is optional
   references used no word-by-word subtitles or animated type.
 - Break lines where the comic pause falls.
 
-`scripts/text_overlay.py` renders it (`--style box`; `*key phrase*` and `--accent` for
-a highlight); Resolve Text+ also works. The hardest frame is the busiest background or
+`scripts/text_overlay.py` renders it (`--style box`); Resolve Text+ also works. The hardest frame is the busiest background or
 the meme side of a cut.
 
 ## Sound
