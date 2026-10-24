@@ -48,7 +48,22 @@ These do not validate a Resolve install, listening quality, visual taste, or an 
 
 ## Installing the skills in Claude Code
 
-From the repo root, once per skill (`reflect`, `rsi`, `video-edit`, `animated-video`, `video-script`, `asset-library`):
+Skills: `reflect`, `rsi`, `video-edit`, `animated-video`, `video-script`, `asset-library`. Run from the repo root.
+
+**Windows (PowerShell).** Junctions need no admin rights; symlinks do. All six at once, skipping any already installed:
+
+```powershell
+$skills = "$env:USERPROFILE\.claude\skills"
+New-Item -ItemType Directory -Force $skills | Out-Null
+foreach ($n in "reflect","rsi","video-edit","animated-video","video-script","asset-library") {
+  $dest = Join-Path $skills $n
+  if (-not (Test-Path $dest)) {
+    New-Item -ItemType Junction -Path $dest -Target (Join-Path $PWD "skills\$n") | Out-Null
+  }
+}
+```
+
+**macOS / Linux.** Once per skill:
 
 ```sh
 skill_name=video-script
